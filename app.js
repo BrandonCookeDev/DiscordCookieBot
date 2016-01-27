@@ -1,3 +1,7 @@
+/** TARGET ENVIRONMENT (test or prod) **/
+//target = "prod";
+target = "test";
+
 /** IMPORTS **/
 var Discord = require("discord.js");
 var fs 		= require("fs");
@@ -8,6 +12,9 @@ var servers = [];
 var channelMap = {};
 
 /** NONSENSE **/
+var isFTU = false;
+var tyusUsername = 'karma';
+
 /*** IMAGES ***/
 var bruceImg  = "./content/images/Brucie.PNG";
 var falconImg = "./content/images/CFalc.png";
@@ -47,7 +54,7 @@ mybot.on("message", function(message){
     	
     	/** SILLY **/
     	if(command === "bracket")
-    		mybot.reply(message, bracket).catch(console.log);
+    		mybot.sendMessage(message.channel, bracket).catch(console.log);
     	
     	if(command === "showmeyourmoves")
     	{
@@ -57,7 +64,7 @@ mybot.on("message", function(message){
     		}
     		catch(err){
     			console.log(err);
-    			mybot.reply(message, falconUrl).catch(console.log);
+    			mybot.sendMessage(message.channel, falconUrl).catch(console.log);
     		}
     	}
     		
@@ -70,19 +77,64 @@ mybot.on("message", function(message){
 	    	catch(err)
 	    	{
 	    		console.log(err);
-	    		mybot.reply(message, bruceUrl);	
+	    		mybot.sendMessage(message.channel, bruceUrl);	
 	    	}
     		
     	}
     		
     	if(command === "suhdude")
     		mybot.reply(message, suhdudeUrl);
+    		
+    	if(command === "ftu")
+    	{
+    		try{
+    			if(!(message.author.username === tyusUsername))
+    			{
+		    		if(isFTU){
+		    			 ftu = false;
+		    			 mybot.sendMessage(message.channel, "FTU mode is now disabled!");
+		    		}
+		    		else{
+		    			 ftu = true;
+		    			 mybot.sendMessage(message.channel, "FTU mode is now enabled!");	 
+		    		}
+		    	}
+	    	}
+	    	catch(err)
+	    	{
+	    		console.log(err);
+	    	}
+    	}
+    }
+    else
+    {
+    	/** USER BASED **/
+    	if(isFTU)
+    	{
+    		try{
+	    		var user = message.author;
+	    		if(user.username.toLowerCase() === tyusUsername)
+	    			mybot.reply(message, "no.");
+			}
+			catch(err)
+			{
+				console.log(err);
+			}    		
+    	}
     }
 });
 
 /** LOGIN **/
-mybot.login("golee5191@hotmail.com", "botmedaddy!").then(loginSuccess).catch(console.log); 	  //TEST 
-//mybot.login("ckscookiessbm@gmail.com", "botmedaddy!").then(loginSuccess).catch(console.log);   //PROD
+console.log("Targetting " + target + "...");
+if(target === "test")
+	mybot.login("golee5191@hotmail.com", "botmedaddy!").then(loginSuccess).catch(console.log); 	  //TEST 
+else if(target === "prod")
+	mybot.login("ckscookiessbm@gmail.com", "botmedaddy!").then(loginSuccess).catch(console.log);   //PROD
+else
+{
+	console.log("Failure. Incorrect target. Terminating....");
+	process.exit();
+}
 
 /** FUNCTIONS **/
 function loginSuccess(token)
