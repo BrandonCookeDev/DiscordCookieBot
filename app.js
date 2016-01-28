@@ -1,7 +1,7 @@
 /** TARGET ENVIRONMENT (test or prod) **/
 var target = "prod";
 //var target = "test";
-var version = "1.0.1";
+var version = "1.0.3";
 
 /** IMPORTS **/
 var Discord = require("discord.js");
@@ -195,10 +195,11 @@ function exportManual(){
 	"\nUSAGE: \n\t![command] [optional:user]" +
 	"\n\nCommands (not case sensative):" +
 	"\n!bracket \t\t\t\t\t\t- returns URL to most recent tournament" +
-	"\n!ShowMeYourMoves - display a picture of C. Falcon" +
-	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
+	"\n!ShowMeYourMoves - display a randomly selected picture of C. Falcon" +
+	"\n!BruciePie \t\t\t\t\t - display a randomly selected picture of Bruce" +
 	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +
 	"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
+	"\n!thumb \t\t\t\t\t\t  - return a picture of the facebook thumb" +
 	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
 	"\n";	
 	return man;
