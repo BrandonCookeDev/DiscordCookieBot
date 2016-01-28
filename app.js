@@ -1,6 +1,6 @@
 /** TARGET ENVIRONMENT (test or prod) **/
-var target = "prod";
-//var target = "test";
+//var target = "prod";
+var target = "test";
 var version = "1.0.3";
 
 /** IMPORTS **/
@@ -9,7 +9,7 @@ var fs 		 = require("fs");
 var botlog   = require("./botlog");
 var commands = require("./commands");
 var urls	 = require("./data/urls");
-var imgPaths = require("./data/imgPaths");
+var imgs	 = require("./data/imgPaths");
 var mybot 	 = new Discord.Client();
 
 /** CONFIG **/
@@ -38,6 +38,9 @@ mybot.on("message", function(message){
     {
     	var command  = message.content.substring(1).toLowerCase();
     	var user = message.author; 
+    	
+    	console.log(command);
+    	console.log(command.substring(1,7));
     	/** SERIOUS **/
     	if(command.substring(1, 5) === "mute"){
     		var memberName = command.substring(command.indexOf(" "));
@@ -54,8 +57,11 @@ mybot.on("message", function(message){
     	}
     	
     	if(command.substring(1, 7) === 'google'){
+    		console.log
+    		//logCommand(user, 'google');
     		try{
     			var searchCriteria = command.substring(command.indexOf(" "));
+    			console.log(searchCriteria);
     			commands.google(message, searchCriteria);    			
     		} catch(err){
     			botlog.botlog(err);
@@ -81,7 +87,7 @@ mybot.on("message", function(message){
     	if(command === "showmeyourmoves"){
     		try{
     			logCommand(user, 'showmeyourmoves');
-    			commands.showmeyourmoves(message, bruceImgs);
+    			commands.showmeyourmoves(message, falconImgs);
     		}catch(err){
     			botlog.botlog(err);
     			mybot.sendMessage(message.channel, urls.falconUrl).catch(console.log);
@@ -99,13 +105,21 @@ mybot.on("message", function(message){
     	}
     		
     	if(command === "suhdude"){
-    		logCommand(user, 'suhdude');
-    		commands.suhdude(message, urls.suhdudeUrl).catch(botlog.botlog);
+    		try{
+    			logCommand(user, 'suhdude');
+    			commands.suhdude(message, urls.suhdudeUrl);
+    		}catch(err){
+    			console.log(err);
+    		}
     	}
     		
     	if(command === "help" || command === "man"){
-    		logCommand(user, 'help');
-    		commands.help(message, version).catch(botlog.botlog);
+	    	try{
+	    		logCommand(user, 'help');
+	    		commands.help(message, version);
+    		}catch(err){
+    			console.log(err);
+    		}
     	}
     	
     	/*	
@@ -158,12 +172,17 @@ function loginSuccess(token)
 {	
 	try{
 		//Init Falcon Picture Array
-		initPictureArray(falconDir, falconImgs);
-		initPictureArray(bruceDir, bruceImgs);	
+		initPictureArray(imgs.falconDir, falconImgs);
+		initPictureArray(imgs.bruceDir, bruceImgs);	
 	}
 	catch(err)
 	{
-		botlog.botlog(err);
+		try{
+			botlog.botlog(err);
+		}catch(err)
+		{
+			console.log(err);
+		}
 	}
 }
 

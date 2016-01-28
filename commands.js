@@ -51,23 +51,29 @@ exports.suhdude = function(message, suhdudeUrl){
 };
 
 exports.google = function(message, searchCriteria){
-	var url = "https://www.google.com/search?q=" + encodeURI(searchCriteria);	
-	message.client.sendMessage(message.channel, 
-								"Google search for " + searchCriteria + ": " + url,
-								function(err){
-									botlog.botlog(err);
-								});
-	
-	var win = window.open(url, '_blank');
-  	win.focus();
+	try{
+		var url = "https://www.google.com/search?q=" + encodeURI(searchCriteria);	
+		console.log(url);
+		message.client.sendMessage(message.channel, 
+									"Google search for " + searchCriteria + ": " + url,
+									function(err){
+										botlog.botlog(err);
+									});
+		
+		var win = window.open(url, '_blank');
+	  	win.focus();
+	}catch(err){
+		console.log(err);
+	}
 };
 
 exports.help = function(message, version){
-	logCommand(user, 'help');
-	message.client.sendMessage(message.channel, manual(version));
+	message.client.sendMessage(message.channel, manual(version), (err) => {
+		console.log(err);
+	});
 };
 
-exports.manual = function(version){
+function manual(version){
 	var man = "cookiE_bot Version " + version + 
 	"\nUSAGE: \n\t![command] [optional:user]" +
 	"\n\nCommands (not case sensative):" +
