@@ -1,6 +1,6 @@
 /** TARGET ENVIRONMENT (test or prod) **/
-var target = "prod";
-//var target = "test";
+//var target = "prod";
+var target = "test";
 var version = "1.0";
 
 /** IMPORTS **/
@@ -21,6 +21,7 @@ var tyusResponses = ['no.', 'Ty, stop', 'k', 'just stop', 'stop talking...', 'sh
 /*** IMAGES ***/
 var bruceImg  = "./content/images/Brucie.PNG";
 var falconDir = "./content/images/Falcon";
+var falconImgs = [];
 
 /*** URLs ***/
 var bracketUrl = 'http://challonge.com/fbgt21';
@@ -62,8 +63,9 @@ mybot.on("message", function(message){
     	if(command === "showmeyourmoves")
     	{
     		try{
-    			//var falconStream = fs.createReadStream(getFalconPicture());
-    			var falconStream = fs.createReadStream("./content/images/Falcon/CFalc2.jpg");
+    			var index = Math.floor(Math.random() * falconImgs.length);  
+    			console.log(index);
+    			var falconStream = fs.createReadStream(falconImgs[index]);
     			mybot.sendFile(message.channel, falconStream, "CFalc.png");
     		}
     		catch(err){
@@ -152,20 +154,27 @@ else
 /** FUNCTIONS **/
 function loginSuccess(token)
 {	
-	if(mybot.channels.has("name", "test"))
-	{
-		//TELL ALL CHANNELS BOT IS ONLINE
-		mybot.channels.getAll("name", "test").foreach(function(){
-			mybot.sendMessage(channel, "...cookie_bot is Online...");
-		})
-		.then("Notified clients...")
-		.catch(console.log);
+	try{
+		//Init Falcon Picture Array
+		initFalconPictureArray();
+	
+		//Notify channels that bot is up
+		if(mybot.channels.has("name", "test"))
+		{
+			//TELL ALL CHANNELS BOT IS ONLINE
+			mybot.channels.getAll("name", "test").foreach(function(){
+				mybot.sendMessage(channel, "...cookie_bot is Online...");
+			})
+			.then("Notified clients...")
+			.catch(console.log);
+		}	
 	}
-		
-	//})
-	//.then("Notified servers...")
-	//.catch(console.log);
+	catch(err)
+	{
+		console.log(err);
+	}
 }
+
 
 function exportManual(){
 	var man = "cookiE_bot Version " + version + 
@@ -181,17 +190,10 @@ function exportManual(){
 	return man;
 }
 
-function getFalconPicture()
+function initFalconPictureArray()
 {
 	
- 	fs.readdir(falconDir, function (err, list) {
-		var index = Math.floor(Math.random() * list.length);
-		console.log(list);
-		return list[index];
-	}).catch(console.log);
-  	
-  	
-  	/*
+ 	fs.readdir(falconDir, function (err, list) {  	
     // Return the error if something went wrong
     if (err)
       console.log(err);
@@ -199,21 +201,10 @@ function getFalconPicture()
     // For every file in the list
     list.forEach(function (file) {
       // Full path of that file
-      path = dir + "/" + file;
-      // Get the file's stats
-      fs.stat(path, function (err, stat) {
-        console.log(stat);
-        // If the file is a directory
-        if (stat && stat.isDirectory())
-          // Dive into the directory
-          //dive(path, action);
-        else
-          // Call the action
-          
-          //action(null, path);
-      });
+      path = falconDir + "/" + file;
+      falconImgs.push(path);
     });
-  });*/
+  });
 }
 
 function getChannels()
