@@ -49,6 +49,7 @@ mybot.on("message", function(message){
 	    	catch(err)
 	    	{
 	    		mybot.reply(message, "The user " + memberName + " isn't in the chat");
+	    		botlog.botlog("The user " + memberName + " isn't in the chat");
 	    	}     		
     	}
     	
@@ -57,7 +58,7 @@ mybot.on("message", function(message){
     			var searchCriteria = command.substring(command.indexOf(" "));
     			commands.google(message, searchCriteria);    			
     		} catch(err){
-    			console.log(err);
+    			botlog.botlog(err);
     		}    		
     	}
     	
@@ -72,7 +73,7 @@ mybot.on("message", function(message){
     			logCommand(user, 'thumb');
     			commands.thumb(message);
 	    	}catch(err){
-	    		console.log(err);
+	    		botlog.botlog(err);
 	    		mybot.sendMessage(message.channel, 'An error occured. Please yell at cookiE');
 	    	}
     	}
@@ -82,7 +83,7 @@ mybot.on("message", function(message){
     			logCommand(user, 'showmeyourmoves');
     			commands.showmeyourmoves(message, bruceImgs);
     		}catch(err){
-    			console.log(err);
+    			botlog.botlog(err);
     			mybot.sendMessage(message.channel, urls.falconUrl).catch(console.log);
     		}
     	}
@@ -92,19 +93,19 @@ mybot.on("message", function(message){
     			logCommand(user, 'bruciepie');
     			commands.bruciepie(message, bruceImgs);
 	    	}catch(err){
-	    		console.log(err);
+	    		botlog.botlog(err);
 	    		mybot.sendMessage(message.channel, urls.bruceUrl);	
 	    	}    		
     	}
     		
     	if(command === "suhdude"){
     		logCommand(user, 'suhdude');
-    		commands.suhdude(message, urls.suhdudeUrl).catch(console.log);
+    		commands.suhdude(message, urls.suhdudeUrl).catch(botlog.botlog);
     	}
     		
     	if(command === "help" || command === "man"){
     		logCommand(user, 'help');
-    		commands.help(message, version).catch(console.log);
+    		commands.help(message, version).catch(botlog.botlog);
     	}
     	
     	/*	
@@ -114,7 +115,7 @@ mybot.on("message", function(message){
     			logCommand(user, 'ftu');
     			commands.ftu(message, tyusUsername);
 	    	}catch(err){
-	    		console.log(err);
+	    		botlog.botlog(err);
 	    	}
     	}
     	*/
@@ -126,7 +127,7 @@ mybot.on("message", function(message){
     		try{
 	    		commands.ftumode(message, tyusUsername, tyusResponses);
 			}catch(err){
-				console.log(err);
+				botlog.botlog(err);
 			}    		
     	}
     }
@@ -162,26 +163,30 @@ function loginSuccess(token)
 	}
 	catch(err)
 	{
-		console.log(err);
+		botlog.botlog(err);
 	}
 }
 
 function initPictureArray(dir, arr)
 {
-	console.log('Populating ' + dir + ' array');
- 	fs.readdir(dir, function (err, list) {  	
-    // Return the error if something went wrong
-    if (err)
-      console.log(err);
-
-    // For every file in the list
-    list.forEach(function (file) {
-      // Full path of that file
-      path = dir + "/" + file;
-      console.log("Adding " + path);
-      arr.push(path);
-    });
-  });
+	try{
+		console.log('Populating ' + dir + ' array');
+	 	fs.readdir(dir, function (err, list) {  	
+	    // Return the error if something went wrong
+	    if (err)
+	      console.log(err);
+	
+	    // For every file in the list
+	    list.forEach(function (file) {
+	      // Full path of that file
+	      path = dir + "/" + file;
+	      console.log("Adding " + path);
+	      arr.push(path);
+	    });
+	  });
+	} catch(err){
+		botlog.botlog(err);
+	}
 }
 
 
