@@ -39,7 +39,7 @@ mybot.on("message", function(message){
     	var command  = message.content.substring(1).toLowerCase();
     	var user = message.author; 
     	/** SERIOUS **/
-    	if(command.substring(1, 4) === "mute"){
+    	if(command.substring(1, 5) === "mute"){
     		var memberName = command.substring(command.indexOf(" "));
     		try{
 	    		var server = message.channel.server;
@@ -50,6 +50,15 @@ mybot.on("message", function(message){
 	    	{
 	    		mybot.reply(message, "The user " + memberName + " isn't in the chat");
 	    	}     		
+    	}
+    	
+    	if(command.substring(1, 7) === 'google'){
+    		try{
+    			var searchCriteria = command.substring(command.indexOf(" "));
+    			commands.google(message, searchCriteria);    			
+    		} catch(err){
+    			console.log(err);
+    		}    		
     	}
     	
     	/** SILLY **/
@@ -103,7 +112,7 @@ mybot.on("message", function(message){
     	{
     		try{
     			logCommand(user, 'ftu');
-    			commands.ftu(message, mybot);
+    			commands.ftu(message, tyusUsername);
 	    	}catch(err){
 	    		console.log(err);
 	    	}
@@ -115,7 +124,7 @@ mybot.on("message", function(message){
     	/** USER BASED **/
     	if(isFTU){
     		try{
-	    		commands.ftumode(user, tyusUsername, tyusResponses, mybot);
+	    		commands.ftumode(message, tyusUsername, tyusResponses);
 			}catch(err){
 				console.log(err);
 			}    		

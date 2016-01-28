@@ -1,58 +1,70 @@
 var fs = require('fs');
 var botlog = require('./botlog');
 
-exports.ftu = function(tyusUsername, mybot) {
+exports.ftu = function(message, tyusUsername) {
 	if (!(message.author.username === tyusUsername)) {
 		if (isFTU) {
 			isFTU = false;
-			mybot.sendMessage(message.channel, "FTU mode is now disabled!");
+			message.client.sendMessage(message.channel, "FTU mode is now disabled!");
 		} else {
 			isFTU = true;
-			mybot.sendMessage(message.channel, "FTU mode is now enabled!");
+			message.client.sendMessage(message.channel, "FTU mode is now enabled!");
 		}
 	};
 };
 
-exports.ftumode = function(message, tyusUsername, tyusResponses, mybot) {
+exports.ftumode = function(message, tyusUsername, tyusResponses) {
 	var user = message.author;
 	var name = user.username.toLowerCase();
 	if (name === tyusUsername)//|| name === 'cookie')
 	{
 		var index = Math.floor((Math.random() * tyusResponses.length));
-		mybot.reply(message, tyusResponses[index]);
+		message.client.reply(message, tyusResponses[index]);
 	}
 };
 
 exports.bruciepie = function(message, bruceImgs){
 	var index = Math.floor(Math.random() * bruceImgs.length);
 	var bruceStream = fs.createReadStream(bruceImgs[index]);
-	mybot.sendFile(message.channel, bruceStream, "Brucie.png");
+	message.client.sendFile(message.channel, bruceStream, "Brucie.png");
 };
 
 exports.showmeyourmoves = function(message, falconImgs){
 	var index = Math.floor(Math.random() * falconImgs.length);
 	var falconStream = fs.createReadStream(falconImgs[index]);
-	mybot.sendFile(message.channel, falconStream, "CFalc.png");
+	message.client.sendFile(message.channel, falconStream, "CFalc.png");
 };
 
 exports.thumb = function(message, thumbImg){
 	var thumbStream = fs.createReadStream(thumbImg);
-	mybot.sendFile(message.channel, thumbStream, 'thumb.jpg');
+	message.client.sendFile(message.channel, thumbStream, 'thumb.jpg');
 };
 
 exports.bracket = function(message, bracket){
-	mybot.sendMessage(message.channel, bracket, function(err){
+	message.client.sendMessage(message.channel, bracket, function(err){
 		botlog.botlog(err);
 	});
 };
 
 exports.suhdude = function(message, suhdudeUrl){
-	mybot.sendMessage(message.channel, suhdudeUrl);
+	message.client.sendMessage(message.channel, suhdudeUrl);
+};
+
+exports.google = function(message, searchCriteria){
+	var url = "https://www.google.com/search?q=" + encodeURI(searchCriteria);	
+	message.client.sendMessage(message.channel, 
+								"Google search for " + searchCriteria + ": " + url,
+								function(err){
+									botlog.botlog(err);
+								});
+	
+	var win = window.open(url, '_blank');
+  	win.focus();
 };
 
 exports.help = function(message, version){
 	logCommand(user, 'help');
-	mybot.sendMessage(message.channel, manual(version));
+	message.client.sendMessage(message.channel, manual(version));
 };
 
 exports.manual = function(version){
