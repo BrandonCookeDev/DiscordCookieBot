@@ -1,7 +1,7 @@
 /** TARGET ENVIRONMENT (test or prod) **/
 //var target = "prod";
 var target = "test";
-var version = "1.0";
+var version = "1.0.1";
 
 /** IMPORTS **/
 var Discord = require("discord.js");
@@ -16,12 +16,14 @@ var channelMap = {};
 /* FTU */
 var isFTU = false;
 var tyusUsername = 'karma';
-var tyusResponses = ['no.', 'Ty, stop', 'k', 'just stop', 'stop talking...', 'shhhhhhh'];
+var tyusResponses = ['no.', 'Ty, stop', 'k', 'just stop', 'stop talking...', 'shhhhhhh', 'ah cool bro', 'nobody gives a shit'];
 
 /*** IMAGES ***/
-var bruceImg  = "./content/images/Brucie.PNG";
+var bruceDir  = "./content/images/Bruce";
 var falconDir = "./content/images/Falcon";
+var thumbImg  = "./content/images/thumb.jpg";
 var falconImgs = [];
+var bruceImgs  = [];
 
 /*** URLs ***/
 var bracketUrl = 'http://challonge.com/fbgt21';
@@ -34,6 +36,7 @@ var bracket = "Flashback Games 21: " + bracketUrl;
 
 console.log("Running cookiE_bot...");
 
+/** EVENTS **/
 mybot.on("message", function(message){
     if(message.content === "ping")
         mybot.reply(message, "pong");
@@ -59,12 +62,24 @@ mybot.on("message", function(message){
     	/** SILLY **/
     	if(command === "bracket")
     		mybot.sendMessage(message.channel, bracket).catch(console.log);
+    		
+    	if(command === "thumb")
+    	{
+    		try{
+	    		var thumbStream = fs.createReadStream(thumbImg);
+	    		mybot.sendFile(message.channel, thumbStream, 'thumb.jpg');
+	    	}
+	    	catch(err)
+	    	{
+	    		console.log(err);
+	    		mybot.sendMessage(message.channel, 'An error occured. Please yell at cookiE');
+	    	}
+    	}
     	
     	if(command === "showmeyourmoves")
     	{
     		try{
-    			var index = Math.floor(Math.random() * falconImgs.length);  
-    			console.log(index);
+    			var index = Math.floor(Math.random() * falconImgs.length);
     			var falconStream = fs.createReadStream(falconImgs[index]);
     			mybot.sendFile(message.channel, falconStream, "CFalc.png");
     		}
@@ -77,7 +92,8 @@ mybot.on("message", function(message){
     	if(command === "bruciepie")
     	{
     		try{
-	    		var bruceStream = fs.createReadStream(bruceImg);
+    			var index = Math.floor(Math.random() * bruceImgs.length);
+	    		var bruceStream = fs.createReadStream(bruceImgs[index]);
 	    		mybot.sendFile(message.channel, bruceStream, "Brucie.png");
 	    	}
 	    	catch(err)
@@ -139,6 +155,14 @@ mybot.on("message", function(message){
     }
 });
 
+mybot.on("ready", function(){
+	
+});
+
+mybot.on("disconnected", function(){
+	
+});
+
 /** LOGIN **/
 console.log("Targetting " + target + "...");
 if(target === "test")
@@ -156,18 +180,8 @@ function loginSuccess(token)
 {	
 	try{
 		//Init Falcon Picture Array
-		initFalconPictureArray();
-	
-		//Notify channels that bot is up
-		if(mybot.channels.has("name", "test"))
-		{
-			//TELL ALL CHANNELS BOT IS ONLINE
-			mybot.channels.getAll("name", "test").foreach(function(){
-				mybot.sendMessage(channel, "...cookie_bot is Online...");
-			})
-			.then("Notified clients...")
-			.catch(console.log);
-		}	
+		initPictureArray(falconDir, falconImgs);
+		initPictureArray(bruceDir, bruceImgs);	
 	}
 	catch(err)
 	{
@@ -190,10 +204,10 @@ function exportManual(){
 	return man;
 }
 
-function initFalconPictureArray()
+function initPictureArray(dir, arr)
 {
-	
- 	fs.readdir(falconDir, function (err, list) {  	
+	console.log('Populating ' + dir + ' array');
+ 	fs.readdir(dir, function (err, list) {  	
     // Return the error if something went wrong
     if (err)
       console.log(err);
@@ -201,10 +215,16 @@ function initFalconPictureArray()
     // For every file in the list
     list.forEach(function (file) {
       // Full path of that file
-      path = falconDir + "/" + file;
-      falconImgs.push(path);
+      path = dir + "/" + file;
+      console.log("Adding " + path);
+      arr.push(path);
     });
   });
+}
+
+function logCommand(user, command)
+{
+	
 }
 
 function getChannels()
