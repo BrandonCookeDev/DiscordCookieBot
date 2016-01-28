@@ -1,6 +1,7 @@
 /** TARGET ENVIRONMENT (test or prod) **/
-//target = "prod";
-target = "test";
+var target = "prod";
+//var target = "test";
+var version = "1.0";
 
 /** IMPORTS **/
 var Discord = require("discord.js");
@@ -12,8 +13,10 @@ var servers = [];
 var channelMap = {};
 
 /** NONSENSE **/
+/* FTU */
 var isFTU = false;
 var tyusUsername = 'karma';
+var tyusResponses = ['no.', 'Ty, stop', 'k', 'just stop', 'stop talking...', 'shhhhhhh'];
 
 /*** IMAGES ***/
 var bruceImg  = "./content/images/Brucie.PNG";
@@ -72,7 +75,7 @@ mybot.on("message", function(message){
     	{
     		try{
 	    		var bruceStream = fs.createReadStream(bruceImg);
-	    		mybot.sendFile(message.channel, bruceStream, "Brucie.png")
+	    		mybot.sendFile(message.channel, bruceStream, "Brucie.png");
 	    	}
 	    	catch(err)
 	    	{
@@ -83,7 +86,10 @@ mybot.on("message", function(message){
     	}
     		
     	if(command === "suhdude")
-    		mybot.reply(message, suhdudeUrl);
+    		mybot.sendMessage(message.channel, suhdudeUrl);
+    		
+    	if(command === "help" || command === "man")
+    		mybot.sendMessage(message.channel, exportManual());
     		
     	if(command === "ftu")
     	{
@@ -91,11 +97,11 @@ mybot.on("message", function(message){
     			if(!(message.author.username === tyusUsername))
     			{
 		    		if(isFTU){
-		    			 ftu = false;
+		    			 isFTU = false;
 		    			 mybot.sendMessage(message.channel, "FTU mode is now disabled!");
 		    		}
 		    		else{
-		    			 ftu = true;
+		    			 isFTU = true;
 		    			 mybot.sendMessage(message.channel, "FTU mode is now enabled!");	 
 		    		}
 		    	}
@@ -113,8 +119,14 @@ mybot.on("message", function(message){
     	{
     		try{
 	    		var user = message.author;
-	    		if(user.username.toLowerCase() === tyusUsername)
-	    			mybot.reply(message, "no.");
+				var name = user.username.toLowerCase();
+				//console.log(name);
+	    		if(name === tyusUsername)//|| name === 'cookie')
+	    		{
+    				var index = Math.floor((Math.random() * tyusResponses.length));
+    				//console.log(index + ", " + tyusResponses[index]);
+	    			mybot.reply(message, tyusResponses[index]);
+	    		}
 			}
 			catch(err)
 			{
@@ -152,6 +164,20 @@ function loginSuccess(token)
 	//})
 	//.then("Notified servers...")
 	//.catch(console.log);
+}
+
+function exportManual(){
+	var man = "cookiE_bot Version " + version + 
+	"\nUSAGE: \n\t![command] [optional:user]" +
+	"\n\nCommands (not case sensative):" +
+	"\n!bracket \t\t\t\t\t\t- returns URL to most recent tournament" +
+	"\n!ShowMeYourMoves - display a picture of C. Falcon" +
+	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
+	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +
+	"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
+	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
+	"\n";	
+	return man;
 }
 
 function getChannels()
