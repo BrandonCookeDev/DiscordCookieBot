@@ -1,7 +1,3 @@
-/** TARGET ENVIRONMENT (test or prod) **/
-//var target = "prod";
-var target = "test";
-var version = "1.0.3";
 
 /** IMPORTS **/
 var Discord  = require("discord.js");
@@ -10,6 +6,7 @@ var botlog   = require("./botlog");
 var commands = require("./commands");
 var urls	 = require("./data/urls");
 var imgs	 = require("./data/imgPaths");
+var config	 = require("./data/config");
 var mybot 	 = new Discord.Client();
 
 /** CONFIG **/
@@ -39,10 +36,8 @@ mybot.on("message", function(message){
     	var command  = message.content.substring(1).toLowerCase();
     	var user = message.author; 
     	
-    	console.log(command);
-    	console.log(command.substring(1,7));
     	/** SERIOUS **/
-    	if(command.substring(1, 5) === "mute"){
+    	if(command.substring(0, 4) === "mute"){
     		var memberName = command.substring(command.indexOf(" "));
     		try{
 	    		var server = message.channel.server;
@@ -56,7 +51,7 @@ mybot.on("message", function(message){
 	    	}     		
     	}
     	
-    	if(command.substring(1, 7) === 'google'){
+    	if(command.substring(0, 6) === 'google'){
     		console.log
     		//logCommand(user, 'google');
     		try{
@@ -116,7 +111,7 @@ mybot.on("message", function(message){
     	if(command === "help" || command === "man"){
 	    	try{
 	    		logCommand(user, 'help');
-	    		commands.help(message, version);
+	    		commands.help(message, config.version);
     		}catch(err){
     			console.log(err);
     		}
@@ -156,10 +151,10 @@ mybot.on("disconnected", function(){
 });
 
 /** LOGIN **/
-console.log("Targetting " + target + "...");
-if(target === "test")
+console.log("Targetting " + config.target + "...");
+if(config.target === "test")
 	mybot.login("golee5191@hotmail.com", "botmedaddy!").then(loginSuccess).catch(console.log); 	  //TEST 
-else if(target === "prod")
+else if(config.target === "prod")
 	mybot.login("ckscookiessbm@gmail.com", "botmedaddy!").then(loginSuccess).catch(console.log);   //PROD
 else
 {
