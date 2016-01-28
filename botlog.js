@@ -6,19 +6,25 @@ var logFile = '/cookiEbot.log';
 
 exports.botlog = function(msg)
 {
-	//Ensure file existence
-	var file = logDir + logFile;
-	if(!fs.existsSync(logDir)){
-	    fs.mkdirSync(logDir);
-	}
-	if(!fs.exists(file)){
-		fs.writeFileSync(file, 'Top of log...', 'utf8', function(err){
-			console.log(err);
-		});
-	}
-	
-	var date = new Date();
-	fs.appendFile(file, "\n" + date + ": " + msg, 'utf8', function(err){
+	try{
+		//Ensure file existence
+		var file = logDir + logFile;
+		if(!fs.existsSync(logDir)){
+		    fs.mkdirSync(logDir);
+		}
+		if(!fs.exists(file)){
+			fs.writeFileSync(file, 'Top of log...\n', 'utf8', function(err){
+				console.log(err);
+			});
+		}
+		else{
+			var date = new Date();
+			fs.appendFile(file, date + ": " + msg + "\n", 'utf8', function(err){
+				console.log(err);
+			});
+		}
+	}catch(err)
+	{
 		console.log(err);
-	});
+	}
 };
