@@ -20,7 +20,7 @@ var tyusResponses = ['no.', 'Ty, stop', 'k', 'just stop', 'stop talking...', 'sh
 
 /*** IMAGES ***/
 var bruceImg  = "./content/images/Brucie.PNG";
-var falconImg = "./content/images/CFalc.png";
+var falconDir = "./content/images/Falcon";
 
 /*** URLs ***/
 var bracketUrl = 'http://challonge.com/fbgt21';
@@ -62,7 +62,8 @@ mybot.on("message", function(message){
     	if(command === "showmeyourmoves")
     	{
     		try{
-    			var falconStream = fs.createReadStream(falconImg);
+    			//var falconStream = fs.createReadStream(getFalconPicture());
+    			var falconStream = fs.createReadStream("./content/images/Falcon/CFalc2.jpg");
     			mybot.sendFile(message.channel, falconStream, "CFalc.png");
     		}
     		catch(err){
@@ -178,6 +179,41 @@ function exportManual(){
 	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
 	"\n";	
 	return man;
+}
+
+function getFalconPicture()
+{
+	
+ 	fs.readdir(falconDir, function (err, list) {
+		var index = Math.floor(Math.random() * list.length);
+		console.log(list);
+		return list[index];
+	}).catch(console.log);
+  	
+  	
+  	/*
+    // Return the error if something went wrong
+    if (err)
+      console.log(err);
+
+    // For every file in the list
+    list.forEach(function (file) {
+      // Full path of that file
+      path = dir + "/" + file;
+      // Get the file's stats
+      fs.stat(path, function (err, stat) {
+        console.log(stat);
+        // If the file is a directory
+        if (stat && stat.isDirectory())
+          // Dive into the directory
+          //dive(path, action);
+        else
+          // Call the action
+          
+          //action(null, path);
+      });
+    });
+  });*/
 }
 
 function getChannels()
