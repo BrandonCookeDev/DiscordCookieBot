@@ -82,7 +82,7 @@ mybot.on("message", function(message){
     	/** SILLY **/
     	if(command === "bracket"){
     		logCommand(user, 'bracket');
-    		commands.bracket(message, bracket);
+    		commands.bracket(message);
     	}
     		
     	if(command === "privilege"){
@@ -93,7 +93,7 @@ mybot.on("message", function(message){
     	if(command === "thumb"){
     		try{
     			logCommand(user, 'thumb');
-    			commands.thumb(message, imgs.thumbImg);
+    			commands.thumb(message);
 	    	}catch(err){
 	    		botlog.botlog(err);
 	    		mybot.sendMessage(message.channel, 'An error occured. Please yell at cookiE');
@@ -112,7 +112,7 @@ mybot.on("message", function(message){
     	
     	if(command === 'love'){
     		try{
-    			commands.love(message, user, arrays.love);
+    			commands.love(message, user);
     		}catch(err){
     			console.log(err);
     		}
@@ -120,7 +120,7 @@ mybot.on("message", function(message){
     	
     	if(command === 'melee'){
     		try{
-    			commands.melee(message, arrays.meleeTips);
+    			commands.melee(message);
     		}catch(err){
     			console.log(err);
     		}
@@ -143,7 +143,7 @@ mybot.on("message", function(message){
     	if(command === "suhdude"){
     		try{
     			logCommand(user, 'suhdude');
-    			commands.suhdude(message, urls.suhdudeUrl);
+    			commands.suhdude(message);
     		}catch(err){
     			console.log(err);
     		}
@@ -152,7 +152,7 @@ mybot.on("message", function(message){
     	if(command === "help" || command === "man"){
 	    	try{
 	    		logCommand(user, 'help');
-	    		commands.help(message, config.version);
+	    		commands.help(message);
     		}catch(err){
     			console.log(err);
     		}
@@ -175,7 +175,7 @@ mybot.on("message", function(message){
     	/** USER BASED **/
     	if(isFTU){
     		try{
-	    		commands.ftumode(message, tyusUsername, tyusResponses);
+	    		commands.ftumode(message, tyusUsername);
 			}catch(err){
 				botlog.botlog(err);
 			}    		

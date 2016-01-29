@@ -39,7 +39,7 @@ exports.privilege = function(message){
 				break;
 			default:
 				if(rand < 50){
-					message.client.sendMessage(message.channel, "Your Priv: " + rand + ". Check your privilege bitch.");
+					message.client.sendMessage(message.channel, "Your Priv: " + rand + ". Check your privilege, bitch.");
 				}else{
 					message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, bro");
 				}
@@ -51,28 +51,31 @@ exports.privilege = function(message){
 };
 
 
-exports.ftumode = function(message, tyusUsername, tyusResponses) {
+exports.ftumode = function(message, tyusUsername) {
 	var user = message.author;
 	var name = user.username.toLowerCase();
+	var arr = arrays.tyusResponses;
 	if (name === tyusUsername)//|| name === 'cookie')
 	{
-		var index = Math.floor((Math.random() * tyusResponses.length));
-		message.client.reply(message, tyusResponses[index]);
+		var index = Math.floor((Math.random() * arr.length));
+		message.client.reply(message, arr[index]);
 	}
 };
 
-exports.melee = function(message, meleeArr){
-	var index = Math.floor(Math.random() * meleeArr.length);
-	var meleeMsg = fs.createReadStream(meleeArr[index]);
+exports.melee = function(message){
+	var arr = arrays.meleeTips;
+	var index = Math.floor(Math.random() * arr.length);
+	var meleeMsg = fs.createReadStream(arr[index]);
 	message.client.sendMessage(message.channel, meleeMsg, function(){
 		console.log(err);
 	});
 };
 
-exports.love = function(message, user, loveArr){
+exports.love = function(message, user){
+	var arr = arrays.love;
 	if(!(user.username === tyusUsername)){
-		var index = Math.floor(Math.random() * loveArr.length);
-		var loveMsg = fs.createReadStream(loveArr[index]);
+		var index = Math.floor(Math.random() * arr.length);
+		var loveMsg = fs.createReadStream(arr[index]);
 		message.client.reply(message, loveMsg, function(err){
 			console.log(err);
 		});
@@ -95,8 +98,8 @@ exports.showmeyourmoves = function(message, falconImgs){
 	message.client.sendFile(message.channel, falconStream, "CFalc.png");
 };
 
-exports.thumb = function(message,  thumbImg){
-	var thumbStream = fs.createReadStream(thumbImg);
+exports.thumb = function(message){
+	var thumbStream = fs.createReadStream(imgs.thumbImg);
 	message.client.sendFile(message.channel, thumbStream, 'thumb.jpg');
 };
 
@@ -106,8 +109,8 @@ exports.bracket = function(message, bracket){
 	});
 };
 
-exports.suhdude = function(message, suhdudeUrl){
-	message.client.sendMessage(message.channel, suhdudeUrl);
+exports.suhdude = function(message){
+	message.client.sendMessage(message.channel, urls.suhdudeUrl);
 };
 
 exports.google = function(message, searchCriteria){
@@ -120,15 +123,15 @@ exports.google = function(message, searchCriteria){
 										botlog.botlog(err);
 									});
 		
-		var win = window.open(url, '_blank');
-	  	win.focus();
+		//var win = window.open(url, '_blank');
+	  	//win.focus();
 	}catch(err){
 		console.log(err);
 	}
 };
 
-exports.help = function(message, version){
-	message.client.sendMessage(message.channel, manual(version), function(err){
+exports.help = function(message){
+	message.client.sendMessage(message.channel, manual(config.version), function(err){
 		console.log(err);
 	});
 };
@@ -138,11 +141,15 @@ function manual(version){
 	"\nUSAGE: \n\t![command] [optional:user]" +
 	"\n\nCommands (not case sensative):" +
 	"\n!bracket \t\t\t\t\t\t- returns URL to most recent tournament" +
+	"\n!google <keyword> \t\t - " +
 	"\n!ShowMeYourMoves - display a picture of C. Falcon" +
 	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
 	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +
 	//"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
 	"\n!privilege \t\t\t\t\t - to check your privilege" +
+	"\n!love \t\t\t\t\t\t\t - Print a loving and motivational message!" +
+	"\n!repo \t\t\t\t\t\t\t - Print the url for GAStreamControl" + 
+	"\n!cookieRepo \t\t\t\t - Print the url for cookiE's old Stream Control program" +
 	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
 	"\n";
 	return man;
