@@ -1,3 +1,4 @@
+var timeout = 5000;
 
 /** IMPORTS **/
 var Discord  = require("discord.js");
@@ -5,6 +6,7 @@ var fs 		 = require("fs");
 var botlog   = require("./botlog");
 var commands = require("./commands");
 var urls	 = require("./data/urls");
+var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
 var mybot 	 = new Discord.Client();
@@ -19,7 +21,6 @@ var bruceImgs  = [];
 /* FTU */
 var isFTU = false;
 var tyusUsername = 'karma';
-var tyusResponses = ['no.', 'Ty, stop', 'k', 'just stop', 'stop talking...', 'shhhhhhh', 'ah cool bro', 'nobody gives a shit'];
 
 /*** MESSAGES ***/
 var bracket = "Flashback Games 21: " + urls.bracketUrl;
@@ -52,7 +53,6 @@ mybot.on("message", function(message){
     	}
     	
     	if(command.substring(0, 6) === 'google'){
-    		console.log
     		//logCommand(user, 'google');
     		try{
     			var searchCriteria = command.substring(command.indexOf(" "));
@@ -61,6 +61,22 @@ mybot.on("message", function(message){
     		} catch(err){
     			botlog.botlog(err);
     		}    		
+    	}
+    	
+    	if(command === 'repo'){
+    		try{
+    			commands.repo(message);
+    		} catch(err){
+    			console.log(err);
+    		}
+    	}
+    	
+    	if(command === 'cookiErepo'){
+    		try{
+    			commands.cookieRepo(message);
+    		} catch(err){
+    			console.log(err);
+    		}
     	}
     	
     	/** SILLY **/
@@ -77,7 +93,7 @@ mybot.on("message", function(message){
     	if(command === "thumb"){
     		try{
     			logCommand(user, 'thumb');
-    			commands.thumb(message);
+    			commands.thumb(message, imgs.thumbImg);
 	    	}catch(err){
 	    		botlog.botlog(err);
 	    		mybot.sendMessage(message.channel, 'An error occured. Please yell at cookiE');
@@ -92,6 +108,26 @@ mybot.on("message", function(message){
     			botlog.botlog(err);
     			mybot.sendMessage(message.channel, urls.falconUrl).catch(console.log);
     		}
+    	}
+    	
+    	if(command === 'love'){
+    		try{
+    			commands.love(message, user, arrays.love);
+    		}catch(err){
+    			console.log(err);
+    		}
+    	}
+    	
+    	if(command === 'melee'){
+    		try{
+    			commands.melee(message, arrays.meleeTips);
+    		}catch(err){
+    			console.log(err);
+    		}
+    	}
+    	
+    	if(command === 'eeee'){
+    		throw "OnPurposeError";
     	}
     		
     	if(command === "bruciepie"){
@@ -148,12 +184,23 @@ mybot.on("message", function(message){
 });
 
 mybot.on("ready", function(){
-	
+	console.log("Ready event hit");
 });
 
 mybot.on("disconnected", function(){
+	console.log("disconnected from the server. Attempting reconnection.");
 	
+	console.log("Reconnected to server!");
 });
+
+mybot.on("error", function(err){
+	if(err)
+		console.log("A large error occured: " + err);
+	
+	retryLogin();
+	console.log("Reconnected to server!");
+});
+
 
 /** LOGIN **/
 console.log("Targetting " + config.target + "...");
@@ -183,6 +230,25 @@ function loginSuccess(token)
 		{
 			console.log(err);
 		}
+	}
+}
+
+function retryLogin()
+{
+	var flag = true;
+	while(flag){
+		console.log("Targetting " + config.target + "...");
+		if(config.target === "test")
+			mybot.login("golee5191@hotmail.com", "botmedaddy!").then(flag = false).catch(console.log); 	  //TEST 
+		else if(config.target === "prod")
+			mybot.login("ckscookiessbm@gmail.com", "botmedaddy!").then(flag = false).catch(console.log);   //PROD
+		else
+		{
+			console.log("Failure. Incorrect target. Terminating....");
+			process.exit();
+		}
+		
+		setTimeout(function(){console.log("timeout, retying in " + timeout);}, timeout);
 	}
 }
 

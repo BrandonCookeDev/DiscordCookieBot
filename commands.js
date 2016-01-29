@@ -1,5 +1,17 @@
-var fs = require('fs');
-var botlog = require('./botlog');
+var fs 		 = require('fs');
+var botlog   = require('./botlog');
+var urls	 = require("./data/urls");
+var arrays	 = require("./data/arrays");
+var imgs	 = require("./data/imgPaths");
+var config	 = require("./data/config");
+
+exports.repo = function(message){
+	message.client.sendMessage(message.channel, urls.streamcontrol);
+};
+
+exports.cookiErepo = function(message){
+	message.client.sendMessage(message.channel, urls.cookiecontrol);
+};
 
 exports.ftu = function(message, tyusUsername) {
 	if (!(message.author.username === tyusUsername)) {
@@ -49,6 +61,28 @@ exports.ftumode = function(message, tyusUsername, tyusResponses) {
 	}
 };
 
+exports.melee = function(message, meleeArr){
+	var index = Math.floor(Math.random() * meleeArr.length);
+	var meleeMsg = fs.createReadStream(meleeArr[index]);
+	message.client.sendMessage(message.channel, meleeMsg, function(){
+		console.log(err);
+	});
+};
+
+exports.love = function(message, user, loveArr){
+	if(!(user.username === tyusUsername)){
+		var index = Math.floor(Math.random() * loveArr.length);
+		var loveMsg = fs.createReadStream(loveArr[index]);
+		message.client.reply(message, loveMsg, function(err){
+			console.log(err);
+		});
+	}
+	else
+		message.client.reply(message, '.....', function(err){
+			console.log(err);
+		});
+};
+
 exports.bruciepie = function(message, bruceImgs){
 	var index = Math.floor(Math.random() * bruceImgs.length);
 	var bruceStream = fs.createReadStream(bruceImgs[index]);
@@ -61,7 +95,7 @@ exports.showmeyourmoves = function(message, falconImgs){
 	message.client.sendFile(message.channel, falconStream, "CFalc.png");
 };
 
-exports.thumb = function(message, thumbImg){
+exports.thumb = function(message,  thumbImg){
 	var thumbStream = fs.createReadStream(thumbImg);
 	message.client.sendFile(message.channel, thumbStream, 'thumb.jpg');
 };
@@ -94,7 +128,7 @@ exports.google = function(message, searchCriteria){
 };
 
 exports.help = function(message, version){
-	message.client.sendMessage(message.channel, manual(version), (err) => {
+	message.client.sendMessage(message.channel, manual(version), function(err){
 		console.log(err);
 	});
 };
@@ -108,8 +142,9 @@ function manual(version){
 	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
 	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +
 	//"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
+	"\n!privilege \t\t\t\t\t - to check your privilege" +
 	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
-	"\n";	
+	"\n";
 	return man;
 };
 
