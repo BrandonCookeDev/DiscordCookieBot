@@ -71,7 +71,7 @@ mybot.on("message", function(message){
     		}
     	}
     	
-    	if(command === 'cookiErepo'){
+    	if(command === 'cookierepo'){
     		try{
     			commands.cookieRepo(message);
     		} catch(err){
@@ -88,6 +88,11 @@ mybot.on("message", function(message){
     	if(command === "privilege"){
     		logCommand(user, 'privilege');
     		commands.privilege(message);
+    	}
+    	
+    	if(command === 'saltytears'){
+    		logCommand(user, 'saltytears');
+    		commands.saltyTears();
     	}
     		
     	if(command === "thumb"){

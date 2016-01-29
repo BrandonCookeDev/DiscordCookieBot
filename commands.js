@@ -13,6 +13,10 @@ exports.cookiErepo = function(message){
 	message.client.sendMessage(message.channel, urls.cookiecontrol);
 };
 
+exports.saltyTears = function(message){
+	message.client.sendMessage(message.channel, arrays.saltyTears);
+}
+
 exports.ftu = function(message, tyusUsername) {
 	if (!(message.author.username === tyusUsername)) {
 		if (isFTU) {
