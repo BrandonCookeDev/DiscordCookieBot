@@ -92,7 +92,7 @@ mybot.on("message", function(message){
     	
     	if(command === 'saltytears'){
     		logCommand(user, 'saltytears');
-    		commands.saltyTears();
+    		commands.saltyTears(message);
     	}
     		
     	if(command === "thumb"){
@@ -117,7 +117,7 @@ mybot.on("message", function(message){
     	
     	if(command === 'love'){
     		try{
-    			commands.love(message, user);
+    			commands.love(message, user, tyusUsername);
     		}catch(err){
     			console.log(err);
     		}

@@ -6,11 +6,11 @@ var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
 
 exports.repo = function(message){
-	message.client.sendMessage(message.channel, urls.streamcontrol);
+	message.client.sendMessage(message.channel, urls.streamControl);
 };
 
-exports.cookiErepo = function(message){
-	message.client.sendMessage(message.channel, urls.cookiecontrol);
+exports.cookieRepo = function(message){
+	message.client.sendMessage(message.channel, urls.cookieControl);
 };
 
 exports.saltyTears = function(message){
@@ -69,17 +69,17 @@ exports.ftumode = function(message, tyusUsername) {
 exports.melee = function(message){
 	var arr = arrays.meleeTips;
 	var index = Math.floor(Math.random() * arr.length);
-	var meleeMsg = fs.createReadStream(arr[index]);
+	var meleeMsg = arr[index];
 	message.client.sendMessage(message.channel, meleeMsg, function(){
 		console.log(err);
 	});
 };
 
-exports.love = function(message, user){
+exports.love = function(message, user, tyusUsername){
 	var arr = arrays.love;
 	if(!(user.username === tyusUsername)){
 		var index = Math.floor(Math.random() * arr.length);
-		var loveMsg = fs.createReadStream(arr[index]);
+		var loveMsg = arr[index];
 		message.client.reply(message, loveMsg, function(err){
 			console.log(err);
 		});
@@ -145,15 +145,15 @@ function manual(version){
 	"\nUSAGE: \n\t![command] [optional:user]" +
 	"\n\nCommands (not case sensative):" +
 	"\n!bracket \t\t\t\t\t\t- returns URL to most recent tournament" +
-	"\n!google <keyword> \t - " +
+	"\n!google <keyword> \t- Google search on keyword" +
 	"\n!ShowMeYourMoves - display a picture of C. Falcon" +
 	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
 	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +
 	//"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
-	"\n!privilege \t\t\t\t\t - to check your privilege" +
-	"\n!love \t\t\t\t\t\t\t - Print a loving and motivational message!" +
-	"\n!saltyTears \t\t\t\t - Print a great message full of salt" +
-	"\n!repo \t\t\t\t\t\t\t - Print the url for GAStreamControl" + 
+	"\n!privilege \t\t\t\t\t  - to check your privilege" +
+	"\n!love \t\t\t\t\t\t\t  - Print a loving and motivational message!" +
+	"\n!saltyTears \t\t\t\t   - Print a great message full of salt" +
+	"\n!repo \t\t\t\t\t\t\t  - Print the url for GAStreamControl" + 
 	"\n!cookieRepo \t\t\t\t - Print the url for cookiE's old Stream Control program" +
 	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
 	"\n";
