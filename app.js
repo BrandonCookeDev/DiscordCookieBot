@@ -69,6 +69,11 @@ mybot.on("message", function(message){
     		commands.bracket(message, bracket);
     	}
     		
+    	if(command === "privilege"){
+    		logCommand(user, 'privilege');
+    		commands.privilege(message);
+    	}
+    		
     	if(command === "thumb"){
     		try{
     			logCommand(user, 'thumb');

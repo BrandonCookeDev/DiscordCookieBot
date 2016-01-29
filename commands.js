@@ -13,6 +13,32 @@ exports.ftu = function(message, tyusUsername) {
 	};
 };
 
+exports.privilege = function(message){
+	try{
+		var rand = Math.floor(Math.random() * 100);
+		switch(rand){
+			case 100:
+				var classA = "Pangendered Pyro Fox Demigod";
+				message.client.sendMessage(message.channel, "Pirv: 100. you are a " + classA);
+				break;
+			case 1:
+				var classZ = "Cisgender Male Scum";
+				message.client.sendMessage(message.channel, "Priv: 1, you are " + classZ);
+				break;
+			default:
+				if(rand < 50){
+					message.client.sendMessage(message.channel, "Your Priv: " + rand + ". Check your privilege bitch.");
+				}else{
+					message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, bro");
+				}
+				break;
+		}
+	}catch(err){
+		console.log(err);
+	}
+};
+
+
 exports.ftumode = function(message, tyusUsername, tyusResponses) {
 	var user = message.author;
 	var name = user.username.toLowerCase();
