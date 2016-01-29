@@ -55,7 +55,7 @@ mybot.on("message", function(message){
     	if(command.substring(0, 6) === 'google'){
     		//logCommand(user, 'google');
     		try{
-    			var searchCriteria = command.substring(command.indexOf(" "));
+    			var searchCriteria = command.substring(command.indexOf(" ") + 1);
     			console.log(searchCriteria);
     			commands.google(message, searchCriteria);    			
     		} catch(err){

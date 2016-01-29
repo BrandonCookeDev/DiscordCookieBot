@@ -145,13 +145,14 @@ function manual(version){
 	"\nUSAGE: \n\t![command] [optional:user]" +
 	"\n\nCommands (not case sensative):" +
 	"\n!bracket \t\t\t\t\t\t- returns URL to most recent tournament" +
-	"\n!google <keyword> \t\t - " +
+	"\n!google <keyword> \t - " +
 	"\n!ShowMeYourMoves - display a picture of C. Falcon" +
 	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
 	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +
 	//"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
 	"\n!privilege \t\t\t\t\t - to check your privilege" +
 	"\n!love \t\t\t\t\t\t\t - Print a loving and motivational message!" +
+	"\n!saltyTears \t\t\t\t - Print a great message full of salt" +
 	"\n!repo \t\t\t\t\t\t\t - Print the url for GAStreamControl" + 
 	"\n!cookieRepo \t\t\t\t - Print the url for cookiE's old Stream Control program" +
 	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
