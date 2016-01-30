@@ -1,5 +1,7 @@
-var tyusResponses = ['no.', 'Ty, stop', 'k', 'just stop', 
-'stop talking...', 'shhhhhhh', 'ah cool bro', 'nobody gives a shit'
+var tyusResponses = ['no.', 'stop', 'k', 'just stop', 
+'stop talking...', 'shhhhhhh', 'ah cool bro', 'nobody gives a shit',
+"Jesus you're such a scrub", "Why are you even here", "Terrible. Take a lap",
+"Do you even have any friends"
 ];
 
 var meleeTips = [

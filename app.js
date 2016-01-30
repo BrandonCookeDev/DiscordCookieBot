@@ -32,6 +32,7 @@ mybot.on("message", function(message){
     if(message.content === "ping")
         mybot.reply(message, "pong");
         
+    //EVENTS TAILORED TO COMMANDS GO BELOW
     if(message.content.charAt(0) === "!")
     {
     	var command  = message.content.substring(1).toLowerCase();
@@ -171,27 +172,45 @@ mybot.on("message", function(message){
     		}
     	}
     	
+    	if(command === "shittalk"){
+    		try{
+    			logCommand(user, 'shittalk');
+    			commands.shittalkmode(message);
+    		} catch(err){
+    			console.log(err);
+    		}
+    	}
+    	
     	/*	
     	if(command === "ftu")
     	{
     		try{
     			logCommand(user, 'ftu');
-    			commands.ftu(message, tyusUsername);
+    			commands.ftumode(message, tyusUsername);
 	    	}catch(err){
 	    		botlog.botlog(err);
 	    	}
     	}
     	*/
     }
+    //ANY EVENTS CONNECTED TO NON-COMMANDS GO BELOW
     else
     {
     	/** USER BASED **/
-    	if(isFTU){
+    	if(config.isFTU){
     		try{
-	    		commands.ftumode(message, tyusUsername);
+	    		commands.ftu(message, tyusUsername);
 			}catch(err){
 				botlog.botlog(err);
 			}    		
+    	}
+    	
+    	if(config.isShittalk){
+    		try{
+    			commands.shittalk(message);
+    		} catch(err){
+    			console.log(err);
+    		}
     	}
     }
 });

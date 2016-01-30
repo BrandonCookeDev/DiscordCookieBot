@@ -17,52 +17,19 @@ exports.saltyTears = function(message){
 	message.client.sendMessage(message.channel, arrays.saltyTears);
 }
 
-exports.ftu = function(message, tyusUsername) {
+exports.ftumode = function(message, tyusUsername) {
 	if (!(message.author.username === tyusUsername)) {
-		if (isFTU) {
-			isFTU = false;
+		if (config.isFTU) {
+			config.isFTU = false;
 			message.client.sendMessage(message.channel, "FTU mode is now disabled!");
 		} else {
-			isFTU = true;
+			config.isFTU = true;
 			message.client.sendMessage(message.channel, "FTU mode is now enabled!");
 		}
 	};
 };
 
-exports.privilege = function(message, username){
-	try{
-		console.log(username);
-		var rand = (Math.floor(Math.random() * 99) + 1);
-		switch(rand){
-			case 100:
-				var classA = "Pangendered Pyro Fox Demigod";
-				message.client.sendMessage(message.channel, "Pirv: 100. you are a " + classA + " " + username);
-				break;
-			case 1:
-				var classZ = "Cisgender Male Scum";
-				message.client.sendMessage(message.channel, "Priv: 1, you are " + classZ + " " + username);
-				break;
-			default:
-				if(rand < 50){
-					if(username == null)
-						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". Check your privilege, bitch.");
-					else 
-						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". " + username + ", check your privilege, bitch.");
-				}else{
-					if(username == null)
-						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, bro");
-					else
-						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, " + username);
-				}
-				break;
-		}
-	}catch(err){
-		console.log(err);
-	}
-};
-
-
-exports.ftumode = function(message, tyusUsername) {
+exports.ftu = function(message, tyusUsername) {
 	var user = message.author;
 	var name = user.username.toLowerCase();
 	var arr = arrays.tyusResponses;
@@ -72,6 +39,31 @@ exports.ftumode = function(message, tyusUsername) {
 		message.client.reply(message, arr[index]);
 	}
 };
+
+
+exports.shittalkmode = function(message){
+	if(!config.isShittalk) {
+		config.isShittalk = true;
+		config.shittalkCounter = (Math.floor(Math.random() * config.shittalkMaxMessages) + 1);
+		message.client.sendMessage(message.channel, 'Shittalk mode is now enabled!');
+	} else{
+		config.isShittalk = false;
+		config.shittalkCounter = 0;
+		message.client.sendMessage(message.channel, 'Shittalk mode is now disabled!');
+	}
+};
+
+exports.shittalk = function(message){
+	if(config.shittalkCounter != 0){
+		config.shittalkCounter--;
+	}
+	else{
+		var arr = arrays.tyusResponses;
+		var index = Math.floor((Math.random() * arr.length));
+		message.client.reply(message, arr[index]);
+		config.shittalkCounter = (Math.floor(Math.random() * config.shittalkMaxMessages) + 1);
+	}	
+}
 
 exports.melee = function(message){
 	var arr = arrays.meleeTips;
@@ -141,6 +133,38 @@ exports.google = function(message, searchCriteria){
 	}
 };
 
+exports.privilege = function(message, username){
+	try{
+		console.log(username);
+		var rand = (Math.floor(Math.random() * 99) + 1);
+		switch(rand){
+			case 100:
+				var classA = "Pangendered Pyro Fox Demigod";
+				message.client.sendMessage(message.channel, "Pirv: 100. you are a " + classA + " " + username);
+				break;
+			case 1:
+				var classZ = "Cisgender Male Scum";
+				message.client.sendMessage(message.channel, "Priv: 1, you are " + classZ + " " + username);
+				break;
+			default:
+				if(rand < 50){
+					if(username == null)
+						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". Check your privilege, bitch.");
+					else 
+						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". " + username + ", check your privilege, bitch.");
+				}else{
+					if(username == null)
+						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, bro");
+					else
+						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, " + username);
+				}
+				break;
+		}
+	}catch(err){
+		console.log(err);
+	}
+};
+
 exports.help = function(message){
 	message.client.sendMessage(message.channel, manual(config.version), function(err){
 		console.log(err);
@@ -160,6 +184,7 @@ function manual(version){
 	"\n!privilege <user>\t\t - to check your privilege" +
 	"\n!love \t\t\t\t\t\t\t  - Print a loving and motivational message!" +
 	"\n!saltyTears \t\t\t\t   - Print a great message full of salt" +
+	"\n!shittalk \t\t\t\t\t\t - Activate shittalk mode" +
 	"\n!repo \t\t\t\t\t\t\t  - Print the url for GAStreamControl" + 
 	"\n!cookieRepo \t\t\t\t - Print the url for cookiE's old Stream Control program" +
 	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
