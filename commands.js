@@ -29,23 +29,30 @@ exports.ftu = function(message, tyusUsername) {
 	};
 };
 
-exports.privilege = function(message){
+exports.privilege = function(message, username){
 	try{
-		var rand = Math.floor(Math.random() * 100);
+		console.log(username);
+		var rand = (Math.floor(Math.random() * 99) + 1);
 		switch(rand){
 			case 100:
 				var classA = "Pangendered Pyro Fox Demigod";
-				message.client.sendMessage(message.channel, "Pirv: 100. you are a " + classA);
+				message.client.sendMessage(message.channel, "Pirv: 100. you are a " + classA + " " + username);
 				break;
 			case 1:
 				var classZ = "Cisgender Male Scum";
-				message.client.sendMessage(message.channel, "Priv: 1, you are " + classZ);
+				message.client.sendMessage(message.channel, "Priv: 1, you are " + classZ + " " + username);
 				break;
 			default:
 				if(rand < 50){
-					message.client.sendMessage(message.channel, "Your Priv: " + rand + ". Check your privilege, bitch.");
+					if(username == null)
+						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". Check your privilege, bitch.");
+					else 
+						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". " + username + ", check your privilege, bitch.");
 				}else{
-					message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, bro");
+					if(username == null)
+						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, bro");
+					else
+						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, " + username);
 				}
 				break;
 		}
@@ -150,7 +157,7 @@ function manual(version){
 	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
 	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +
 	//"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
-	"\n!privilege \t\t\t\t\t  - to check your privilege" +
+	"\n!privilege <user>\t\t - to check your privilege" +
 	"\n!love \t\t\t\t\t\t\t  - Print a loving and motivational message!" +
 	"\n!saltyTears \t\t\t\t   - Print a great message full of salt" +
 	"\n!repo \t\t\t\t\t\t\t  - Print the url for GAStreamControl" + 

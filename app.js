@@ -85,9 +85,17 @@ mybot.on("message", function(message){
     		commands.bracket(message);
     	}
     		
-    	if(command === "privilege"){
-    		logCommand(user, 'privilege');
-    		commands.privilege(message);
+    	if(command.substring(0, 9) === "privilege"){
+    		try{
+	    		var username = null;
+	    		if(command.includes(" "))
+	    			username = command.substring(command.indexOf(" ") + 1);
+	    				
+	    		logCommand(user, 'privilege');
+	    		commands.privilege(message, username);
+    		} catch(err){
+    			console.log(err);
+    		}
     	}
     	
     	if(command === 'saltytears'){
