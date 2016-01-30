@@ -1,8 +1,7 @@
-var timeout = 5000;
-
 /** IMPORTS **/
 var Discord  = require("discord.js");
 var fs 		 = require("fs");
+var cluster  = require("cluster");
 var botlog   = require("./botlog");
 var commands = require("./commands");
 var urls	 = require("./data/urls");
@@ -36,6 +35,9 @@ mybot.on("message", function(message){
     if(message.content.charAt(0) === "!")
     {
     	var command  = message.content.substring(1).toLowerCase();
+    	var parameter = null;
+    	if(command.includes(" "))
+    		parameter = message.content.substring(message.content.indexOf(" ") + 1);
     	var user = message.author; 
     	
     	/** SERIOUS **/
@@ -43,8 +45,7 @@ mybot.on("message", function(message){
     		var memberName = command.substring(command.indexOf(" "));
     		try{
 	    		var server = message.channel.server;
-	    		var u = server.members.get("username", memberName);
-	    		
+	    		var u = server.members.get("username", memberName);	    		
 	    	}
 	    	catch(err)
 	    	{
@@ -87,13 +88,9 @@ mybot.on("message", function(message){
     	}
     		
     	if(command.substring(0, 9) === "privilege"){
-    		try{
-	    		var username = null;
-	    		if(command.includes(" "))
-	    			username = command.substring(command.indexOf(" ") + 1);
-	    				
+    		try{	    				
 	    		logCommand(user, 'privilege');
-	    		commands.privilege(message, username);
+	    		commands.privilege(message, parameter);
     		} catch(err){
     			console.log(err);
     		}
@@ -222,37 +219,67 @@ mybot.on("ready", function(){
 mybot.on("disconnected", function(){
 	console.log("disconnected from the server. Attempting reconnection.");
 	
-	console.log("Reconnected to server!");
+	process.exit();
+	//config.connected = false;
+	//retryLogin(mybot);
 });
 
 mybot.on("error", function(err){
 	if(err)
-		console.log("A large error occured: " + err);
-	
-	retryLogin();
-	console.log("Reconnected to server!");
+		console.log("A large error occured: " + err);	
+	process.exit();
+	//config.connected = false;
+	//retryLogin(mybot);
 });
 
+if (cluster.isMaster) {
+	cluster.fork();
 
-/** LOGIN **/
-console.log("Targetting " + config.target + "...");
-if(config.target === "test")
-	mybot.login("golee5191@hotmail.com", "botmedaddy!").then(loginSuccess).catch(console.log); 	  //TEST 
-else if(config.target === "prod")
-	mybot.login("ckscookiessbm@gmail.com", "botmedaddy!").then(loginSuccess).catch(console.log);   //PROD
-else
-{
-	console.log("Failure. Incorrect target. Terminating....");
-	process.exit();
+	cluster.on('exit', function(worker, code, signal) {
+		cluster.fork();
+	});
+}
+
+/** MAIN **/
+if (cluster.isWorker) {
+	try{
+		/** LOGIN **/
+		console.log("Targetting " + config.target + "...");
+		if(config.target === "test")
+			mybot.login("golee5191@hotmail.com", "botmedaddy!").then(loginSuccess).catch(function(){
+				sleep(5000);
+				process.exit();
+			}) 	  //TEST 
+		else if(config.target === "prod")
+			mybot.login("ckscookiessbm@gmail.com", "botmedaddy!").then(loginSuccess).catch(function(){
+				sleep(5000);
+				process.exit();
+			});   //PROD
+		else
+		{
+			console.log("Failure. Incorrect target. Terminating....");
+			sleep(5000);
+			process.exit();
+		}
+	} catch(err){
+		process.exit();
+	}
 }
 
 /** FUNCTIONS **/
 function loginSuccess(token)
 {	
 	try{
-		//Init Falcon Picture Array
-		initPictureArray(imgs.falconDir, falconImgs);
-		initPictureArray(imgs.bruceDir, bruceImgs);	
+		//SET CONFIG
+		console.log("Connected to server!");
+		config.connected = true;
+		
+		//INIT PICTURE ARRAYS
+		if(falconImgs.length == 0)
+			initPictureArray(imgs.falconDir, falconImgs);
+		
+		if(bruceImgs.length == 0)
+			initPictureArray(imgs.bruceDir, bruceImgs);	
 	}
 	catch(err)
 	{
@@ -262,25 +289,6 @@ function loginSuccess(token)
 		{
 			console.log(err);
 		}
-	}
-}
-
-function retryLogin()
-{
-	var flag = true;
-	while(flag){
-		console.log("Targetting " + config.target + "...");
-		if(config.target === "test")
-			mybot.login("golee5191@hotmail.com", "botmedaddy!").then(flag = false).catch(console.log); 	  //TEST 
-		else if(config.target === "prod")
-			mybot.login("ckscookiessbm@gmail.com", "botmedaddy!").then(flag = false).catch(console.log);   //PROD
-		else
-		{
-			console.log("Failure. Incorrect target. Terminating....");
-			process.exit();
-		}
-		
-		setTimeout(function(){console.log("timeout, retying in " + timeout);}, timeout);
 	}
 }
 
@@ -306,6 +314,14 @@ function initPictureArray(dir, arr)
 	}
 }
 
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
 
 function logCommand(user, command)
 {
