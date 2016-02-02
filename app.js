@@ -42,10 +42,9 @@ mybot.on("message", function(message){
     	
     	/** SERIOUS **/
     	if(command.substring(0, 4) === "mute"){
-    		var memberName = command.substring(command.indexOf(" "));
     		try{
-	    		var server = message.channel.server;
-	    		var u = server.members.get("username", memberName);	    		
+    			logCommand(user, 'mute');
+	    		commands.mute(message, user);
 	    	}
 	    	catch(err)
 	    	{
@@ -57,6 +56,7 @@ mybot.on("message", function(message){
     	if(command.substring(0, 6) === 'google'){
     		//logCommand(user, 'google');
     		try{
+    			logCommand(user, 'google');
     			var searchCriteria = command.substring(command.indexOf(" ") + 1);
     			console.log(searchCriteria);
     			commands.google(message, searchCriteria);    			
@@ -67,6 +67,7 @@ mybot.on("message", function(message){
     	
     	if(command === 'repo'){
     		try{
+    			logCommand(user, 'repo');
     			commands.repo(message);
     		} catch(err){
     			console.log(err);
@@ -75,6 +76,7 @@ mybot.on("message", function(message){
     	
     	if(command === 'cookierepo'){
     		try{
+    			logCommand(user, 'cookierepo');
     			commands.cookieRepo(message);
     		} catch(err){
     			console.log(err);
@@ -123,6 +125,7 @@ mybot.on("message", function(message){
     	
     	if(command === 'love'){
     		try{
+    			logCommand(user, 'love');
     			commands.love(message, user, tyusUsername);
     		}catch(err){
     			console.log(err);

@@ -13,6 +13,10 @@ exports.cookieRepo = function(message){
 	message.client.sendMessage(message.channel, urls.cookieControl);
 };
 
+exports.mute = function(message, user){
+	
+}
+
 exports.saltyTears = function(message){
 	message.client.sendMessage(message.channel, arrays.saltyTears);
 }

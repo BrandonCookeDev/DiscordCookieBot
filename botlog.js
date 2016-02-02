@@ -10,21 +10,32 @@ exports.botlog = function(msg)
 		//Ensure file existence
 		var file = logDir + logFile;
 		if(!fs.existsSync(logDir)){
+			console.log("Directory missing. Creating...");
 		    fs.mkdirSync(logDir);
 		}
-		if(!fs.exists(file)){
+		
+		try{
+			var fileStat = fs.statSync(file);
+		}
+		catch(err){
+			console.log("Log file missing. Creating...");
 			fs.writeFileSync(file, 'Top of log...\n', 'utf8', function(err){
 				console.log(err);
 			});
-		}
-		else{
-			var date = new Date();
-			fs.appendFile(file, date + ": " + msg + "\n", 'utf8', function(err){
-				console.log(err);
-			});
-		}
+		}		
+		
+		console.log("Writing to log...");
+		var date = new Date();
+		fs.appendFile(file, date + ": " + msg + "\n", 'utf8', function(err){
+			console.log(err);
+		});
+		
 	}catch(err)
 	{
 		console.log(err);
 	}
 };
+
+function error(err){
+	console.log(err)
+}
