@@ -5,6 +5,7 @@ var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
 
+/** SERIOUS **/
 exports.repo = function(message){
 	message.client.sendMessage(message.channel, urls.streamControl);
 };
@@ -15,11 +16,12 @@ exports.cookieRepo = function(message){
 
 exports.mute = function(message, user){
 	
-}
+};
 
+/** SILLY **/
 exports.saltyTears = function(message){
 	message.client.sendMessage(message.channel, arrays.saltyTears);
-}
+};
 
 exports.ftumode = function(message, tyusUsername) {
 	if (!(message.author.username === tyusUsername)) {
@@ -67,7 +69,7 @@ exports.shittalk = function(message){
 		message.client.reply(message, arr[index]);
 		config.shittalkCounter = (Math.floor(Math.random() * config.shittalkMaxMessages) + 1);
 	}	
-}
+};
 
 exports.melee = function(message){
 	var arr = arrays.meleeTips;
@@ -134,7 +136,7 @@ exports.conch = function(message){
 			console.log(err);
 		});
 	}
-}
+};
 
 exports.google = function(message, searchCriteria){
 	try{
@@ -185,6 +187,24 @@ exports.privilege = function(message, username){
 	}
 };
 
+exports.block = function(message, words){
+	if(!words){
+		//Flush array if no parameter
+		arrays.blockedWords = [];
+	}
+	else{
+		words.foreach(function(word){
+			//If word is already blocked, unblock
+			if(arrays.blockedWords.contains(word)){
+				arrays.blockedWords.splice(arrays.blockedWords.indexOf(word), 1);
+			} 
+			else{
+				arrays.blockedWords.push(word);
+			}
+		});
+	}
+};
+
 exports.frames = function(message, character){
 	if(!character || character == null || typeof character === 'undefined') 
 		message.client.reply(message, 'You need to put a character after the command');
@@ -197,7 +217,7 @@ exports.frames = function(message, character){
 			console.log(err);
 		}
 	}
-}
+};
 
 exports.help = function(message){
 	message.client.sendMessage(message.channel, manual(config.version), function(err){
@@ -219,6 +239,7 @@ function manual(version){
 	"\n!love \t\t\t\t\t\t\t  - Print a loving and motivational message!" +
 	"\n!saltyTears \t\t\t\t   - Print a great message full of salt" +
 	"\n!shittalk \t\t\t\t\t\t - Activate shittalk mode" +
+	"\n!frames <character>\t  - Get the url to a melee character's frame data" + 
 	"\n!repo \t\t\t\t\t\t\t  - Print the url for GAStreamControl" + 
 	"\n!cookieRepo \t\t\t\t - Print the url for cookiE's old Stream Control program" +
 	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +

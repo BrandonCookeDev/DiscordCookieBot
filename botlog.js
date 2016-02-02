@@ -6,6 +6,8 @@ var logFile = '/cookiEbot.log';
 
 exports.botlog = function(msg)
 {
+	if(!msg) throw Exception("No message in botlog");
+	console.log(msg);
 	try{
 		//Ensure file existence
 		var file = logDir + logFile;

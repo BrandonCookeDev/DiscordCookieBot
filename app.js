@@ -65,6 +65,44 @@ mybot.on("message", function(message){
     		}    		
     	}
     	
+    	if(command.substring(0, 5) === 'block'){
+    		if(command.substring(6,8) === "-l"){
+    			var list = "";
+    			arrays.blockedWords.foreach(function(word){
+    				list += word + " \n";
+    			});
+    			mybot.sendMessage(message.channel, list);
+    		}
+    		else{
+	    		try{
+	    			var keywords = null;
+	    			logCommand(user, 'block');
+	    			if(command.includes('"')){
+			    		for(var i=0, count = 0; i<parameter.length; i++){
+			    			var c = parameter.charAt(i);
+			    			if(c === '"') count++;
+			    		}
+				    	
+				    	if (count % 2 != 0)
+				    		throw Exception("Must be even number of quotes in phrase.");
+				    	
+				    	for(var i = 0; i<count/2; i++){
+				    		var phrase = command.substring(command.indexOf('"'), command.indexOf('"', command.indexOf('"')) + 1);
+				    		console.log(phrase);
+				    		keywords.push(phrase.replace('"', ""));
+				    		command = command.replace(phrase, "");
+				    	}
+				    }
+	    			if(command.includes(" "))
+	    				keywords = command.substring(command.indexOf(" ") + 1).split(" ");
+	    			commands.block(message, keywords);
+	    		}catch(err){
+	    			botlog.botlog(err);
+	    			mybot.reply(message, err);
+	    		}
+	    	}
+    	}
+    	
     	if(command === 'repo'){
     		try{
     			logCommand(user, 'repo');
@@ -140,14 +178,7 @@ mybot.on("message", function(message){
     		}
     	}
     	
-    	if(command.substring(0,5) === 'conch'){
-    		try{
-    			logCommand(user, 'conch');
-    			commands.conch(message);
-    		}catch(err){
-    			console.log(err);
-    		}
-    	}
+    	
     	
     	if(command === 'eeee'){
     		throw "OnPurposeError";
@@ -172,19 +203,6 @@ mybot.on("message", function(message){
     		}
     	}
     	
-    	if(command.substring(0,6) === 'frames'){
-    		if(command.includes(" "))
-    			var character = command.substring(command.indexOf(" ") + 1);
-    		else character = null;
-    		
-    		try{
-    			logCommand(user, 'frames');
-    			commands.frames(message, character);
-    		}catch(err){
-    			console.log(err);
-    		}
-    	}
-    		
     	if(command === "help" || command === "man"){
 	    	try{
 	    		logCommand(user, 'help');
@@ -202,6 +220,30 @@ mybot.on("message", function(message){
     			console.log(err);
     		}
     	}
+    	
+    	if(command.substring(0,6) === 'frames'){
+    		if(command.includes(" "))
+    			var character = command.substring(command.indexOf(" ") + 1);
+    		else character = null;
+    		
+    		try{
+    			logCommand(user, 'frames');
+    			commands.frames(message, character);
+    		}catch(err){
+    			console.log(err);
+    		}
+    	}
+    		
+    	if(command.substring(0,5) === 'conch'){
+    		try{
+    			logCommand(user, 'conch');
+    			commands.conch(message);
+    		}catch(err){
+    			botlog.botlog(err);
+    		}
+    	}
+    
+    	
     	
     	/*	
     	if(command === "ftu")
@@ -234,6 +276,14 @@ mybot.on("message", function(message){
     			console.log(err);
     		}
     	}
+    	
+    	//Check for blocked words
+    	arrays.blockedWords.foreach(function(word){
+    		if(message.content.includes(word)){
+    			var replace = message.content.replace(word, "*****");
+    			message.content = replace;
+    		}
+    	});
     }
 });
 
