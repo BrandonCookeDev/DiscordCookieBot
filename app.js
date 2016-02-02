@@ -137,7 +137,7 @@ mybot.on("message", function(message){
     		}
     	}
     	
-    	if(command === 'conch'){
+    	if(command.substring(0,5) === 'conch'){
     		try{
     			logCommand(user, 'conch');
     			commands.conch(message);
@@ -170,9 +170,13 @@ mybot.on("message", function(message){
     	}
     	
     	if(command.substring(0,6) === 'frames'){
+    		if(command.includes(" "))
+    			var character = command.substring(command.indexOf(" ") + 1);
+    		else character = null;
+    		
     		try{
     			logCommand(user, 'frames');
-    			commands.frames(message, command.substring(command.indexOf(" ") + 1));
+    			commands.frames(message, character);
     		}catch(err){
     			console.log(err);
     		}

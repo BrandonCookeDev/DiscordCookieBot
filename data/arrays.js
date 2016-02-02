@@ -29,8 +29,6 @@ var love = [
 
 var conch = [
 'Maybe someday.',
-'Nothing.', // (says this when asked what to do),
-'Neither.', // (says this when asked a "which one?" question)',
 'Follow the seahorse.',
 "I don't think so.",
 'No.',

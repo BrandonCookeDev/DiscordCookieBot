@@ -117,11 +117,19 @@ exports.suhdude = function(message){
 };
 
 exports.conch = function(message){
-	var index = Math.floor(Math.random() * arrays.conch.length);
-	var conchMsg = arrays.conch[index];
-	message.client.reply(message.channel, conchMsg, function(err){
-		console.log(err);
-	});
+	if(message.content.includes('what do I do')){
+		message.client.reply(message.channel, 'Nothing.');
+	}
+	else if(message.content.includes('which one')){
+		message.client.reply(message.channel, 'Neither.');
+	}
+	else{	
+		var index = Math.floor(Math.random() * arrays.conch.length);
+		var conchMsg = arrays.conch[index];
+		message.client.reply(message.channel, conchMsg, function(err){
+			console.log(err);
+		});
+	}
 }
 
 exports.google = function(message, searchCriteria){
@@ -174,8 +182,7 @@ exports.privilege = function(message, username){
 };
 
 exports.frames = function(message, character){
-	console.log(character);
-	if(!character) 
+	if(!character || character == null || typeof character === 'undefined') 
 		message.client.reply(message, 'You need to put a character after the command');
 	else{
 		try{
