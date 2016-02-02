@@ -27,6 +27,17 @@ var love = [
 "Who da bes? Oh. That's you!", "You got this mayne, you're the bomb"
 ];
 
+var conch = [
+'Maybe someday.',
+'Nothing.', // (says this when asked what to do),
+'Neither.', // (says this when asked a "which one?" question)',
+'Follow the seahorse.',
+"I don't think so.",
+'No.',
+'Yes.',
+'Try asking again.'
+];
+
 var saltyTears = "I am very mad. I drove all the way to CSU to play in a tournament, " +
 		"get stuck in traffic and lost against this retarded ass sheik. Down threw tech " +
 		"chase and wouldn't stop shino stalling " +
@@ -35,7 +46,7 @@ var saltyTears = "I am very mad. I drove all the way to CSU to play in a tournam
 		"I thought I would have made it out of pools if I knew how to fucking buffer roll. " +
 		"But they didn't even give me the frames to do it. Bullshit, just straight up bullshit. " +
 		"Probably will never go to a tournament that gay ass sheiks enter ever again. " +
-		"This definitely ruined my day."
+		"This definitely ruined my day.";
 
 var meleeFrames = {
 		"bowser" : "http://smashboards.com/threads/bowsers-hitboxes-and-frame-data-updated-20-01-11.293620/",
@@ -64,12 +75,14 @@ var meleeFrames = {
 		'yoshi' : 'http://smashboards.com/threads/yoshi-hitboxes-and-frame-data.317467/',
 		'young link' : 'http://smashboards.com/threads/young-link-hitboxes-and-frame-data.301753/',
 		'zelda' : 'http://smashboards.com/threads/zelda-hitboxes-and-frame-data.319598/'
-}
+};
+
 		
 module.exports = {
 	tyusResponses: tyusResponses,
 	meleeTips: meleeTips,
 	saltyTears: saltyTears,
 	love: love,
-	meleeFrames: meleeFrames
+	meleeFrames: meleeFrames,
+	conch: conch
 };

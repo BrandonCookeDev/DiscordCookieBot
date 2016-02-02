@@ -116,6 +116,14 @@ exports.suhdude = function(message){
 	message.client.sendMessage(message.channel, urls.suhdudeUrl);
 };
 
+exports.conch = function(message){
+	var index = Math.floor(Math.random() * arrays.conch.length);
+	var conchMsg = arrays.conch[index];
+	message.client.reply(message.channel, conchMsg, function(err){
+		console.log(err);
+	});
+}
+
 exports.google = function(message, searchCriteria){
 	try{
 		var url = "https://www.google.com/search?q=" + encodeURI(searchCriteria);	

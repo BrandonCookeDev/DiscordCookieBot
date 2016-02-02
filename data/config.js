@@ -4,7 +4,7 @@ var target = "test"; //'test' or 'prod'
 var version = "1.2.5";
 var shittalkMaxMessages = 25;
 var shittalkCounter = 0;
-var dcTimeout = 10000;
+var dcTimeout = 10000; 
 
 /** MODES **/
 var isFTU = false;

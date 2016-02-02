@@ -137,6 +137,15 @@ mybot.on("message", function(message){
     		}
     	}
     	
+    	if(command === 'conch'){
+    		try{
+    			logCommand(user, 'conch');
+    			commands.conch(message);
+    		}catch(err){
+    			console.log(err);
+    		}
+    	}
+    	
     	if(command === 'eeee'){
     		throw "OnPurposeError";
     	}
