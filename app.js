@@ -159,6 +159,15 @@ mybot.on("message", function(message){
     			console.log(err);
     		}
     	}
+    	
+    	if(command.substring(0,6) === 'frames'){
+    		try{
+    			logCommand(user, 'frames');
+    			commands.frames(message, command.substring(command.indexOf(" ") + 1));
+    		}catch(err){
+    			console.log(err);
+    		}
+    	}
     		
     	if(command === "help" || command === "man"){
 	    	try{

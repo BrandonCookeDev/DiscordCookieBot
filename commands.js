@@ -165,6 +165,21 @@ exports.privilege = function(message, username){
 	}
 };
 
+exports.frames = function(message, character){
+	console.log(character);
+	if(!character) 
+		message.client.reply(message, 'You need to put a character after the command');
+	else{
+		try{
+			var data = arrays.meleeFrames[character.toLowerCase()];
+			console.log(data);
+			message.client.sendMessage(message.channel, data);
+		} catch(err){
+			console.log(err);
+		}
+	}
+}
+
 exports.help = function(message){
 	message.client.sendMessage(message.channel, manual(config.version), function(err){
 		console.log(err);

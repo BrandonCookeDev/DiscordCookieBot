@@ -37,9 +37,39 @@ var saltyTears = "I am very mad. I drove all the way to CSU to play in a tournam
 		"Probably will never go to a tournament that gay ass sheiks enter ever again. " +
 		"This definitely ruined my day."
 
+var meleeFrames = {
+		"bowser" : "http://smashboards.com/threads/bowsers-hitboxes-and-frame-data-updated-20-01-11.293620/",
+		'captain falcon' : 'http://smashboards.com/threads/captain-falcon-hitboxes-and-frame-data.284165/',
+		'doctor mario' : 'http://smashboards.com/threads/doctor-mario-hitboxes-and-frame-data.309998/',
+		'donkey kong' : 'http://smashboards.com/threads/donkey-kong-hitboxes-and-frame-data.298620/',
+		'falco' : 'http://smashboards.com/threads/falco-hitboxes-and-frame-data.300397/',
+		'fox' : 'http://smashboards.com/threads/complete-fox-hitboxes-and-frame-data.285177/',
+		'game & watch' : 'http://smashboards.com/threads/game-watch-hitboxes-and-frame-data.303618/',
+		'ganondorf' : 'http://smashboards.com/threads/ganondorf-hitboxes-and-frame-data.303443/',
+		'ice climbers' : 'http://smashboards.com/threads/complete-ice-climbers-hitboxes-and-frame-data.285394/',
+		'jigglypuff' : 'http://smashboards.com/threads/jigglypuff-hitbox-and-frame-data-nsf56k.303202/',
+		'kirby' : 'http://smashboards.com/threads/kirby-hitboxes-and-frame-data.322531/',
+		'link' : 'http://smashboards.com/threads/link-hitboxes-and-frame-data.306010/',
+		'luigi (Cancer)' : 'http://smashboards.com/threads/luigi-hitboxes-and-frame-data.306546/',
+		'mario' : 'http://smashboards.com/threads/mario-hitboxes-and-frame-data.312343/',
+		'marth' : 'http://smashboards.com/threads/complete-marth-hitboxes-and-frame-data.285324/',
+		'mewtwo' : 'http://smashboards.com/threads/mewtwo-hitboxes-and-frame-data.302477/',
+		'ness' : 'http://smashboards.com/threads/ness-hitboxes-and-frame-data.304703/',
+		'peach' : 'http://smashboards.com/threads/peach-hitboxes-and-frame-data-thread-remastered.425917/',
+		'pichu' : 'http://smashboards.com/threads/pichus-hitboxes-and-frame-data-updated-27-02-11.298367/',
+		'pikachu' : 'http://smashboards.com/threads/pikachu-hitboxes-and-frame-data.320088/',
+		'roy' : 'http://smashboards.com/threads/roy-hitboxes-and-frame-data.286427/',
+		'samus' : 'http://smashboards.com/threads/samus-hitboxes-and-frame-data.320253/',
+		'sheik' : 'http://smashboards.com/threads/sheik-hitboxes-and-frame-data.299984/',
+		'yoshi' : 'http://smashboards.com/threads/yoshi-hitboxes-and-frame-data.317467/',
+		'young link' : 'http://smashboards.com/threads/young-link-hitboxes-and-frame-data.301753/',
+		'zelda' : 'http://smashboards.com/threads/zelda-hitboxes-and-frame-data.319598/'
+}
+		
 module.exports = {
 	tyusResponses: tyusResponses,
 	meleeTips: meleeTips,
 	saltyTears: saltyTears,
-	love: love
+	love: love,
+	meleeFrames: meleeFrames
 };
