@@ -193,11 +193,19 @@ exports.block = function(message, words){
 		arrays.blockedWords = [];
 	}
 	else{
-		words.foreach(function(word){
+		words.forEach(function(word){
 			//If word is already blocked, unblock
-			if(arrays.blockedWords.contains(word)){
+			var flag = false;
+			for(var i=0; i < arrays.blockedWords.length; i++){
+				if(arrays.blockedWords[i] === word){
+					flag = true;
+					break;
+				}
+			}
+			
+			if(flag){
 				arrays.blockedWords.splice(arrays.blockedWords.indexOf(word), 1);
-			} 
+			}
 			else{
 				arrays.blockedWords.push(word);
 			}

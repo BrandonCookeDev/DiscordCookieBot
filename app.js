@@ -68,7 +68,7 @@ mybot.on("message", function(message){
     	if(command.substring(0, 5) === 'block'){
     		if(command.substring(6,8) === "-l"){
     			var list = "";
-    			arrays.blockedWords.foreach(function(word){
+    			arrays.blockedWords.forEach(function(word){
     				list += word + " \n";
     			});
     			mybot.sendMessage(message.channel, list);
@@ -278,7 +278,8 @@ mybot.on("message", function(message){
     	}
     	
     	//Check for blocked words
-    	arrays.blockedWords.foreach(function(word){
+    	arrays.blockedWords.forEach(function(word){
+    		console.log(message.content);
     		if(message.content.includes(word)){
     			var replace = message.content.replace(word, "*****");
     			message.content = replace;
