@@ -277,14 +277,17 @@ mybot.on("message", function(message){
     		}
     	}
     	
+    	/*
     	//Check for blocked words
     	arrays.blockedWords.forEach(function(word){
     		console.log(message.content);
     		if(message.content.includes(word)){
     			var replace = message.content.replace(word, "*****");
-    			message.content = replace;
+    			//message.content = replace;
+    			mybot.sendMessage(message.channel, replace);
     		}
     	});
+    	*/
     }
 });
 
