@@ -65,10 +65,10 @@ mybot.on("message", function(message){
     		}    		
     	}
     	
-    	if(command.substring(0, 5) === 'block'){
+    	if(command.substring(0, 4) === 'buzz'){
     		if(command.substring(6,8) === "-l"){
     			var list = "";
-    			arrays.blockedWords.foreach(function(word){
+    			arrays.buzzedWords.forEach(function(word){
     				list += word + " \n";
     			});
     			mybot.sendMessage(message.channel, list);
@@ -278,10 +278,9 @@ mybot.on("message", function(message){
     	}
     	
     	//Check for blocked words
-    	arrays.blockedWords.foreach(function(word){
+    	arrays.buzzedWords.forEach(function(word){
     		if(message.content.includes(word)){
-    			var replace = message.content.replace(word, "*****");
-    			message.content = replace;
+    			mybot.reply(message, 'BUZZ!!!');
     		}
     	});
     }

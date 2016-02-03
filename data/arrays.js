@@ -1,4 +1,4 @@
-var blockedWords = [];
+var buzzedWords = [];
 
 var tyusResponses = ['no.', 'stop', 'k', 'just stop', 
 'stop talking...', 'shhhhhhh', 'ah cool bro', 'nobody gives a shit',

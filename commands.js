@@ -187,19 +187,19 @@ exports.privilege = function(message, username){
 	}
 };
 
-exports.block = function(message, words){
+exports.buzz = function(message, words){
 	if(!words){
 		//Flush array if no parameter
-		arrays.blockedWords = [];
+		arrays.buzzedWords = [];
 	}
 	else{
-		words.foreach(function(word){
+		words.forEach(function(word){
 			//If word is already blocked, unblock
-			if(arrays.blockedWords.contains(word)){
-				arrays.blockedWords.splice(arrays.blockedWords.indexOf(word), 1);
+			if(arrays.buzzedWords.contains(word)){
+				arrays.buzzedWords.splice(arrays.buzzedWords.indexOf(word), 1);
 			} 
 			else{
-				arrays.blockedWords.push(word);
+				arrays.buzzedWords.push(word);
 			}
 		});
 	}
