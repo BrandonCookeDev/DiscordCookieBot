@@ -197,7 +197,18 @@ exports.buzz = function(message, words){
 			//If word is already blocked, unblock
 			if(arrays.buzzedWords.contains(word)){
 				arrays.buzzedWords.splice(arrays.buzzedWords.indexOf(word), 1);
-			} 
+			var flag = false;
+			for(var i=0; i < arrays.buzzedWords.length; i++){
+				if(arrays.buzzedWords[i] === word){
+					flag = true;
+					break;
+				}
+			}
+			
+			if(flag){
+				arrays.buzzedWords.splice(arrays.buzzedWords.indexOf(word), 1);
+			
+			}
 			else{
 				arrays.buzzedWords.push(word);
 			}
