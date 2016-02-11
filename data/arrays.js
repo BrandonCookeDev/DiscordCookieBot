@@ -84,5 +84,5 @@ module.exports = {
 	love: love,
 	meleeFrames: meleeFrames,
 	conch: conch,
-	blockedWords: blockedWords
+	buzzedWords: buzzedWords
 };

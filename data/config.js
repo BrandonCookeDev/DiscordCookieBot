@@ -1,6 +1,6 @@
 /** TARGET ENVIRONMENT (test or prod) **/
 //var target = "prod";
-var target = "test"; //'test' or 'prod'
+var target = "prod"; //'test' or 'prod'
 var version = "1.3.0";
 var shittalkMaxMessages = 25;
 var shittalkCounter = 0;

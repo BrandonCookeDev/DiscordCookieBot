@@ -2,6 +2,7 @@
 var Discord  = require("discord.js");
 var fs 		 = require("fs");
 var cluster  = require("cluster");
+var express	 = require("express");
 var botlog   = require("./botlog");
 var commands = require("./commands");
 var urls	 = require("./data/urls");
@@ -66,7 +67,7 @@ mybot.on("message", function(message){
     	}
     	
     	if(command.substring(0, 4) === 'buzz'){
-    		if(command.substring(6,8) === "-l"){
+    		if(command.substring(5,7) === "-l"){
     			var list = "";
     			arrays.buzzedWords.forEach(function(word){
     				list += word + " \n";
@@ -76,7 +77,7 @@ mybot.on("message", function(message){
     		else{
 	    		try{
 	    			var keywords = null;
-	    			logCommand(user, 'block');
+	    			logCommand(user, 'buzz');
 	    			if(command.includes('"')){
 			    		for(var i=0, count = 0; i<parameter.length; i++){
 			    			var c = parameter.charAt(i);
@@ -95,7 +96,7 @@ mybot.on("message", function(message){
 				    }
 	    			if(command.includes(" "))
 	    				keywords = command.substring(command.indexOf(" ") + 1).split(" ");
-	    			commands.block(message, keywords);
+	    			commands.buzz(message, keywords);
 	    		}catch(err){
 	    			botlog.botlog(err);
 	    			mybot.reply(message, err);

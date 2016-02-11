@@ -190,29 +190,31 @@ exports.privilege = function(message, username){
 exports.buzz = function(message, words){
 	if(!words){
 		//Flush array if no parameter
+		message.client.sendMessage(message.channel,"Buzz list flushed");
 		arrays.buzzedWords = [];
 	}
 	else{
 		words.forEach(function(word){
 			//If word is already blocked, unblock
-			if(arrays.buzzedWords.contains(word)){
+			if(arrays.buzzedWords.indexOf(word) >= 0){
 				arrays.buzzedWords.splice(arrays.buzzedWords.indexOf(word), 1);
-			var flag = false;
-			for(var i=0; i < arrays.buzzedWords.length; i++){
-				if(arrays.buzzedWords[i] === word){
-					flag = true;
-					break;
+				var flag = false;
+				for(var i=0; i < arrays.buzzedWords.length; i++){
+					if(arrays.buzzedWords[i] === word){
+						flag = true;
+						break;
+					}
+				}
+				
+				if(flag){
+					arrays.buzzedWords.splice(arrays.buzzedWords.indexOf(word), 1);
+				
+				}
+				else{
+					arrays.buzzedWords.push(word);
 				}
 			}
-			
-			if(flag){
-				arrays.buzzedWords.splice(arrays.buzzedWords.indexOf(word), 1);
-			
-			}
-			else{
-				arrays.buzzedWords.push(word);
-			}
-		});
+		})
 	}
 };
 
@@ -257,4 +259,3 @@ function manual(version){
 	"\n";
 	return man;
 };
-

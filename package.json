@@ -1,0 +1,23 @@
+{
+  "name": "discordcookiebot",
+  "version": "1.0.0",
+  "description": "Discord bot in order for silly bs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrandonCookeDev/DiscordCookieBot.git"
+  },
+  "author": "Brandon Cooke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrandonCookeDev/DiscordCookieBot/issues"
+  },
+  "homepage": "https://github.com/BrandonCookeDev/DiscordCookieBot#readme",
+  "dependencies": {
+    "discord.js": "^6.0.0",
+    "express": "^4.13.4"
+  }
+}
