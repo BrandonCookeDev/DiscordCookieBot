@@ -95,6 +95,12 @@ exports.love = function(message, user, tyusUsername){
 		});
 };
 
+exports.randomImage = function(message, arr){
+	var index = Math.floor(Math.random() * arr.length);
+	var bruceStream = fs.createReadStream(arr[index]);
+	message.client.sendFile(message.channel, bruceStream, "Brucie.png");
+};
+
 exports.bruciepie = function(message, bruceImgs){
 	var index = Math.floor(Math.random() * bruceImgs.length);
 	var bruceStream = fs.createReadStream(bruceImgs[index]);

@@ -16,6 +16,7 @@ var servers    = [];
 var channelMap = {};
 var falconImgs = [];
 var bruceImgs  = [];
+var ragsImgs   = [];
 
 /** NONSENSE **/
 /* FTU */
@@ -155,7 +156,17 @@ mybot.on("message", function(message){
     	if(command === "showmeyourmoves"){
     		try{
     			logCommand(user, 'showmeyourmoves');
-    			commands.showmeyourmoves(message, falconImgs);
+    			commands.randomImage(message, falconImgs);
+    		}catch(err){
+    			botlog.botlog(err);
+    			mybot.sendMessage(message.channel, urls.falconUrl).catch(console.log);
+    		}
+    	}
+    	
+    	if(command === "rags"){
+    		try{
+    			logCommand(user, 'rags');
+    			commands.randomImage(message, ragsImgs);
     		}catch(err){
     			botlog.botlog(err);
     			mybot.sendMessage(message.channel, urls.falconUrl).catch(console.log);
@@ -188,7 +199,7 @@ mybot.on("message", function(message){
     	if(command === "bruciepie"){
     		try{
     			logCommand(user, 'bruciepie');
-    			commands.bruciepie(message, bruceImgs);
+    			commands.randomImage(message, bruceImgs);
 	    	}catch(err){
 	    		botlog.botlog(err);
 	    		mybot.sendMessage(message.channel, urls.bruceUrl);	
@@ -318,6 +329,11 @@ if (cluster.isMaster) {
 /** MAIN **/
 if (cluster.isWorker) {
 	try{
+		if(process.argv.length > 2){
+			if(process.argv[2] === 'prod')
+				config.target = 'prod';
+		}
+		
 		/** LOGIN **/
 		console.log("Targetting " + config.target + "...");
 		if(config.target === "test")
@@ -355,6 +371,9 @@ function loginSuccess(token)
 		
 		if(bruceImgs.length == 0)
 			initPictureArray(imgs.bruceDir, bruceImgs);	
+		
+		if(ragsImgs.length == 0)
+			initPictureArray(imgs.ragsDir, ragsImgs);
 	}
 	catch(err)
 	{
