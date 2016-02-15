@@ -76,6 +76,18 @@ var saltyTears = "I am very mad. I drove all the way to CSU to play in a tournam
 		"But they didn't even give me the frames to do it. Bullshit, just straight up bullshit. " +
 		"Probably will never go to a tournament that gay ass sheiks enter ever again. " +
 		"This definitely ruined my day.";
+
+var fuckLuigi = "I am very mad. I drove all the way to CSU to play in a tournament, " +
+	"get stuck in traffic and lost against this retarded ass luigi. Slip-and-slide to down smash and " +
+	"wouldn't stop being gay. " +
+	"I really cannot think straight right now." +
+	"I offered to MM him for more than $20XX. Nope." +
+	"I thought I would have made it out of pools if I knew how to fucking avoid his f-smash. " +
+	"But they didn't even give me the frames to do it. Bullshit, just straight up bullshit. " +
+	"Probably will never go to a tournament that gay ass luigi enter ever again. " +
+	"The 20XX metagame would have developed so much by now, but that yah-yah slip-and-slide " +
+	"motherfucker has ruined it all. " +
+	"This definitely ruined my day.";
 		
 module.exports = {
 	tyusResponses: tyusResponses,
@@ -84,5 +96,6 @@ module.exports = {
 	love: love,
 	meleeFrames: meleeFrames,
 	conch: conch,
-	buzzedWords: buzzedWords
+	buzzedWords: buzzedWords,
+	fuckLuigi: fuckLuigi
 };

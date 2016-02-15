@@ -142,6 +142,11 @@ mybot.on("message", function(message){
     		logCommand(user, 'saltytears');
     		commands.saltyTears(message);
     	}
+    	
+    	if(command === 'fuckluigi'){
+    		logCommand(user, 'fuckLuigi');
+    		commands.fuckLuigi(message);
+    	}
     		
     	if(command === "thumb"){
     		try{

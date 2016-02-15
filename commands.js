@@ -23,6 +23,10 @@ exports.saltyTears = function(message){
 	message.client.sendMessage(message.channel, arrays.saltyTears);
 };
 
+exports.fuckLuigi = function(message){
+	message.client.sendMessage(message.channel, arrays.fuckLuigi);
+}
+
 exports.ftumode = function(message, tyusUsername) {
 	if (!(message.author.username === tyusUsername)) {
 		if (config.isFTU) {
