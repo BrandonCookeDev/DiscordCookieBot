@@ -21,22 +21,28 @@ client.get('statuses/user_timeline', params, function(error, tweets, response){
 */
 
 exports.tweet = function(message, content){
-	var tweetContents = message.author.username + ": " + content;
-	
-	if(tweetContents > CHAR_LIMIT){
-		message.client.reply(
-				"Count: " + tweetContents.length() + ". Tweet content must be under " + CHAR_LIMIT);
+	if(content){
+		console.log(content);
+		var tweetContents = message.author.username + ": " + content;
+		
+		if(tweetContents > CHAR_LIMIT){
+			//console.log(tweetContents);
+			var tooLong = "Count: " + tweetContents.length + ". Tweet content must be under " + CHAR_LIMIT;
+			//console.log(tooLong);
+			message.client.reply(message, "Tweet much be under 140 characters");
+		}
+		else{
+			client.post('statuses/update', 
+					{status: tweetContents},
+					function(err, tw, response){
+				if(!err){
+					message.client.reply(message, tw);
+				}
+				else{
+					message.client.reply(message, err);
+				}
+			});
+		}
 	}
-	else{
-		client.post('statuses/update', 
-				{status: tweetContents},
-				function(err, tw, response){
-			if(!error){
-				console.log(tw);
-			}
-			else{
-				console.log(err);
-			}
-		});
-	}
+	else message.client.reply(message, "You have to put some text after, fam");
 };

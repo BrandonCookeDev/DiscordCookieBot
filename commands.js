@@ -224,12 +224,12 @@ exports.privilege = function(message, username){
 				break;
 			default:
 				if(rand < 50){
-					if(username == null)
-						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". Check your privilege, bitch.");
+					if(!username)
+						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". Check your privilege, fam.");
 					else 
-						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". " + username + ", check your privilege, bitch.");
+						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". " + username + ", check your privilege, fam.");
 				}else{
-					if(username == null)
+					if(!username)
 						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, bro");
 					else
 						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, " + username);
@@ -297,6 +297,7 @@ function manual(){
 	"\nUSAGE: \n\t![command] [optional:parameter]" +
 	"\n\nCommands (not case sensative):" +
 	"\n!bracket \t\t\t\t\t\t- returns URL to most recent tournament" +
+	"\n!tweet \t\t\t\t\t\t  - Tweet something out to the KSU Discord Twitter: " + config.twHandle +
 	"\n!google <keyword> \t- Google search on keyword" +
 	"\n!ShowMeYourMoves - display a picture of C. Falcon" +
 	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
