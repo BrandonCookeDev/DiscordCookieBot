@@ -18,6 +18,28 @@ exports.mute = function(message, user){
 	
 };
 
+exports.game = function(message, user, game){
+	try{
+		//console.log(message.author.game['name']);
+		
+		//if(message.author.game == null){
+		//	console.log('yeah it\'s null');
+		//	var oGame = new Object();
+		//	oGame.name = game;
+		//	message.author.game = oGame;
+		//};
+		
+		//message.author.game['name'] = game;
+		
+		message.author.client.setStatus('online', game, function(err){
+			console.log(err);
+			botlog.botlog(err);
+		});
+	}catch(err){
+		console.log(err);
+	}
+};
+
 /** SILLY **/
 exports.saltyTears = function(message){
 	message.client.sendMessage(message.channel, arrays.saltyTears);
@@ -122,11 +144,17 @@ exports.thumb = function(message){
 	message.client.sendFile(message.channel, thumbStream, 'thumb.jpg');
 };
 
-exports.bracket = function(message, bracket){
-	message.client.sendMessage(message.channel, bracket, function(err){
+exports.bracket = function(message){
+	message.client.sendMessage(message.channel, arrays.bracket, function(err){
 		botlog.botlog(err);
 	});
 };
+
+exports.smashDat = function(message){
+	message.client.sendMessage(message.channel, arrays.smashDat, function(err){
+		botlog.botlog(err);
+	})
+}
 
 exports.suhdude = function(message){
 	message.client.sendMessage(message.channel, urls.suhdudeUrl);
@@ -250,20 +278,23 @@ exports.help = function(message){
 
 function manual(version){
 	var man = "cookiE_bot Version " + version + 
-	"\nUSAGE: \n\t![command] [optional:user]" +
+	"\nUSAGE: \n\t![command] [optional:parameter]" +
 	"\n\nCommands (not case sensative):" +
 	"\n!bracket \t\t\t\t\t\t- returns URL to most recent tournament" +
 	"\n!google <keyword> \t- Google search on keyword" +
 	"\n!ShowMeYourMoves - display a picture of C. Falcon" +
 	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
+	"\n!Rags \t\t\t\t\t\t	 - display a picture of medieval art" +
 	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +
 	//"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
 	"\n!privilege <user>\t\t - to check your privilege" +
 	"\n!love \t\t\t\t\t\t\t  - Print a loving and motivational message!" +
 	"\n!saltyTears \t\t\t\t   - Print a great message full of salt" +
+	"\n!fuckLuigi \t\t\t\t     - Print a great message full of luigi" +
 	"\n!shittalk \t\t\t\t\t\t - Activate shittalk mode" +
-	"\n!frames <character>\t  - Get the url to a melee character's frame data" + 
+	"\n!frames <character>\t- Get the url to a melee character's frame data" + 
 	"\n!repo \t\t\t\t\t\t\t  - Print the url for GAStreamControl" + 
+	"\n!game \t\t\t\t\t\t\t- Set the game cookiE_bot is playing" +
 	"\n!cookieRepo \t\t\t\t - Print the url for cookiE's old Stream Control program" +
 	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
 	"\n";

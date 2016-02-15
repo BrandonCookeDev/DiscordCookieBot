@@ -1,3 +1,5 @@
+var urls = require('./urls');
+
 var buzzedWords = [];
 
 var tyusResponses = ['no.', 'stop', 'k', 'just stop', 
@@ -88,6 +90,10 @@ var fuckLuigi = "I am very mad. I drove all the way to CSU to play in a tourname
 	"The 20XX metagame would have developed so much by now, but that yah-yah slip-and-slide " +
 	"motherfucker has ruined it all. " +
 	"This definitely ruined my day.";
+
+var bracket = "Flashback Games 21: " + urls.bracketUrl;
+
+var smashDat = ":joy: :joy: :joy: :joy: :joy: :ok_hand: :ok_hand: :ok_hand:";
 		
 module.exports = {
 	tyusResponses: tyusResponses,
@@ -97,5 +103,7 @@ module.exports = {
 	meleeFrames: meleeFrames,
 	conch: conch,
 	buzzedWords: buzzedWords,
-	fuckLuigi: fuckLuigi
+	fuckLuigi: fuckLuigi,
+	bracket: bracket,
+	smashDat: smashDat
 };

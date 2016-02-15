@@ -23,9 +23,6 @@ var ragsImgs   = [];
 var isFTU = false;
 var tyusUsername = 'karma';
 
-/*** MESSAGES ***/
-var bracket = "Flashback Games 21: " + urls.bracketUrl;
-
 console.log("Running cookiE_bot...");
 
 /** EVENTS **/
@@ -53,6 +50,18 @@ mybot.on("message", function(message){
 	    		mybot.reply(message, "The user " + memberName + " isn't in the chat");
 	    		botlog.botlog("The user " + memberName + " isn't in the chat");
 	    	}     		
+    	}
+    	
+    	if(command.substring(0, 4) === 'game'){
+    		try{
+	    		logCommand(user, 'game');
+	    		//var game = command.substring(command.indexOf(" ") + 1);
+	    		console.log(parameter);
+	    		commands.game(message, user, parameter);
+    		}catch(err){
+    			console.log("ERROR:" +err);
+    			botlog.botlog(err);
+    		}
     	}
     	
     	if(command.substring(0, 6) === 'google'){
@@ -127,6 +136,11 @@ mybot.on("message", function(message){
     	if(command === "bracket"){
     		logCommand(user, 'bracket');
     		commands.bracket(message);
+    	}
+    	
+    	if(command === "smashdat"){
+    		logCommand(user, 'smashdat');
+    		commands.smashdat(message);
     	}
     		
     	if(command.substring(0, 9) === "privilege"){
