@@ -1,11 +1,11 @@
 /** TARGET ENVIRONMENT (test or prod) **/
 //var target = "prod";
 var target = "test"; //'test' or 'prod'
-var version = "2.0.0";
+var version = "2.0.2";
 var shittalkMaxMessages = 25;
 var shittalkCounter = 0;
 var dcTimeout = 10000; 
-var twHandle= '@KSU_Discord';
+var twHandle= '@cookiEbot420';
 
 /** MODES **/
 var isFTU = false;

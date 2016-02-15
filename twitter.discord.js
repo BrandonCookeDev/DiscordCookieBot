@@ -21,22 +21,25 @@ client.get('statuses/user_timeline', params, function(error, tweets, response){
 */
 
 exports.tweet = function(message, content){
+	content = String(content);
 	if(content){
 		console.log(content);
 		var tweetContents = message.author.username + ": " + content;
 		
-		if(tweetContents > CHAR_LIMIT){
-			//console.log(tweetContents);
-			var tooLong = "Count: " + tweetContents.length + ". Tweet content must be under " + CHAR_LIMIT;
-			//console.log(tooLong);
-			message.client.reply(message, "Tweet much be under 140 characters");
+		if(tweetContents.length > CHAR_LIMIT){
+			try{
+				var tooLong = "Count: " + tweetContents.length + ". Tweet content must be under " + CHAR_LIMIT;
+				message.client.reply(message, tooLong);
+			} catch(err){
+				message.client.reply(message, err);
+			}
 		}
 		else{
 			client.post('statuses/update', 
 					{status: tweetContents},
 					function(err, tw, response){
 				if(!err){
-					message.client.reply(message, tw);
+					message.client.reply(message, 'Tweet posted successfully!');
 				}
 				else{
 					message.client.reply(message, err);
