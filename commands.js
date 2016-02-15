@@ -1,4 +1,5 @@
 var fs 		 = require('fs');
+var request	 = require('request').defaults({encoding: null});
 var botlog   = require('./botlog');
 var urls	 = require("./data/urls");
 var arrays	 = require("./data/arrays");
@@ -38,6 +39,21 @@ exports.game = function(message, user, game){
 	}catch(err){
 		console.log(err);
 	}
+};
+
+exports.avatar = function(message, url){
+	var imgBuffer = null;
+	request.get(url, function(err, response, body){
+		console.log('body: ' + (body instanceof Buffer));
+		
+		message.client.setAvatar(body, function(err){
+			console.log(err);
+			botlog.botlog(err);
+		});
+	});
+	
+	//while(!(imgBuffer instanceof Buffer)){console.log(imgBuffer)}
+	//var avatar = new Buffer(imgBuffer.toString('base64'), 'base64');
 };
 
 /** SILLY **/
@@ -276,8 +292,8 @@ exports.help = function(message){
 	});
 };
 
-function manual(version){
-	var man = "cookiE_bot Version " + version + 
+function manual(){
+	var man = "cookiE_bot Version " + config.version + 
 	"\nUSAGE: \n\t![command] [optional:parameter]" +
 	"\n\nCommands (not case sensative):" +
 	"\n!bracket \t\t\t\t\t\t- returns URL to most recent tournament" +

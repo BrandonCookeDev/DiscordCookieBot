@@ -52,6 +52,18 @@ mybot.on("message", function(message){
 	    	}     		
     	}
     	
+    	if(command.substring(0, 6) === 'avatar'){
+    		try{
+	    		logCommand(user, 'avatar');
+	    		var url = parameter;
+	    		commands.avatar(message, parameter);
+    		} catch(err){
+    			console.log(err);
+    			botlog.botlog(err);
+    		}
+    		
+    	}
+    	
     	if(command.substring(0, 4) === 'game'){
     		try{
 	    		logCommand(user, 'game');
