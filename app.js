@@ -5,6 +5,7 @@ var cluster  = require("cluster");
 var express	 = require("express");
 var botlog   = require("./botlog");
 var commands = require("./commands");
+var twitter	 = require("./twitter.discord");
 var urls	 = require("./data/urls");
 var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
@@ -124,6 +125,11 @@ mybot.on("message", function(message){
 	    			mybot.reply(message, err);
 	    		}
 	    	}
+    	}
+    	
+    	if(command.substring(0, 6) === 'tweet'){
+    		logCommand(user, 'tweet');
+    		twitter.tweet(message, parameter);
     	}
     	
     	if(command === 'repo'){
