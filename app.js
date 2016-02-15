@@ -127,7 +127,7 @@ mybot.on("message", function(message){
 	    	}
     	}
     	
-    	if(command.substring(0, 6) === 'tweet'){
+    	if(command.substring(0, 5) === 'tweet'){
     		logCommand(user, 'tweet');
     		twitter.tweet(message, parameter);
     	}

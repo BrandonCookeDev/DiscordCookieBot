@@ -4,7 +4,7 @@ var props	= require('./twitter.properties');
 
 var CHAR_LIMIT = 140;
 
-var client = new Twitter({
+var client = new twitter({
 	  consumer_key: props.consumer_key,
 	  consumer_secret: props.consumer_secret,
 	  access_token_key: props.access_token_key,
