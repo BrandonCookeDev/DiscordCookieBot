@@ -190,6 +190,16 @@ mybot.on("message", function(message){
 	    	}
     	}
     	
+    	if(command === "pangasm"){
+    		try{
+    			logCommand(user, 'PanGasm');
+    			commands.panGasm(message);
+	    	}catch(err){
+	    		botlog.botlog(err);
+	    		mybot.sendMessage(message.channel, 'An error occured. Please yell at cookiE');
+	    	}
+    	}
+    	
     	if(command === "showmeyourmoves"){
     		try{
     			logCommand(user, 'showmeyourmoves');
@@ -336,6 +346,7 @@ mybot.on("message", function(message){
 });
 
 mybot.on("ready", function(){
+	console.log("Targetting " + config.target + "...");
 	console.log("Ready event hit");
 });
 
@@ -371,8 +382,7 @@ if (cluster.isWorker) {
 				config.target = 'prod';
 		}
 		
-		/** LOGIN **/
-		console.log("Targetting " + config.target + "...");
+		/** LOGIN **/		
 		if(config.target === "test")
 			mybot.login("golee5191@hotmail.com", "botmedaddy!").then(loginSuccess).catch(function(){
 				sleep(5000);

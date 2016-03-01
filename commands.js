@@ -160,6 +160,11 @@ exports.thumb = function(message){
 	message.client.sendFile(message.channel, thumbStream, 'thumb.jpg');
 };
 
+exports.panGasm = function(message){
+	var panStream = fs.createReadStream(imgs.panImg);
+	message.client.sendFile(message.channel, panStream, 'PanGasm.png');
+}
+
 exports.bracket = function(message){
 	message.client.sendMessage(message.channel, arrays.bracket, function(err){
 		botlog.botlog(err);
