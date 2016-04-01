@@ -280,6 +280,15 @@ mybot.on("message", function(message){
     		}
     	}
     	
+    	if(command === "plagueis"){
+    		try{
+    			logCommand(user, 'plagueis');
+    			commands.plagueis(message);
+    		} catch(err){
+    			console.log(err);
+    		}
+    	}
+    	
     	if(command.substring(0,6) === 'frames'){
     		if(command.includes(" "))
     			var character = command.substring(command.indexOf(" ") + 1);

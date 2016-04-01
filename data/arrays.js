@@ -8,6 +8,15 @@ var tyusResponses = ['no.', 'stop', 'k', 'just stop',
 "Do you even have any friends"
 ];
 
+var plagueis = "Did you ever hear the Tragedy of Darth Plagueis the Wise? It's a " +
+		"Sith legend. Darth Plagueis was a Dark Lord of the Sith so powerful and so wise, " +
+		"he could use the Force to influence the midi-chlorians to create...life. He had " +
+		"such a knowledge of the Dark Side, he could even keep the ones he cared about...from " +
+		"dying. He became so powerful, the only thing he was afraid of was losing his power..." +
+		"which, eventually of course, he did. Unfortunately, he taught his apprentice " +
+		"everything he knew. Then his apprentice killed him in his sleep. Ironic. He could " +
+		"save others from death...but not himself.";
+
 var meleeTips = [
 "If you're having trouble, try smash 4. It's a great trandistional tool with a lot of depth too!",
 "Rolling is a great way to avoid attacks!", "Press L or Z twice to perform a barrel roll",
@@ -97,6 +106,7 @@ var smashDat = ":joy: :joy: :joy: :joy: :joy: :ok_hand: :ok_hand: :ok_hand:";
 		
 module.exports = {
 	tyusResponses: tyusResponses,
+	plagueis: plagueis,
 	meleeTips: meleeTips,
 	saltyTears: saltyTears,
 	love: love,

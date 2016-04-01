@@ -41,6 +41,8 @@ exports.game = function(message, user, game){
 	}
 };
 
+
+
 exports.avatar = function(message, url){
 	var imgBuffer = null;
 	request.get(url, function(err, response, body){
@@ -57,6 +59,10 @@ exports.avatar = function(message, url){
 };
 
 /** SILLY **/
+exports.plagueis = function(message){
+	message.client.sendMessage(message.channel, arrays.plagueis);
+}
+
 exports.saltyTears = function(message){
 	message.client.sendMessage(message.channel, arrays.saltyTears);
 };
