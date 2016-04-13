@@ -5,12 +5,18 @@ var cluster  = require("cluster");
 var express	 = require("express");
 var botlog   = require("./botlog");
 var commands = require("./commands");
-var twitter	 = require("./twitter.discord");
 var urls	 = require("./data/urls");
 var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
 var mybot 	 = new Discord.Client();
+
+var twitter  = null;
+try{	
+	twitter	 = require("./twitter.discord");
+} catch(err){
+	console.log("twitter unavailable");	
+}
 
 /** CONFIG **/
 var servers    = [];

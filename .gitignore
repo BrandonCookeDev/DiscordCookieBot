@@ -1,4 +1,5 @@
 *.log
+node_modules/*
 node_modules/discord.js/.babelrc
 node_modules/discord.js/.eslintrc
 node_modules/discord.js/.npmignore
@@ -1841,3 +1842,4 @@ node_modules/request/package.json
 node_modules/request/request.js
 twitter.properties
 twitter.properties.js
+node_modules/
