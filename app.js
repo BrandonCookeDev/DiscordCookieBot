@@ -399,7 +399,8 @@ if (cluster.isWorker) {
 		
 		/** LOGIN **/		
 		if(config.target === "test")
-			mybot.login("golee5191@hotmail.com", "botmedaddy!").then(loginSuccess).catch(function(){
+			mybot.login("golee5191@hotmail.com", "botmedaddy!").then(loginSuccess).catch(function(err){
+				console.log(err);
 				sleep(5000);
 				process.exit();
 			}) 	  //TEST 
