@@ -340,6 +340,7 @@ function manual(){
 	"\n----COPYPASTA----" +
 	"\n!saltyTears \t\t\t\t   - Print a great message full of salt" +
 	"\n!fuckLuigi \t\t\t\t     - Print a great message full of luigi" +
+	"\n!plagueis \t\t\t\t\t   - Print copypasta about Lord Plagueis" +
 	"\n" +
 	"\n----IMAGES----" +
 	"\n!ShowMeYourMoves - display a picture of C. Falcon" +
