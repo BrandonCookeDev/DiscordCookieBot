@@ -5,7 +5,7 @@ var cluster  = require("cluster");
 var express	 = require("express");
 var botlog   = require("./botlog");
 var commands = require("./commands");
-var register = require('./commandRegister');
+var reg		 = require('./commandRegister');
 var urls	 = require("./data/urls");
 var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
@@ -22,11 +22,7 @@ try{
 /** CONFIG **/
 var servers    = [];
 var channelMap = {};
-var falconImgs = [];
-var bruceImgs  = [];
-var ragsImgs   = [];
-var okImgs	   = [];
-var waifuImgs  = [];
+
 
 /** NONSENSE **/
 /* FTU */
@@ -37,337 +33,63 @@ console.log("Running cookiE_bot...");
 
 /** EVENTS **/
 
-register.register('thumb', commands.thumb);
+//IMAGES
+reg.register('thumb', commands.thumb);
+reg.register('ok', commands.ok);
+reg.register('pangasm', commands.panGasm);
+reg.register('rags', commands.rags);
+reg.register('waifu', commands.waifu);
+reg.register('bruciepie', commands.bruciepie);
+reg.register('showmeyourmoves', commands.showmeyourmoves);
+
+//SHITPOST COPYPASTA
+reg.register('fuckluigi', commands.fuckLuigi);
+reg.register('saltytears', commands.saltyTears);
+reg.register('plagueis', commands.plagueis);
+
+//VIDEO
+reg.register('suhdude', commands.suhdude);
+
+//DUMB COMMANDS
+reg.register('privilege', commands.privilege);
+reg.register('smashdat', commands.smashDat);
+reg.register('love', commands.love);
+reg.register('melee', commands.melee);
+reg.register('conch', commands.conch);
+
+//SERIOUS
+reg.register('help', commands.help);
+reg.register('mute', commands.mute);
+reg.register('game', commands.game);
+reg.register('google', commands.google);
+reg.register('tweet', commands.tweet);
+reg.register('avatar', commands.avatar);
+reg.register('frames', commands.frames);
+reg.register('cookierepo', commands.cookieRepo);
+
+//MODES
+reg.register('ftu', commands.ftumode);
+reg.register('shittalk', commands.shittalkmode);
 
 mybot.on("message", function(message){
 	if(message.content.charAt(0) === "!")
     {
-    	var command  = message.content.substring(1).toLowerCase();
+    	var command = ''
+		if(message.content.includes(" "))
+			command = message.content.substring(1, message.content.indexOf(" ")).toLowerCase();
+		else
+			command = message.content.substring(1).toLowerCase();
+		
     	var parameter = null;
-    	if(command.includes(" "))
+    	if(message.content.includes(" "))
     		parameter = message.content.substring(message.content.indexOf(" ") + 1);
     	var user = message.author;
 	
-		register.execute(command, message, user, parameter);
+		reg.execute(command, message, user, parameter);
 	}
-
-	/*
-    if(message.content === "ping")
-        mybot.reply(message, "pong");
-        
-    //EVENTS TAILORED TO COMMANDS GO BELOW
-     
-    	
-    	/** SERIOUS **/
-		/*
-    	if(command.substring(0, 4) === "mute"){
-    		try{
-    			logCommand(user, 'mute');
-	    		commands.mute(message, user);
-	    	}
-	    	catch(err)
-	    	{
-	    		mybot.reply(message, "The user " + memberName + " isn't in the chat");
-	    		botlog.botlog("The user " + memberName + " isn't in the chat");
-	    	}     		
-    	}
-    	
-    	if(command.substring(0, 6) === 'avatar'){
-    		try{
-	    		logCommand(user, 'avatar');
-	    		var url = parameter;
-	    		commands.avatar(message, parameter);
-    		} catch(err){
-    			console.log(err);
-    			botlog.botlog(err);
-    		}
-    		
-    	}
-    	
-    	if(command.substring(0, 4) === 'game'){
-    		try{
-	    		logCommand(user, 'game');
-	    		//var game = command.substring(command.indexOf(" ") + 1);
-	    		console.log(parameter);
-	    		commands.game(message, user, parameter);
-    		}catch(err){
-    			console.log("ERROR:" +err);
-    			botlog.botlog(err);
-    		}
-    	}
-    	
-    	if(command.substring(0, 6) === 'google'){
-    		//logCommand(user, 'google');
-    		try{
-    			logCommand(user, 'google');
-    			var searchCriteria = command.substring(command.indexOf(" ") + 1);
-    			console.log(searchCriteria);
-    			commands.google(message, searchCriteria);    			
-    		} catch(err){
-    			botlog.botlog(err);
-    		}    		
-    	}
-    	
-    	if(command.substring(0, 4) === 'buzz'){
-    		if(command.substring(5,7) === "-l"){
-    			var list = "";
-    			arrays.buzzedWords.forEach(function(word){
-    				list += word + " \n";
-    			});
-    			mybot.sendMessage(message.channel, list);
-    		}
-    		else{
-	    		try{
-	    			var keywords = null;
-	    			logCommand(user, 'buzz');
-	    			if(command.includes('"')){
-			    		for(var i=0, count = 0; i<parameter.length; i++){
-			    			var c = parameter.charAt(i);
-			    			if(c === '"') count++;
-			    		}
-				    	
-				    	if (count % 2 != 0)
-				    		throw Exception("Must be even number of quotes in phrase.");
-				    	
-				    	for(var i = 0; i<count/2; i++){
-				    		var phrase = command.substring(command.indexOf('"'), command.indexOf('"', command.indexOf('"')) + 1);
-				    		console.log(phrase);
-				    		keywords.push(phrase.replace('"', ""));
-				    		command = command.replace(phrase, "");
-				    	}
-				    }
-	    			if(command.includes(" "))
-	    				keywords = command.substring(command.indexOf(" ") + 1).split(" ");
-	    			commands.buzz(message, keywords);
-	    		}catch(err){
-	    			botlog.botlog(err);
-	    			mybot.reply(message, err);
-	    		}
-	    	}
-    	}
-    	
-    	if(command.substring(0, 5) === 'tweet'){
-    		logCommand(user, 'tweet');
-    		twitter.tweet(message, parameter);
-    	}
-    	
-    	if(command === 'repo'){
-    		try{
-    			logCommand(user, 'repo');
-    			commands.repo(message);
-    		} catch(err){
-    			console.log(err);
-    		}
-    	}
-    	
-    	if(command === 'cookierepo'){
-    		try{
-    			logCommand(user, 'cookierepo');
-    			commands.cookieRepo(message);
-    		} catch(err){
-    			console.log(err);
-    		}
-    	}
-    	
-    	/** SILLY **/
-    	/*
-		if(command === "bracket"){
-    		logCommand(user, 'bracket');
-    		commands.bracket(message);
-    	}
-    	
-    	if(command === "smashDat"){
-    		logCommand(user, 'smashDat');
-    		commands.smashDat(message);
-    	}
-    		
-    	if(command.substring(0, 9) === "privilege"){
-    		try{	    				
-	    		logCommand(user, 'privilege');
-	    		commands.privilege(message, parameter);
-    		} catch(err){
-    			console.log(err);
-    		}
-    	}
-    	
-    	if(command === 'saltytears'){
-    		logCommand(user, 'saltytears');
-    		commands.saltyTears(message);
-    	}
-    	
-    	if(command === 'fuckluigi'){
-    		logCommand(user, 'fuckLuigi');
-    		commands.fuckLuigi(message);
-    	}
-    		
-    	if(command === "thumb"){
-    		try{
-    			logCommand(user, 'thumb');
-    			commands.thumb(message);
-	    	}catch(err){
-	    		botlog.botlog(err);
-	    		mybot.sendMessage(message.channel, 'An error occured. Please yell at cookiE');
-	    	}
-    	}
-    	
-    	if(command === "pangasm"){
-    		try{
-    			logCommand(user, 'PanGasm');
-    			commands.panGasm(message);
-	    	}catch(err){
-	    		botlog.botlog(err);
-	    		mybot.sendMessage(message.channel, 'An error occured. Please yell at cookiE');
-	    	}
-    	}
-    	
-    	if(command === "showmeyourmoves"){
-    		try{
-    			logCommand(user, 'showmeyourmoves');
-    			commands.randomImage(message, falconImgs);
-    		}catch(err){
-    			botlog.botlog(err);
-    			mybot.sendMessage(message.channel, urls.falconUrl).catch(console.log);
-    		}
-    	}
-    	
-    	if(command === "rags"){
-    		try{
-    			logCommand(user, 'rags');
-    			commands.randomImage(message, ragsImgs);
-    		}catch(err){
-    			botlog.botlog(err);
-    			mybot.sendMessage(message.channel, urls.falconUrl).catch(console.log);
-    		}
-    	}
-    	
-    	if(command === 'love'){
-    		try{
-    			logCommand(user, 'love');
-    			commands.love(message, user, tyusUsername);
-    		}catch(err){
-    			console.log(err);
-    		}
-    	}
-    	
-    	if(command === 'melee'){
-    		try{
-    			commands.melee(message);
-    		}catch(err){
-    			console.log(err);
-    		}
-    	}
-    	
-    	
-    	
-    	if(command === 'eeee'){
-    		throw "OnPurposeError";
-    	}
-		
-		if(command.substring(0,2) === 'ok'){
-			try{
-				logCommand(user, 'ok');
-				commands.ok(message, okImgs);
-			} catch(err){
-				botlog.botlog(err);
-			}
-		};
-    		
-    	if(command === "bruciepie"){
-    		try{
-    			logCommand(user, 'bruciepie');
-    			commands.randomImage(message, bruceImgs);
-	    	}catch(err){
-	    		botlog.botlog(err);
-	    		mybot.sendMessage(message.channel, urls.bruceUrl);	
-	    	}    		
-    	}
-    		
-    	if(command === "suhdude"){
-    		try{
-    			logCommand(user, 'suhdude');
-    			commands.suhdude(message);
-    		}catch(err){
-    			console.log(err);
-    		}
-    	}
-    	
-    	if(command === "help" || command === "man"){
-	    	try{
-	    		logCommand(user, 'help');
-	    		commands.help(message);
-    		}catch(err){
-    			console.log(err);
-    		}
-    	}
-    	
-    	if(command === "shittalk"){
-    		try{
-    			logCommand(user, 'shittalk');
-    			commands.shittalkmode(message);
-    		} catch(err){
-    			console.log(err);
-    		}
-    	}
-    	
-    	if(command === "plagueis"){
-    		try{
-    			logCommand(user, 'plagueis');
-    			commands.plagueis(message);
-    		} catch(err){
-    			console.log(err);
-    		}
-    	}
-    	
-    	if(command.substring(0,6) === 'frames'){
-    		if(command.includes(" "))
-    			var character = command.substring(command.indexOf(" ") + 1);
-    		else character = null;
-    		
-    		try{
-    			logCommand(user, 'frames');
-    			commands.frames(message, character);
-    		}catch(err){
-    			console.log(err);
-    		}
-    	}
-    		
-    	if(command.substring(0,5) === 'conch'){
-    		try{
-    			logCommand(user, 'conch');
-    			commands.conch(message);
-    		}catch(err){
-    			botlog.botlog(err);
-    		}
-    	}
-    
-		if(command.substring(0,5) === 'waifu'){
-			try{
-    			logCommand(user, 'waifu');
-    			commands.waifu(message, waifuImgs);
-    		}catch(err){
-    			botlog.botlog(err);
-    		}
-		}
-    	
-    	
-    	/*	
-    	if(command === "ftu")
-    	{
-    		try{
-    			logCommand(user, 'ftu');
-    			commands.ftumode(message, tyusUsername);
-	    	}catch(err){
-	    		botlog.botlog(err);
-	    	}
-    	}
-    	*/
-    //}
-    //ANY EVENTS CONNECTED TO NON-COMMANDS GO BELOW
-	/*
     else
     {
     	/** USER BASED **/
-		/*
     	if(config.isFTU){
     		try{
 	    		commands.ftu(message, tyusUsername);
@@ -383,15 +105,7 @@ mybot.on("message", function(message){
     			console.log(err);
     		}
     	}
-    	
-    	//Check for blocked words
-    	arrays.buzzedWords.forEach(function(word){
-    		if(message.content.includes(word)){
-    			mybot.reply(message, 'BUZZ!!!');
-    		}
-    	});
     }
-	*/
 });
 
 mybot.on("ready", function(){
@@ -463,20 +177,20 @@ function loginSuccess(token)
 		config.connected = true;
 		
 		//INIT PICTURE ARRAYS
-		if(falconImgs.length == 0)
-			initPictureArray(imgs.falconDir, falconImgs);
+		if(arrays.falconImgs.length == 0)
+			initPictureArray(imgs.falconDir, arrays.falconImgs);
 		
-		if(bruceImgs.length == 0)
-			initPictureArray(imgs.bruceDir, bruceImgs);	
+		if(arrays.bruceImgs.length == 0)
+			initPictureArray(imgs.bruceDir, arrays.bruceImgs);	
 		
-		if(ragsImgs.length == 0)
-			initPictureArray(imgs.ragsDir, ragsImgs);
+		if(arrays.ragsImgs.length == 0)
+			initPictureArray(imgs.ragsDir, arrays.ragsImgs);
 			
-		if(okImgs.length == 0)
-			initPictureArray(imgs.okDir, okImgs);
+		if(arrays.okImgs.length == 0)
+			initPictureArray(imgs.okDir, arrays.okImgs);
 			
-		if(waifuImgs.length == 0)
-			initPictureArray(imgs.waifuDir, waifuImgs);
+		if(arrays.waifuImgs.length == 0)
+			initPictureArray(imgs.waifuDir, arrays.waifuImgs);
 	}
 	catch(err)
 	{

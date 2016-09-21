@@ -145,31 +145,37 @@ exports.love = function(message, user, tyusUsername){
 
 exports.randomImage = function(message, user, arr){
 	var index = Math.floor(Math.random() * arr.length);
-	var bruceStream = fs.createReadStream(arr[index]);
-	message.client.sendFile(message.channel, bruceStream, "Brucie.png");
+	var imgStream = fs.createReadStream(arr[index]);
+	message.client.sendFile(message.channel, imgStream, "img.png");
 };
 
-exports.waifu = function(message, user, waifuImgs){
-	var index = Math.floor(Math.random() * waifuImgs.length);
-	var waifuStream = fs.createReadStream(waifuImgs[index]);
-	message.client.sendFile(message.channel, waifuStream, "ok.png");
+exports.waifu = function(message, user){
+	var index = Math.floor(Math.random() * arrays.waifuImgs.length);
+	var waifuStream = fs.createReadStream(arrays.waifuImgs[index]);
+	message.client.sendFile(message.channel, waifuStream, "waifu.png");
 };
 
-exports.ok = function(message, user, okImgs){
-	var index = Math.floor(Math.random() * okImgs.length);
-	var okStream = fs.createReadStream(okImgs[index]);
+exports.ok = function(message, user){
+	var index = Math.floor(Math.random() * arrays.okImgs.length);
+	var okStream = fs.createReadStream(arrays.okImgs[index]);
 	message.client.sendFile(message.channel, okStream, "ok.png");
 };
 
-exports.bruciepie = function(message, user, bruceImgs){
-	var index = Math.floor(Math.random() * bruceImgs.length);
-	var bruceStream = fs.createReadStream(bruceImgs[index]);
+exports.rags = function(message, user){
+	var index = Math.floor(Math.random() * arrays.ragsImgs.length);
+	var ragsStream = fs.createReadStream(arrays.ragsImgs[index]);
+	message.client.sendFile(message.channel, ragsStream, "rags.png");
+};
+
+exports.bruciepie = function(message, user){
+	var index = Math.floor(Math.random() * arrays.bruceImgs.length);
+	var bruceStream = fs.createReadStream(arrays.bruceImgs[index]);
 	message.client.sendFile(message.channel, bruceStream, "Brucie.png");
 };
 
-exports.showmeyourmoves = function(message, user, falconImgs){
-	var index = Math.floor(Math.random() * falconImgs.length);
-	var falconStream = fs.createReadStream(falconImgs[index]);
+exports.showmeyourmoves = function(message, user){
+	var index = Math.floor(Math.random() * arrays.falconImgs.length);
+	var falconStream = fs.createReadStream(arrays.falconImgs[index]);
 	message.client.sendFile(message.channel, falconStream, "CFalc.png");
 };
 
@@ -231,7 +237,7 @@ exports.google = function(message, user, searchCriteria){
 	}
 };
 
-exports.privilege = function(message, username){
+exports.privilege = function(message, user, username){
 	try{
 		console.log(username);
 		var rand = (Math.floor(Math.random() * 99) + 1);

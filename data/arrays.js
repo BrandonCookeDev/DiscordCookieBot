@@ -103,6 +103,12 @@ var fuckLuigi = "I am very mad. I drove all the way to CSU to play in a tourname
 var bracket = "Flashback Games 21: " + urls.bracketUrl;
 
 var smashDat = ":joy: :joy: :joy: :joy: :joy: :ok_hand: :ok_hand: :ok_hand:";
+
+var falconImgs = [];
+var bruceImgs  = [];
+var ragsImgs   = [];
+var okImgs	   = [];
+var waifuImgs  = [];
 		
 module.exports = {
 	tyusResponses: tyusResponses,
@@ -115,5 +121,11 @@ module.exports = {
 	buzzedWords: buzzedWords,
 	fuckLuigi: fuckLuigi,
 	bracket: bracket,
-	smashDat: smashDat
+	
+	smashDat: smashDat,
+	falconImgs: falconImgs,
+	bruceImgs: bruceImgs,
+	ragsImgs: ragsImgs,
+	okImgs: okImgs,
+	waifuImgs: waifuImgs
 };
