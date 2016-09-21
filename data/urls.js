@@ -4,7 +4,7 @@ var falconUrl  = 'https://upload.wikimedia.org/wikipedia/en/4/4c/Captain_Falcon_
 var bruceUrl   = 'http://imgur.com/90kq6VT';
 var suhdudeUrl = 'https://www.youtube.com/watch?v=pIHYPaoh79I';
 var streamControl = 'https://github.com/BrandonCookeDev/StreamControl';
-var cookieControl = 'https://github.com/BrandonCookeDev/FightingGameOverlayGenerator';
+var cookieControl = 'https://github.com/BrandonCookeDev/DiscordCookieBot';
 
 module.exports = {
 	bracketUrl: bracketUrl,

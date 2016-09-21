@@ -189,17 +189,16 @@ exports.suhdude = function(message){
 
 exports.conch = function(message){
 	if(message.content.includes('what do I do')){
-		message.client.reply(message.channel, 'Nothing.');
+		message.client.sendMessage(message.channel, 'Nothing.');
 	}
 	else if(message.content.includes('which one')){
-		message.client.reply(message.channel, 'Neither.');
+		message.client.sendMessage(message.channel, 'Neither.');
 	}
 	else{	
 		var index = Math.floor(Math.random() * arrays.conch.length);
 		var conchMsg = arrays.conch[index];
-		message.client.reply(message.channel, conchMsg, function(err){
-			console.log(err);
-		});
+		console.log(conchMsg);
+		message.client.sendMessage(message.channel, conchMsg);
 	}
 };
 
@@ -307,24 +306,34 @@ function manual(){
 	var man = "cookiE_bot Version " + config.version + 
 	"\nUSAGE: \n\t![command] [optional:parameter]" +
 	"\n\nCommands (not case sensative):" +
-	"\n!bracket \t\t\t\t\t\t- returns URL to most recent tournament" +
-	"\n!tweet <message>\t\t\t\t  - Tweet something out to the KSU Discord Twitter: " + config.twHandle +
+	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
+	"\n" +
+	"\n----SIMPLE COMMANDS----" +
+	"\n!privilege <user>\t\t - to check your privilege" +
+	"\n!tweet <message>\t  - Tweet something out to the KSU Discord Twitter: " + config.twHandle +
+	"\n!love \t\t\t\t\t\t\t  - Print a loving and motivational message!" +
+	"\n!conch \t\t\t\t\t\t  - have the magic conch shell tell you your future" + 
+	"\n!game \t\t\t\t\t\t\t- Set the game cookiE_bot is playing" +
+	"\n!frames <character>   - Get the url to a melee character's frame data" + 
 	"\n!google <keyword> \t- Google search on keyword" +
+	"\n!cookieRepo \t\t\t\t - Print the url for the code repository for cookiE bot" +
+	"\n" + 
+	"\n----COPYPASTA----" +
+	"\n!saltyTears \t\t\t\t   - Print a great message full of salt" +
+	"\n!fuckLuigi \t\t\t\t     - Print a great message full of luigi" +
+	"\n" +
+	"\n----IMAGES----" +
 	"\n!ShowMeYourMoves - display a picture of C. Falcon" +
 	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
 	"\n!Rags \t\t\t\t\t\t	 - display a picture of medieval art" +
+	"\n!pangasm \t\t\t\t\t  - display PanChamp cutout" +
+	"\n" +
+	"\n----VIDEOS----" +
 	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +
-	//"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
-	"\n!privilege <user>\t\t - to check your privilege" +
-	"\n!love \t\t\t\t\t\t\t  - Print a loving and motivational message!" +
-	"\n!saltyTears \t\t\t\t   - Print a great message full of salt" +
-	"\n!fuckLuigi \t\t\t\t     - Print a great message full of luigi" +
+	"\n" +
+	"\n----MODES----" +
 	"\n!shittalk \t\t\t\t\t\t - Activate shittalk mode" +
-	"\n!frames <character>\t- Get the url to a melee character's frame data" + 
-	"\n!repo \t\t\t\t\t\t\t  - Print the url for GAStreamControl" + 
-	"\n!game \t\t\t\t\t\t\t- Set the game cookiE_bot is playing" +
-	"\n!cookieRepo \t\t\t\t - Print the url for cookiE's old Stream Control program" +
-	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
+	//"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
 	"\n";
 	return man;
 };
