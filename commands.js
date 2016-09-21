@@ -19,6 +19,10 @@ exports.mute = function(message, user){
 	
 };
 
+exports.request = function(message, user){
+	message.client.sendMessage(message.channel, urls.request);
+}
+
 exports.game = function(message, user, game){
 	try{
 		//console.log(message.author.game['name']);
@@ -325,6 +329,7 @@ function manual(){
 	"\nUSAGE: \n\t![command] [optional:parameter]" +
 	"\n\nCommands (not case sensative):" +
 	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
+	"\n!request \t\t\t\t\t  - Print url to submit new cookiE bot functionality requests" +
 	"\n" +
 	"\n----SIMPLE COMMANDS----" +
 	"\n!privilege <user>\t\t - to check your privilege" +

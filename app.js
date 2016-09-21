@@ -65,6 +65,7 @@ reg.register('google', commands.google);
 reg.register('tweet', commands.tweet);
 reg.register('avatar', commands.avatar);
 reg.register('frames', commands.frames);
+reg.register('request', commands.request);
 reg.register('cookierepo', commands.cookieRepo);
 
 //MODES

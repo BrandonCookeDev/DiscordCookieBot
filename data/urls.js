@@ -5,6 +5,7 @@ var bruceUrl   = 'http://imgur.com/90kq6VT';
 var suhdudeUrl = 'https://www.youtube.com/watch?v=pIHYPaoh79I';
 var streamControl = 'https://github.com/BrandonCookeDev/StreamControl';
 var cookieControl = 'https://github.com/BrandonCookeDev/DiscordCookieBot';
+var request = 'https://github.com/BrandonCookeDev/DiscordCookieBot/issues';
 
 module.exports = {
 	bracketUrl: bracketUrl,
@@ -12,5 +13,6 @@ module.exports = {
 	bruceUrl: bruceUrl,
 	suhdudeUrl: suhdudeUrl,
 	streamControl: streamControl,
-	cookieControl: cookieControl
+	cookieControl: cookieControl,
+	request: request
 };
