@@ -322,6 +322,7 @@ function manual(){
 	"\n" +
 	"\n----SIMPLE COMMANDS----" +
 	"\n!privilege <user>\t\t - to check your privilege" +
+	"\n!melee \t\t\t\t\t\t  - print a random melee tip" +
 	"\n!tweet <message>\t  - Tweet something out to the Discord Twitter: " + config.twHandle +
 	"\n!love \t\t\t\t\t\t\t  - Print a loving and motivational message!" +
 	"\n!conch \t\t\t\t\t\t  - have the magic conch shell tell you your future" + 
