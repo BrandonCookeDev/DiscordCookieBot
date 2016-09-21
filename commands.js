@@ -339,6 +339,7 @@ function manual(){
 	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
 	"\n!Rags \t\t\t\t\t\t	 - display a picture of medieval art" +
 	"\n!pangasm \t\t\t\t\t  - display PanChamp cutout" +
+	"\n!waifu \t\t\t\t\t\t    - display a random waifu" +
 	"\n!ok \t\t\t\t\t\t\t\t - give everyone that good shit" +
 	"\n" +
 	"\n----VIDEOS----" +
