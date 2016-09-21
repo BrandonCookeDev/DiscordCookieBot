@@ -24,6 +24,7 @@ var channelMap = {};
 var falconImgs = [];
 var bruceImgs  = [];
 var ragsImgs   = [];
+var okImgs	   = [];
 
 /** NONSENSE **/
 /* FTU */
@@ -162,9 +163,9 @@ mybot.on("message", function(message){
     		commands.bracket(message);
     	}
     	
-    	if(command === "smashdat"){
-    		logCommand(user, 'smashdat');
-    		commands.smashdat(message);
+    	if(command === "smashDat"){
+    		logCommand(user, 'smashDat');
+    		commands.smashDat(message);
     	}
     		
     	if(command.substring(0, 9) === "privilege"){
@@ -248,6 +249,15 @@ mybot.on("message", function(message){
     	if(command === 'eeee'){
     		throw "OnPurposeError";
     	}
+		
+		if(command.substring(0,2) === 'ok'){
+			try{
+				logCommand(user, 'ok');
+				commands.ok(message, okImgs);
+			} catch(err){
+				botlog.botlog(err);
+			}
+		};
     		
     	if(command === "bruciepie"){
     		try{
@@ -437,6 +447,9 @@ function loginSuccess(token)
 		
 		if(ragsImgs.length == 0)
 			initPictureArray(imgs.ragsDir, ragsImgs);
+			
+		if(okImgs.length == 0)
+			initPictureArray(imgs.okDir, okImgs);
 	}
 	catch(err)
 	{

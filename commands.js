@@ -149,6 +149,12 @@ exports.randomImage = function(message, arr){
 	message.client.sendFile(message.channel, bruceStream, "Brucie.png");
 };
 
+exports.ok = function(message, okImgs){
+	var index = Math.floor(Math.random() * okImgs.length);
+	var okStream = fs.createReadStream(okImgs[index]);
+	message.client.sendFile(message.channel, okStream, "ok.png");
+};
+
 exports.bruciepie = function(message, bruceImgs){
 	var index = Math.floor(Math.random() * bruceImgs.length);
 	var bruceStream = fs.createReadStream(bruceImgs[index]);
@@ -310,7 +316,7 @@ function manual(){
 	"\n" +
 	"\n----SIMPLE COMMANDS----" +
 	"\n!privilege <user>\t\t - to check your privilege" +
-	"\n!tweet <message>\t  - Tweet something out to the KSU Discord Twitter: " + config.twHandle +
+	"\n!tweet <message>\t  - Tweet something out to the Discord Twitter: " + config.twHandle +
 	"\n!love \t\t\t\t\t\t\t  - Print a loving and motivational message!" +
 	"\n!conch \t\t\t\t\t\t  - have the magic conch shell tell you your future" + 
 	"\n!game \t\t\t\t\t\t\t- Set the game cookiE_bot is playing" +
@@ -327,6 +333,7 @@ function manual(){
 	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
 	"\n!Rags \t\t\t\t\t\t	 - display a picture of medieval art" +
 	"\n!pangasm \t\t\t\t\t  - display PanChamp cutout" +
+	"\n!ok \t\t\t\t\t\t\t\t - give everyone that good shit" +
 	"\n" +
 	"\n----VIDEOS----" +
 	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +

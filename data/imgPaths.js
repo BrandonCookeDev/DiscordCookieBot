@@ -12,5 +12,6 @@ module.exports = {
 	ragsDir: ragsDir,
 	falconDir: falconDir,
 	thumbImg: thumbImg,
-	panImg: panImg
+	panImg: panImg,
+	okDir: okDir
 };
