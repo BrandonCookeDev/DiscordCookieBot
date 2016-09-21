@@ -25,6 +25,7 @@ var falconImgs = [];
 var bruceImgs  = [];
 var ragsImgs   = [];
 var okImgs	   = [];
+var waifuImgs  = [];
 
 /** NONSENSE **/
 /* FTU */
@@ -327,6 +328,14 @@ mybot.on("message", function(message){
     		}
     	}
     
+		if(command.substring(0,5) === 'waifu'){
+			try{
+    			logCommand(user, 'waifu');
+    			commands.waifu(message, waifuImgs);
+    		}catch(err){
+    			botlog.botlog(err);
+    		}
+		}
     	
     	
     	/*	
@@ -450,6 +459,9 @@ function loginSuccess(token)
 			
 		if(okImgs.length == 0)
 			initPictureArray(imgs.okDir, okImgs);
+			
+		if(waifuImgs.length == 0)
+			initPictureArray(imgs.waifuDir, waifuImgs);
 	}
 	catch(err)
 	{

@@ -149,6 +149,12 @@ exports.randomImage = function(message, arr){
 	message.client.sendFile(message.channel, bruceStream, "Brucie.png");
 };
 
+exports.waifu = function(message, waifuImgs){
+	var index = Math.floor(Math.random() * waifuImgs.length);
+	var waifuStream = fs.createReadStream(waifuImgs[index]);
+	message.client.sendFile(message.channel, waifuStream, "ok.png");
+};
+
 exports.ok = function(message, okImgs){
 	var index = Math.floor(Math.random() * okImgs.length);
 	var okStream = fs.createReadStream(okImgs[index]);
