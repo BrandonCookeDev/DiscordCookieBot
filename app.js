@@ -5,6 +5,7 @@ var cluster  = require("cluster");
 var express	 = require("express");
 var botlog   = require("./botlog");
 var commands = require("./commands");
+var register = require('./commandRegister');
 var urls	 = require("./data/urls");
 var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
@@ -35,20 +36,30 @@ var tyusUsername = 'karma';
 console.log("Running cookiE_bot...");
 
 /** EVENTS **/
+
+register.register('thumb', commands.thumb);
+
 mybot.on("message", function(message){
-    if(message.content === "ping")
-        mybot.reply(message, "pong");
-        
-    //EVENTS TAILORED TO COMMANDS GO BELOW
-    if(message.content.charAt(0) === "!")
+	if(message.content.charAt(0) === "!")
     {
     	var command  = message.content.substring(1).toLowerCase();
     	var parameter = null;
     	if(command.includes(" "))
     		parameter = message.content.substring(message.content.indexOf(" ") + 1);
-    	var user = message.author; 
+    	var user = message.author;
+	
+		register.execute(command, message, user, parameter);
+	}
+
+	/*
+    if(message.content === "ping")
+        mybot.reply(message, "pong");
+        
+    //EVENTS TAILORED TO COMMANDS GO BELOW
+     
     	
     	/** SERIOUS **/
+		/*
     	if(command.substring(0, 4) === "mute"){
     		try{
     			logCommand(user, 'mute');
@@ -159,7 +170,8 @@ mybot.on("message", function(message){
     	}
     	
     	/** SILLY **/
-    	if(command === "bracket"){
+    	/*
+		if(command === "bracket"){
     		logCommand(user, 'bracket');
     		commands.bracket(message);
     	}
@@ -349,11 +361,13 @@ mybot.on("message", function(message){
 	    	}
     	}
     	*/
-    }
+    //}
     //ANY EVENTS CONNECTED TO NON-COMMANDS GO BELOW
+	/*
     else
     {
     	/** USER BASED **/
+		/*
     	if(config.isFTU){
     		try{
 	    		commands.ftu(message, tyusUsername);
@@ -377,6 +391,7 @@ mybot.on("message", function(message){
     		}
     	});
     }
+	*/
 });
 
 mybot.on("ready", function(){

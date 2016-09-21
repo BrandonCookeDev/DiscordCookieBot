@@ -143,31 +143,31 @@ exports.love = function(message, user, tyusUsername){
 		});
 };
 
-exports.randomImage = function(message, arr){
+exports.randomImage = function(message, user, arr){
 	var index = Math.floor(Math.random() * arr.length);
 	var bruceStream = fs.createReadStream(arr[index]);
 	message.client.sendFile(message.channel, bruceStream, "Brucie.png");
 };
 
-exports.waifu = function(message, waifuImgs){
+exports.waifu = function(message, user, waifuImgs){
 	var index = Math.floor(Math.random() * waifuImgs.length);
 	var waifuStream = fs.createReadStream(waifuImgs[index]);
 	message.client.sendFile(message.channel, waifuStream, "ok.png");
 };
 
-exports.ok = function(message, okImgs){
+exports.ok = function(message, user, okImgs){
 	var index = Math.floor(Math.random() * okImgs.length);
 	var okStream = fs.createReadStream(okImgs[index]);
 	message.client.sendFile(message.channel, okStream, "ok.png");
 };
 
-exports.bruciepie = function(message, bruceImgs){
+exports.bruciepie = function(message, user, bruceImgs){
 	var index = Math.floor(Math.random() * bruceImgs.length);
 	var bruceStream = fs.createReadStream(bruceImgs[index]);
 	message.client.sendFile(message.channel, bruceStream, "Brucie.png");
 };
 
-exports.showmeyourmoves = function(message, falconImgs){
+exports.showmeyourmoves = function(message, user, falconImgs){
 	var index = Math.floor(Math.random() * falconImgs.length);
 	var falconStream = fs.createReadStream(falconImgs[index]);
 	message.client.sendFile(message.channel, falconStream, "CFalc.png");
@@ -214,7 +214,7 @@ exports.conch = function(message){
 	}
 };
 
-exports.google = function(message, searchCriteria){
+exports.google = function(message, user, searchCriteria){
 	try{
 		var url = "https://www.google.com/search?q=" + encodeURI(searchCriteria);	
 		console.log(url);
@@ -263,7 +263,7 @@ exports.privilege = function(message, username){
 	}
 };
 
-exports.buzz = function(message, words){
+exports.buzz = function(message, user, words){
 	if(!words){
 		//Flush array if no parameter
 		message.client.sendMessage(message.channel,"Buzz list flushed");
@@ -294,7 +294,7 @@ exports.buzz = function(message, words){
 	}
 };
 
-exports.frames = function(message, character){
+exports.frames = function(message, user, character){
 	if(!character || character == null || typeof character === 'undefined') 
 		message.client.reply(message, 'You need to put a character after the command');
 	else{
