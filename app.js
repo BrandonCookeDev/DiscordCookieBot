@@ -12,12 +12,12 @@ var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
 
-var seriousC   = require('./commands/seriousCommands');
-var dumbC      = require('./commands/dumbCommands');
-var copypastaC = require('./commands/copypastaCommands');
-var imageC     = require('./commands/imageCommands');
-var modeC      = require('./commands/modeCommands');
-var videoC     = require('./commands/videoCommands');
+var seriousCmd   = require('./commands/seriousCommands');
+var dumbCmd      = require('./commands/dumbCommands');
+var copypastaCmd = require('./commands/copypastaCommands');
+var imageCmd     = require('./commands/imageCommands');
+var modeCmd      = require('./commands/modeCommands');
+var videoCmd     = require('./commands/videoCommands');
 
 var mybot 	 = new Discord.Client();
 
@@ -40,45 +40,48 @@ var tyusUsername = 'karma';
 console.log("Running cookiE_bot...");
 
 /** EVENTS **/
+/** REGISTER TEXT EVENTS USING 
+reg.register(<text you're searching for>, <function to be called>) 
+**/
 
 //IMAGES
-reg.register('thumb', commands.thumb);
-reg.register('ok', commands.ok);
-reg.register('pangasm', commands.panGasm);
-reg.register('rags', commands.rags);
-reg.register('waifu', commands.waifu);
-reg.register('bruciepie', commands.bruciepie);
-reg.register('showmeyourmoves', commands.showmeyourmoves);
+reg.register('thumb', imageCmd.thumb);
+reg.register('ok', imageCmd.ok);
+reg.register('pangasm', imageCmd.panGasm);
+reg.register('rags', imageCmd.rags);
+reg.register('waifu', imageCmd.waifu);
+reg.register('bruciepie', imageCmd.bruciepie);
+reg.register('showmeyourmoves', imageCmd.showmeyourmoves);
 
 //SHITPOST COPYPASTA
-reg.register('fuckluigi', commands.fuckLuigi);
-reg.register('saltytears', commands.saltyTears);
-reg.register('plagueis', commands.plagueis);
+reg.register('fuckluigi', copypastaCmd.fuckLuigi);
+reg.register('saltytears', copypastaCmd.saltyTears);
+reg.register('plagueis', copypastaCmd.plagueis);
 
 //VIDEO
-reg.register('suhdude', commands.suhdude);
+reg.register('suhdude', videoCmd.suhdude);
 
 //DUMB COMMANDS
-reg.register('privilege', commands.privilege);
-reg.register('smashdat', commands.smashDat);
-reg.register('love', commands.love);
-reg.register('melee', commands.melee);
-reg.register('conch', commands.conch);
+reg.register('privilege', dumbCmd.privilege);
+reg.register('smashdat', dumbCmd.smashDat);
+reg.register('love', dumbCmd.love);
+reg.register('melee', dumbCmd.melee);
+reg.register('conch', dumbCmd.conch);
 
 //SERIOUS
-reg.register('help', commands.help);
-reg.register('mute', commands.mute);
-reg.register('game', commands.game);
-reg.register('google', commands.google);
-reg.register('tweet', commands.tweet);
-reg.register('avatar', commands.avatar);
-reg.register('frames', commands.frames);
-reg.register('request', commands.request);
-reg.register('cookierepo', commands.cookieRepo);
+reg.register('help', seriousCmd.help);
+reg.register('mute', seriousCmd.mute);
+reg.register('game', seriousCmd.game);
+reg.register('google', seriousCmd.google);
+reg.register('tweet', seriousCmd.tweet);
+reg.register('avatar', seriousCmd.avatar);
+reg.register('frames', seriousCmd.frames);
+reg.register('request', seriousCmd.request);
+reg.register('cookierepo', seriousCmd.cookieRepo);
 
 //MODES
-reg.register('ftu', commands.ftumode);
-reg.register('shittalk', commands.shittalkmode);
+reg.register('ftu', modeCmd.ftumode);
+reg.register('shittalk', modeCmd.shittalkmode);
 
 mybot.on("message", function(message){
 	if(message.content.charAt(0) === "!")
