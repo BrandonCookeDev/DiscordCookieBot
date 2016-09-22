@@ -1,81 +1,55 @@
 var fs 		 = require('fs');
 var request	 = require('request').defaults({encoding: null});
+
 var botlog   = require('./botlog');
 var urls	 = require("./data/urls");
 var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
-var twitter  = require('./twitter.discord.js');
+
+var seriousC   = require('./commands/seriousCommands');
+var dumbC      = require('./commands/dumbCommands');
+var copypastaC = require('./commands/copypastaCommands');
+var imageC     = require('./commands/imageCommands');
+var modeC      = require('./commands/modeCommands');
+var videoC     = require('./commands/videoCommands');
+var twitterC   = require('./twitter.discord.js');
 
 /** SERIOUS **/
 exports.repo = function(message){
-	message.client.sendMessage(message.channel, urls.streamControl);
+	seriousC.repo(message);
 };
 
 exports.cookieRepo = function(message){
-	message.client.sendMessage(message.channel, urls.cookieControl);
-};
-
-exports.mute = function(message, user){
-	
+	seriousC.cookieRepo(message);
 };
 
 exports.request = function(message, user){
-	message.client.sendMessage(message.channel, urls.request);
+	seriousC.request(message, user);
 }
+
+exports.tweet = function(message, user, content){
+    twitter.tweet(message, content);
+};
+
+exports.mute = function(message, user){
+	// TODO implement this
+
+};
 
 exports.game = function(message, user, game){
-	try{
-		//console.log(message.author.game['name']);
-		
-		//if(message.author.game == null){
-		//	console.log('yeah it\'s null');
-		//	var oGame = new Object();
-		//	oGame.name = game;
-		//	message.author.game = oGame;
-		//};
-		
-		//message.author.game['name'] = game;
-		
-		message.author.client.setStatus('online', game, function(err){
-			console.log(err);
-			botlog.botlog(err);
-		});
-	}catch(err){
-		console.log(err);
-	}
+	seriousC.game(message, user, game);
 };
-
-
 
 exports.avatar = function(message, url){
-	var imgBuffer = null;
-	request.get(url, function(err, response, body){
-		console.log('body: ' + (body instanceof Buffer));
-		
-		message.client.setAvatar(body, function(err){
-			console.log(err);
-			botlog.botlog(err);
-		});
-	});
-	
-	//while(!(imgBuffer instanceof Buffer)){console.log(imgBuffer)}
-	//var avatar = new Buffer(imgBuffer.toString('base64'), 'base64');
+	seriousC.avatar(message, url);
 };
 
-/** SILLY **/
-exports.plagueis = function(message){
-	message.client.sendMessage(message.channel, arrays.plagueis);
-}
-
-exports.saltyTears = function(message){
-	message.client.sendMessage(message.channel, arrays.saltyTears);
+exports.frames = function(message, user, character){
+	seriousC.frames(message, user, character);
 };
 
-exports.fuckLuigi = function(message){
-	message.client.sendMessage(message.channel, arrays.fuckLuigi);
-}
-
+/** MODES **/
 exports.ftumode = function(message, tyusUsername) {
 	if (!(message.author.username === tyusUsername)) {
 		if (config.isFTU) {
@@ -124,30 +98,7 @@ exports.shittalk = function(message){
 	}	
 };
 
-exports.melee = function(message){
-	var arr = arrays.meleeTips;
-	var index = Math.floor(Math.random() * arr.length);
-	var meleeMsg = arr[index];
-	message.client.sendMessage(message.channel, meleeMsg, function(){
-		console.log(err);
-	});
-};
-
-exports.love = function(message, user, tyusUsername){
-	var arr = arrays.love;
-	if(!(user.username === tyusUsername)){
-		var index = Math.floor(Math.random() * arr.length);
-		var loveMsg = arr[index];
-		message.client.reply(message, loveMsg, function(err){
-			console.log(err);
-		});
-	}
-	else
-		message.client.reply(message, '.....', function(err){
-			console.log(err);
-		});
-};
-
+/** IMAGES **/
 exports.randomImage = function(message, user, arr){
 	var index = Math.floor(Math.random() * arr.length);
 	var imgStream = fs.createReadStream(arr[index]);
@@ -194,10 +145,30 @@ exports.panGasm = function(message){
 	message.client.sendFile(message.channel, panStream, 'PanGasm.png');
 }
 
-exports.bracket = function(message){
-	message.client.sendMessage(message.channel, arrays.bracket, function(err){
-		botlog.botlog(err);
+
+/** DUMB **/
+exports.melee = function(message){
+	var arr = arrays.meleeTips;
+	var index = Math.floor(Math.random() * arr.length);
+	var meleeMsg = arr[index];
+	message.client.sendMessage(message.channel, meleeMsg, function(){
+		console.log(err);
 	});
+};
+
+exports.love = function(message, user, tyusUsername){
+	var arr = arrays.love;
+	if(!(user.username === tyusUsername)){
+		var index = Math.floor(Math.random() * arr.length);
+		var loveMsg = arr[index];
+		message.client.reply(message, loveMsg, function(err){
+			console.log(err);
+		});
+	}
+	else
+		message.client.reply(message, '.....', function(err){
+			console.log(err);
+		});
 };
 
 exports.smashDat = function(message){
@@ -205,10 +176,6 @@ exports.smashDat = function(message){
 		botlog.botlog(err);
 	})
 }
-
-exports.suhdude = function(message){
-	message.client.sendMessage(message.channel, urls.suhdudeUrl);
-};
 
 exports.conch = function(message){
 	if(message.content.includes('what do I do')){
@@ -305,28 +272,31 @@ exports.buzz = function(message, user, words){
 	}
 };
 
-exports.frames = function(message, user, character){
-	if(!character || character == null || typeof character === 'undefined') 
-		message.client.reply(message, 'You need to put a character after the command');
-	else{
-		try{
-			var data = arrays.meleeFrames[character.toLowerCase()];
-			console.log(data);
-			message.client.sendMessage(message.channel, data);
-		} catch(err){
-			console.log(err);
-		}
-	}
+
+/** COPYPASTA **/
+exports.plagueis = function(message){
+	copypastaC.plagueis(message)
+}
+
+exports.saltyTears = function(message){
+	copypastaC.saltyTears(message);
 };
 
+exports.fuckLuigi = function(message){
+	copypastaC.fuckLuigi(message);
+}
+
+/** VIDEO **/
+exports.suhdude = function(message){
+    // TODO Implement video module
+	message.client.sendMessage(message.channel, urls.suhdudeUrl);
+};
+
+/** HELP **/
 exports.help = function(message){
 	message.client.sendMessage(message.channel, manual(config.version), function(err){
 		console.log(err);
 	});
-};
-
-exports.tweet = function(message, user, content){
-    twitter.tweet(message, content);
 };
 
 function manual(){
