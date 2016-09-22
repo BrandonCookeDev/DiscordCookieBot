@@ -46,4 +46,9 @@ exports.thumb = function(message){
 exports.panGasm = function(message){
 	var panStream = fs.createReadStream(imgs.panImg);
 	message.client.sendFile(message.channel, panStream, 'PanGasm.png');
-}
+};
+
+exports.dolphin = function(message){
+	var dolphinStream = fs.createReadStream(imgs.dolphinImg);
+	message.client.sendFile(message.channel, dolphinStream, 'dolphinKing.png');
+};

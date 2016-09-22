@@ -48,6 +48,7 @@ reg.register(<text you're searching for>, <function to be called>)
 reg.register('thumb', imageCmd.thumb);
 reg.register('ok', imageCmd.ok);
 reg.register('pangasm', imageCmd.panGasm);
+reg.register('dolphin', imageCmd.dolphin);
 reg.register('rags', imageCmd.rags);
 reg.register('waifu', imageCmd.waifu);
 reg.register('bruciepie', imageCmd.bruciepie);

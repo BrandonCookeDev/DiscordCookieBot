@@ -7,6 +7,7 @@ var waifuDir   = projectDir + "\\content\\images\\Waifu";
 var okDir	   = projectDir + "\\content\\images\\OK";
 var thumbImg   = projectDir + "\\content\\images\\thumb.jpg";
 var panImg	   = projectDir + "\\content\\images\\PanGasm.png";
+var dolphinImg = projectDir + "\\content\\images\\dolphin.jpg";
 
 module.exports = {
 	bruceDir: bruceDir,
@@ -14,6 +15,7 @@ module.exports = {
 	falconDir: falconDir,
 	thumbImg: thumbImg,
 	panImg: panImg,
+	dolphinImg: dolphinImg,
 	waifuDir: waifuDir,
 	okDir: okDir
 };
