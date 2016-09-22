@@ -11,9 +11,3 @@ exports.saltyTears = function(message){
 exports.fuckLuigi = function(message){
 	message.client.sendMessage(message.channel, arrays.fuckLuigi);
 };
-
-module.exports = {
-    plagueis: plagueis,
-    saltyTears: saltyTears,
-    fuckLuigi: fuckLuigi
-};

@@ -3,6 +3,7 @@ var Discord  = require("discord.js");
 var fs 		 = require("fs");
 var cluster  = require("cluster");
 var express	 = require("express");
+
 var botlog   = require("./botlog");
 var commands = require("./commands");
 var reg		 = require('./commandRegister');
@@ -10,6 +11,7 @@ var urls	 = require("./data/urls");
 var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
+
 var mybot 	 = new Discord.Client();
 
 var twitter  = null;
@@ -22,7 +24,6 @@ try{
 /** CONFIG **/
 var servers    = [];
 var channelMap = {};
-
 
 /** NONSENSE **/
 /* FTU */

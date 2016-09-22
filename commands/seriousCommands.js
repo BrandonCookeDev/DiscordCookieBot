@@ -1,4 +1,5 @@
-var urls = require('../data/urls');
+var urls 	= require('../data/urls');
+var arrays	= require('../data/arrays');
 
 exports.repo = function(message){
 	message.client.sendMessage(message.channel, urls.streamControl);
