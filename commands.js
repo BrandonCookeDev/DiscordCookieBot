@@ -5,6 +5,7 @@ var urls	 = require("./data/urls");
 var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
+var twitter  = require('./twitter.discord.js');
 
 /** SERIOUS **/
 exports.repo = function(message){
@@ -322,6 +323,10 @@ exports.help = function(message){
 	message.client.sendMessage(message.channel, manual(config.version), function(err){
 		console.log(err);
 	});
+};
+
+exports.tweet = function(message, user, content){
+    twitter.tweet(message, content);
 };
 
 function manual(){
