@@ -12,6 +12,13 @@ var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
 
+var seriousC   = require('./commands/seriousCommands');
+var dumbC      = require('./commands/dumbCommands');
+var copypastaC = require('./commands/copypastaCommands');
+var imageC     = require('./commands/imageCommands');
+var modeC      = require('./commands/modeCommands');
+var videoC     = require('./commands/videoCommands');
+
 var mybot 	 = new Discord.Client();
 
 var twitter  = null;

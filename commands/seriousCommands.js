@@ -11,7 +11,24 @@ exports.cookieRepo = function(message){
 
 exports.request = function(message, user){
 	message.client.sendMessage(message.channel, urls.request);
-}
+};
+
+exports.google = function(message, user, searchCriteria){
+	try{
+		var url = "https://www.google.com/search?q=" + encodeURI(searchCriteria);	
+		console.log(url);
+		message.client.sendMessage(message.channel, 
+									"Google search for " + searchCriteria + ": " + url,
+									function(err){
+										botlog.botlog(err);
+									});
+		
+		//var win = window.open(url, '_blank');
+	  	//win.focus();
+	}catch(err){
+		console.log(err);
+	}
+};
 
 exports.game = function(message, user, game){
 	try{
