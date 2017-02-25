@@ -1,4 +1,6 @@
 /** IMPORTS **/
+var credentials = require('./credentials');
+
 var Discord  = require("discord.js");
 var fs 		 = require("fs");
 var cluster  = require("cluster");
@@ -163,14 +165,14 @@ if (cluster.isWorker) {
 		
 		/** LOGIN **/		
 		if(config.target === "test")
-			mybot.login("Mjg1MTQyMjY4OTkyODE1MTA0.C5N28g.RdUsEOnLEyR2MGsOPRU40TUjqfk")
+			mybot.login(credentials.test)
 				.then(loginSuccess).catch(function(err){
 					console.log(err);
 					sleep(5000);
 					process.exit();
 			}); 	  //TEST
 		else if(config.target === "prod")
-			mybot.login('Mjg1MTE2MzIxMDU2ODE3MTUz.C5NtiQ.pYO-o0ZAUNJaRp7-0SddXk1zsh0')
+			mybot.login(credentials.prod)
 			  	.then(loginSuccess).catch(function(){
 					sleep(5000);
 					process.exit();
