@@ -129,7 +129,7 @@ mybot.on("ready", function(){
 
 mybot.on("disconnected", function(err){
 	console.log("disconnected from the server. Attempting reconnection.");
-	
+    mybot.user.setStatus('invisible');
 	process.exit();
 	//config.connected = false;
 	//retryLogin(mybot);
@@ -137,7 +137,9 @@ mybot.on("disconnected", function(err){
 
 mybot.on("error", function(err){
 	if(err)
-		console.log("A large error occured: " + err);	
+		console.log("A large error occured: " + err);
+	mybot.user.setStatus('invisible');
+
 	process.exit();
 	//config.connected = false;
 	//retryLogin(mybot);
@@ -188,6 +190,9 @@ if (cluster.isWorker) {
 function loginSuccess(token)
 {	
 	try{
+		// SET STATUS TO ONLINE
+		mybot.user.setStatus('online');
+
 		//SET CONFIG
 		console.log("Connected to server!");
 		config.connected = true;
