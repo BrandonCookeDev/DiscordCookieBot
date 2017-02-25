@@ -132,9 +132,11 @@ function manual(){
     return man;
 }
 
+/*
 exports.testCommands = function(message, user){
 	const register = require('../commandRegister');
 	register.registeredCmds.forEach(function(cmd){
 
 	})
 };
+	*/
