@@ -108,7 +108,7 @@ exports.thumb = function(message){
 
 exports.panGasm = function(message){
 	imageC.panGasm(message);
-}
+};
 
 
 /** DUMB **/
@@ -148,7 +148,7 @@ exports.saltyTears = function(message){
 
 exports.fuckLuigi = function(message){
 	copypastaC.fuckLuigi(message);
-}
+};
 
 /** VIDEO **/
 exports.suhdude = function(message){
@@ -156,50 +156,3 @@ exports.suhdude = function(message){
 	message.client.sendMessage(message.channel, urls.suhdudeUrl);
 };
 
-/** HELP **/
-exports.help = function(message){
-	message.client.sendMessage(message.channel, manual(config.version), function(err){
-		console.log(err);
-	});
-};
-
-function manual(){
-	var man = "cookiE_bot Version " + config.version + 
-	"\nUSAGE: \n\t![command] [optional:parameter]" +
-	"\n\nCommands (not case sensative):" +
-	"\n!Help \t\t\t\t\t\t\t - Print the manual for cookiE_bot" +
-	"\n!request \t\t\t\t\t  - Print url to submit new cookiE bot functionality requests" +
-	"\n" +
-	"\n----SIMPLE COMMANDS----" +
-	"\n!privilege <user>\t\t - to check your privilege" +
-	"\n!melee \t\t\t\t\t\t  - print a random melee tip" +
-	"\n!tweet <message>\t  - Tweet something out to the Discord Twitter: " + config.twHandle +
-	"\n!love \t\t\t\t\t\t\t  - Print a loving and motivational message!" +
-	"\n!conch \t\t\t\t\t\t  - have the magic conch shell tell you your future" + 
-	"\n!game \t\t\t\t\t\t\t- Set the game cookiE_bot is playing" +
-	"\n!frames <character>   - Get the url to a melee character's frame data" + 
-	"\n!google <keyword> \t- Google search on keyword" +
-	"\n!cookieRepo \t\t\t\t - Print the url for the code repository for cookiE bot" +
-	"\n" + 
-	"\n----COPYPASTA----" +
-	"\n!saltyTears \t\t\t\t   - Print a great message full of salt" +
-	"\n!fuckLuigi \t\t\t\t     - Print a great message full of luigi" +
-	"\n!plagueis \t\t\t\t\t   - Print copypasta about Lord Plagueis" +
-	"\n" +
-	"\n----IMAGES----" +
-	"\n!ShowMeYourMoves - display a picture of C. Falcon" +
-	"\n!BruciePie \t\t\t\t\t - display a picture of Bruce" +
-	"\n!Rags \t\t\t\t\t\t	 - display a picture of medieval art" +
-	"\n!pangasm \t\t\t\t\t  - display PanChamp cutout" +
-	"\n!waifu \t\t\t\t\t\t    - display a random waifu" +
-	"\n!ok \t\t\t\t\t\t\t\t - give everyone that good shit" +
-	"\n" +
-	"\n----VIDEOS----" +
-	"\n!SuhDude \t\t\t\t\t - return embeded youtube video for SuhDude" +
-	"\n" +
-	"\n----MODES----" +
-	"\n!shittalk \t\t\t\t\t\t - Activate shittalk mode" +
-	//"\n!FTU \t\t\t\t\t\t\t  - true/false switch for FTU mode" +
-	"\n";
-	return man;
-};

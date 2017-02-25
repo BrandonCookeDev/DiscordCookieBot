@@ -21,6 +21,7 @@ var videoCmd     = require('./commands/videoCommands');
 
 var mybot 	 = new Discord.Client();
 
+
 var twitter  = null;
 try{	
 	twitter	 = require("./twitter.discord");
@@ -126,7 +127,7 @@ mybot.on("ready", function(){
 	console.log("Ready event hit");
 });
 
-mybot.on("disconnected", function(){
+mybot.on("disconnected", function(err){
 	console.log("disconnected from the server. Attempting reconnection.");
 	
 	process.exit();
@@ -160,15 +161,17 @@ if (cluster.isWorker) {
 		
 		/** LOGIN **/		
 		if(config.target === "test")
-			mybot.login("golee5191@hotmail.com", "botmedaddy!").then(loginSuccess).catch(function(err){
-				console.log(err);
-				sleep(5000);
-				process.exit();
-			}) 	  //TEST 
+			mybot.login("Mjg1MTQyMjY4OTkyODE1MTA0.C5N28g.RdUsEOnLEyR2MGsOPRU40TUjqfk")
+				.then(loginSuccess).catch(function(err){
+					console.log(err);
+					sleep(5000);
+					process.exit();
+			}); 	  //TEST
 		else if(config.target === "prod")
-			mybot.login("ckscookiessbm@gmail.com", "botmedaddy!").then(loginSuccess).catch(function(){
-				sleep(5000);
-				process.exit();
+			mybot.login('Mjg1MTE2MzIxMDU2ODE3MTUz.C5NtiQ.pYO-o0ZAUNJaRp7-0SddXk1zsh0')
+			  	.then(loginSuccess).catch(function(){
+					sleep(5000);
+					process.exit();
 			});   //PROD
 		else
 		{
