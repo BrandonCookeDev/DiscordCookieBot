@@ -1,4 +1,6 @@
 /** IMPORTS **/
+var credentials = require('./credentials');
+
 var Discord  = require("discord.js");
 var fs 		 = require("fs");
 var cluster  = require("cluster");
@@ -20,6 +22,7 @@ var modeCmd      = require('./commands/modeCommands');
 var videoCmd     = require('./commands/videoCommands');
 
 var mybot 	 = new Discord.Client();
+
 
 var twitter  = null;
 try{	
@@ -126,9 +129,9 @@ mybot.on("ready", function(){
 	console.log("Ready event hit");
 });
 
-mybot.on("disconnected", function(){
+mybot.on("disconnected", function(err){
 	console.log("disconnected from the server. Attempting reconnection.");
-	
+    mybot.user.setStatus('invisible');
 	process.exit();
 	//config.connected = false;
 	//retryLogin(mybot);
@@ -136,7 +139,9 @@ mybot.on("disconnected", function(){
 
 mybot.on("error", function(err){
 	if(err)
-		console.log("A large error occured: " + err);	
+		console.log("A large error occured: " + err);
+	mybot.user.setStatus('invisible');
+
 	process.exit();
 	//config.connected = false;
 	//retryLogin(mybot);
@@ -160,15 +165,17 @@ if (cluster.isWorker) {
 		
 		/** LOGIN **/		
 		if(config.target === "test")
-			mybot.login("golee5191@hotmail.com", "botmedaddy!").then(loginSuccess).catch(function(err){
-				console.log(err);
-				sleep(5000);
-				process.exit();
-			}) 	  //TEST 
+			mybot.login(credentials.test)
+				.then(loginSuccess).catch(function(err){
+					console.log(err);
+					sleep(5000);
+					process.exit();
+			}); 	  //TEST
 		else if(config.target === "prod")
-			mybot.login("ckscookiessbm@gmail.com", "botmedaddy!").then(loginSuccess).catch(function(){
-				sleep(5000);
-				process.exit();
+			mybot.login(credentials.prod)
+			  	.then(loginSuccess).catch(function(){
+					sleep(5000);
+					process.exit();
 			});   //PROD
 		else
 		{
@@ -185,6 +192,9 @@ if (cluster.isWorker) {
 function loginSuccess(token)
 {	
 	try{
+		// SET STATUS TO ONLINE
+		mybot.user.setStatus('online');
+
 		//SET CONFIG
 		console.log("Connected to server!");
 		config.connected = true;

@@ -1,10 +1,13 @@
+var common = require('./common');
+var arrays = require('../data/arrays');
+
 exports.melee = function(message){
 	var arr = arrays.meleeTips;
 	var index = Math.floor(Math.random() * arr.length);
 	var meleeMsg = arr[index];
-	message.client.sendMessage(message.channel, meleeMsg, function(){
-		console.log(err);
-	});
+	message.channel.sendMessage(meleeMsg)
+        .then(common.success)
+        .catch(common.error);
 };
 
 exports.love = function(message, user, tyusUsername){
@@ -12,34 +15,38 @@ exports.love = function(message, user, tyusUsername){
 	if(!(user.username === tyusUsername)){
 		var index = Math.floor(Math.random() * arr.length);
 		var loveMsg = arr[index];
-		message.client.reply(message, loveMsg, function(err){
-			console.log(err);
-		});
+		message.reply(loveMsg)
+            .then(common.success)
+            .catch(common.error);
 	}
 	else
-		message.client.reply(message, '.....', function(err){
-			console.log(err);
-		});
+		message.reply('.....')
+			.then(common.success)
+			.catch(common.error);
 };
 
 exports.smashDat = function(message){
-	message.client.sendMessage(message.channel, arrays.smashDat, function(err){
-		botlog.botlog(err);
-	})
+	message.channel.sendMessage(arrays.smashDat)
+        .then(common.success)
+        .catch(common.error);
 };
 
 exports.conch = function(message){
 	if(message.content.includes('what do I do')){
-		message.client.sendMessage(message.channel, 'Nothing.');
+		message.channel.sendMessage('Nothing.')
+            .then(common.success)
+            .catch(common.error);
 	}
 	else if(message.content.includes('which one')){
-		message.client.sendMessage(message.channel, 'Neither.');
+		message.channel.sendMessage('Neither.')
+            .then(common.success)
+            .catch(common.error);
 	}
 	else{	
 		var index = Math.floor(Math.random() * arrays.conch.length);
 		var conchMsg = arrays.conch[index];
 		console.log(conchMsg);
-		message.client.sendMessage(message.channel, conchMsg);
+		message.channel.sendMessage(conchMsg);
 	}
 };
 
@@ -50,23 +57,35 @@ exports.privilege = function(message, user, username){
 		switch(rand){
 			case 100:
 				var classA = "Pangendered Pyro Fox Demigod";
-				message.client.sendMessage(message.channel, "Pirv: 100. you are a " + classA + " " + username);
+				message.channel.sendMessage( "Pirv: 100. you are a " + classA + " " + username)
+                    .then(common.success)
+                    .catch(common.error);
 				break;
 			case 1:
 				var classZ = "Cisgender Male Scum";
-				message.client.sendMessage(message.channel, "Priv: 1, you are " + classZ + " " + username);
+				message.channel.sendMessage("Priv: 1, you are " + classZ + " " + username)
+                    .then(common.success)
+                    .catch(common.error);
 				break;
 			default:
 				if(rand < 50){
 					if(!username)
-						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". Check your privilege, fam.");
+						message.channel.sendMessage( "Your Priv: " + rand + ". Check your privilege, fam.")
+                            .then(common.success)
+                            .catch(common.error);
 					else 
-						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". " + username + ", check your privilege, fam.");
+						message.channel.sendMessage( "Your Priv: " + rand + ". " + username + ", check your privilege, fam.")
+                            .then(common.success)
+                            .catch(common.error);
 				}else{
 					if(!username)
-						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, bro");
+						message.channel.sendMessage( "Your Priv: " + rand + ". You aight, bro")
+                            .then(common.success)
+                            .catch(common.error);
 					else
-						message.client.sendMessage(message.channel, "Your Priv: " + rand + ". You aight, " + username);
+						message.channel.sendMessage( "Your Priv: " + rand + ". You aight, " + username)
+                            .then(common.success)
+                            .catch(common.error);
 				}
 				break;
 		}
@@ -78,7 +97,9 @@ exports.privilege = function(message, user, username){
 exports.buzz = function(message, user, words){
 	if(!words){
 		//Flush array if no parameter
-		message.client.sendMessage(message.channel,"Buzz list flushed");
+		message.channel.sendMessage("Buzz list flushed")
+            .then(common.success)
+            .catch(common.error);
 		arrays.buzzedWords = [];
 	}
 	else{

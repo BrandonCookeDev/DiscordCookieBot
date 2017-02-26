@@ -1,16 +1,21 @@
 var config 	= require('../data/config');
 var arrays	= require('../data/arrays');
+var common	= require('./common');
 
 exports.ftumode = function(message, tyusUsername) {
 	if (!(message.author.username === tyusUsername)) {
 		if (config.isFTU) {
 			config.isFTU = false;
-			message.client.sendMessage(message.channel, "FTU mode is now disabled!");
+			message.channel.sendMessage("FTU mode is now disabled!")
+                .then(common.success)
+                .catch(common.error);
 		} else {
 			config.isFTU = true;
-			message.client.sendMessage(message.channel, "FTU mode is now enabled!");
+			message.channel.sendMessage("FTU mode is now enabled!")
+                .then(common.success)
+                .catch(common.error);
 		}
-	};
+	}
 };
 
 exports.ftu = function(message, tyusUsername) {
@@ -20,7 +25,9 @@ exports.ftu = function(message, tyusUsername) {
 	if (name === tyusUsername)//|| name === 'cookie')
 	{
 		var index = Math.floor((Math.random() * arr.length));
-		message.client.reply(message, arr[index]);
+		message.reply(arr[index])
+            .then(common.success)
+            .catch(common.error);
 	}
 };
 
@@ -28,11 +35,15 @@ exports.shittalkmode = function(message){
 	if(!config.isShittalk) {
 		config.isShittalk = true;
 		config.shittalkCounter = (Math.floor(Math.random() * config.shittalkMaxMessages) + 1);
-		message.client.sendMessage(message.channel, 'Shittalk mode is now enabled!');
+		message.channel.sendMessage('Shittalk mode is now enabled!')
+            .then(common.success)
+            .catch(common.error);
 	} else{
 		config.isShittalk = false;
 		config.shittalkCounter = 0;
-		message.client.sendMessage(message.channel, 'Shittalk mode is now disabled!');
+		message.channel.sendMessage('Shittalk mode is now disabled!')
+            .then(common.success)
+            .catch(common.error);
 	}
 };
 
@@ -43,7 +54,9 @@ exports.shittalk = function(message){
 	else{
 		var arr = arrays.tyusResponses;
 		var index = Math.floor((Math.random() * arr.length));
-		message.client.reply(message, arr[index]);
+		message.reply(arr[index])
+            .then(common.success)
+            .catch(common.error);
 		config.shittalkCounter = (Math.floor(Math.random() * config.shittalkMaxMessages) + 1);
 	}	
 };

@@ -1,13 +1,20 @@
 var arrays   = require('../data/arrays');
+var common	 = require('./common');
 
 exports.plagueis = function(message){
-	message.client.sendMessage(message.channel, arrays.plagueis);
+	message.channel.sendMessage(arrays.plagueis)
+        .then(common.success)
+        .catch(common.error);
 };
 
 exports.saltyTears = function(message){
-	message.client.sendMessage(message.channel, arrays.saltyTears);
+	message.channel.sendMessage(arrays.saltyTears)
+        .then(common.success)
+        .catch(common.error);
 };
 
 exports.fuckLuigi = function(message){
-	message.client.sendMessage(message.channel, arrays.fuckLuigi);
+	message.channel.sendMessage(arrays.fuckLuigi)
+        .then(common.success)
+        .catch(common.error);
 };

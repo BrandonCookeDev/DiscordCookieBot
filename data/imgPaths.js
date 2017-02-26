@@ -1,13 +1,15 @@
+var path = require('path');
+
 /*** IMAGES ***/
-var projectDir = __dirname + '\\..\\'
-var bruceDir   = projectDir + "\\content\\images\\Bruce";
-var falconDir  = projectDir + "\\content\\images\\Falcon";
-var ragsDir	   = projectDir + "\\content\\images\\Medieval";
-var waifuDir   = projectDir + "\\content\\images\\Waifu";
-var okDir	   = projectDir + "\\content\\images\\OK";
-var thumbImg   = projectDir + "\\content\\images\\thumb.jpg";
-var panImg	   = projectDir + "\\content\\images\\PanGasm.png";
-var dolphinImg = projectDir + "\\content\\images\\dolphin.jpg";
+var projectDir = path.join(__dirname, '..');
+var bruceDir   = path.join(projectDir, "content","images","Bruce");
+var falconDir  = path.join(projectDir, "content","images","Falcon");
+var ragsDir	   = path.join(projectDir, "content","images","Medieval");
+var waifuDir   = path.join(projectDir, "content","images","Waifu");
+var okDir	   = path.join(projectDir, "content","images","OK");
+var thumbImg   = path.join(projectDir, "content","images","thumb.jpg");
+var panImg	   = path.join(projectDir, "content","images","PanGasm.png");
+var dolphinImg = path.join(projectDir, "content","images","dolphin.jpg");
 
 module.exports = {
 	bruceDir: bruceDir,
