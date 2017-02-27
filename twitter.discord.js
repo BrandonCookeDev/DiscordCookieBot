@@ -1,6 +1,7 @@
 var discord = require('discord.js');
 var twitter = require('twitter');
 var props	= require('./twitter.properties');
+var log		= require('./log');
 
 var CHAR_LIMIT = 140;
 

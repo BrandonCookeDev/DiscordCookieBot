@@ -2,6 +2,7 @@ var urls 	= require('../data/urls');
 var arrays	= require('../data/arrays');
 var common	= require('./common');
 var config  = require('../data/config');
+var log		= require('../log');
 
 exports.repo = function(message){
 	message.channel.sendMessage(urls.streamControl)
@@ -27,7 +28,7 @@ exports.google = function(message, user, searchCriteria){
 		console.log(url);
 		message.channel.sendMessage("Google search for " + searchCriteria + ": " + url,
 									function(err){
-										botlog.botlog(err);
+										log.err(err);
 									})
 									.then(common.success)
 									.catch(common.error);
@@ -58,7 +59,7 @@ exports.avatar = function(message, url){
 
 		message.client.setAvatar(body, function(err){
 			console.log(err);
-			botlog.botlog(err);
+			log.err(err);
 		});
 	});
 

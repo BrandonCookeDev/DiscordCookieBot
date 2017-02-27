@@ -6,7 +6,7 @@ var fs 		 = require("fs");
 var cluster  = require("cluster");
 var express	 = require("express");
 
-var botlog   = require("./botlog");
+var log   = require("./log");
 var commands = require("./commands");
 var reg		 = require('./commandRegister');
 var urls	 = require("./data/urls");
@@ -22,13 +22,14 @@ var modeCmd      = require('./commands/modeCommands');
 var videoCmd     = require('./commands/videoCommands');
 
 var mybot 	 = new Discord.Client();
-
+log.info('Beginning cookiE bot');
 
 var twitter  = null;
 try{	
 	twitter	 = require("./twitter.discord");
 } catch(err){
-	console.log("twitter unavailable");	
+	console.error("twitter unavailable");
+	log.warn('Twitter Unavailable');
 }
 
 /** CONFIG **/
@@ -110,7 +111,7 @@ mybot.on("message", function(message){
     		try{
 	    		commands.ftu(message, tyusUsername);
 			}catch(err){
-				botlog.botlog(err);
+				log.err(err);
 			}    		
     	}
     	
@@ -118,7 +119,7 @@ mybot.on("message", function(message){
     		try{
     			commands.shittalk(message);
     		} catch(err){
-    			console.log(err);
+    			log.err(err);
     		}
     	}
     }
@@ -127,9 +128,12 @@ mybot.on("message", function(message){
 mybot.on("ready", function(){
 	console.log("Targetting " + config.target + "...");
 	console.log("Ready event hit");
+	log.info("Targetting " + config.target + "...");
+	log.info('Ready event hit')
 });
 
 mybot.on("disconnected", function(err){
+	log.err(err);
 	console.log("disconnected from the server. Attempting reconnection.");
     mybot.user.setStatus('invisible');
 	process.exit();
@@ -138,13 +142,12 @@ mybot.on("disconnected", function(err){
 });
 
 mybot.on("error", function(err){
-	if(err)
-		console.log("A large error occured: " + err);
+	if(err) {
+        console.log("A large error occured: " + err);
+		log.err(err);
+    }
 	mybot.user.setStatus('invisible');
-
 	process.exit();
-	//config.connected = false;
-	//retryLogin(mybot);
 });
 
 if (cluster.isMaster) {
@@ -218,10 +221,10 @@ function loginSuccess(token)
 	catch(err)
 	{
 		try{
-			botlog.botlog(err);
+			log.err(err);
 		}catch(err)
 		{
-			console.log(err);
+			log.err(err);
 		}
 	}
 }
@@ -229,12 +232,14 @@ function loginSuccess(token)
 function initPictureArray(dir, arr)
 {
 	try{
+		log.verbose('Populating ' + dir + ' array');
 		console.log('Populating ' + dir + ' array');
 	 	fs.readdir(dir, function (err, list) {  	
 	    // Return the error if something went wrong
-	    if (err)
-	      console.log(err);
-	
+	    if (err) {
+            console.log(err);
+            log.err(err);
+        }
 	    // For every file in the list
 	    list.forEach(function (file) {
 	      // Full path of that file
@@ -244,7 +249,7 @@ function initPictureArray(dir, arr)
 	    });
 	  });
 	} catch(err){
-		botlog.botlog(err);
+		log.err(err);
 	}
 }
 
@@ -259,7 +264,7 @@ function sleep(milliseconds) {
 
 function logCommand(user, command)
 {
-	botlog.botlog(user.username + ", " + command);
+	log.info(user.username + ", " + command);
 }
 
 

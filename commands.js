@@ -1,7 +1,7 @@
 var fs 		 = require('fs');
 var request	 = require('request').defaults({encoding: null});
 
-var botlog   = require('./botlog');
+var log		 = require('./log');
 var urls	 = require("./data/urls");
 var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");

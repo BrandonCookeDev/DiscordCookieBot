@@ -1,6 +1,6 @@
 var Discord  = require("discord.js");
 var commands = require('./commands');
-var botlog   = require('./botlog');
+var log		 = require('./log');
 
 var bot = null;
 var registeredCmds = [];
@@ -24,13 +24,13 @@ function execute(command, message, user, param){
 		registeredCmds[command].callback(message, user, param);
 	}catch(err){
 		console.log("ERROR:" +err);
-		botlog.botlog(err);
+		log.err(err);
 	}
 }
 
 function logCommand(user, command)
 {
-	botlog.botlog(user.username + ", " + command);
+	log.info(user.username + ", " + command);
 }
 
 module.exports = {
