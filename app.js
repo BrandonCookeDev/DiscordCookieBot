@@ -141,6 +141,8 @@ mybot.on("disconnected", function(err){
 	//retryLogin(mybot);
 });
 
+mybot.on('unhandledRejection', console.error);
+
 mybot.on("error", function(err){
 	if(err) {
         console.log("A large error occured: " + err);
