@@ -21,7 +21,7 @@ var imageCmd     = require('./commands/imageCommands');
 var modeCmd      = require('./commands/modeCommands');
 var videoCmd     = require('./commands/videoCommands');
 
-var credentials  = require('./models/credentials');
+var credentials  = require('./models/credentials.model');
 mongoose.connect('mongodb://localhost/cookiebot');
 
 
@@ -29,10 +29,11 @@ var mybot 	 = new Discord.Client();
 log.info('Beginning cookiE bot');
 
 var twitter  = null;
-try{	
+try{
+	credentials.getTwitterCredentialsByEnvironment(config.target);
 	twitter	 = require("./twitter.discord");
 } catch(err){
-	console.error("twitter unavailable");
+	console.warn("twitter unavailable");
 	log.warn('Twitter Unavailable');
 }
 
@@ -174,14 +175,16 @@ if (cluster.isWorker) {
 		
 		/** LOGIN **/
         credentials.getDiscordCredentialsByEnvironment(config.target)
-			.then(function(token){
-                if(token) {
-                    mybot.login(token)
+			.then(function(discord){
+                if(discord.token) {
+                    mybot.login(discord.token)
                         .then(loginSuccess).catch(function (err) {
-                        console.log(err);
-                        sleep(5000);
-                        process.exit();
-                    });
+							console.error(err);
+							log.err(err);
+
+							sleep(5000);
+							process.exit();
+                    	});
                 }
                 else
                 {
