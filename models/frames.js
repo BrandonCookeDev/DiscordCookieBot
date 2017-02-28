@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 //DB Objects
 var frames = new Schema({
 	name: String, 
-	jab{
+	jab : {
 		jab1: Number,
 		jab2: Number,
 		jab3: Number,
@@ -13,23 +13,23 @@ var frames = new Schema({
 		jab6: Number
 	},
 	dash: Number,
-	tilt{
+	tilt : {
 		ftilt: Number,
 		uptilt: Number,
 		dtilt: Number
 	},
-	smash{
+	smash : {
 		fsmash: Number,
 		upsmash: Number,
 		dsmash: Number
 	},
-	air{
+	air : {
 		nair: Number,
 		uair: Number,
 		dair: Number,
 		bair: Number
 	},
-	special{
+	special : {
 		neutralB: Number,
 		overB: Number,
 		upB: Number,

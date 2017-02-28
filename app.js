@@ -4,7 +4,7 @@ var credentials = require('./credentials');
 var Discord  = require("discord.js");
 var fs 		 = require("fs");
 var cluster  = require("cluster");
-var express	 = require("express");
+var mongoose = require('mongoose');
 
 var log   = require("./log");
 var commands = require("./commands");
@@ -20,6 +20,10 @@ var copypastaCmd = require('./commands/copypastaCommands');
 var imageCmd     = require('./commands/imageCommands');
 var modeCmd      = require('./commands/modeCommands');
 var videoCmd     = require('./commands/videoCommands');
+
+var credentials  = require('./models/credentials');
+mongoose.connect('mongodb://localhost/cookiebot');
+
 
 var mybot 	 = new Discord.Client();
 log.info('Beginning cookiE bot');
@@ -168,26 +172,26 @@ if (cluster.isWorker) {
 				config.target = 'prod';
 		}
 		
-		/** LOGIN **/		
-		if(config.target === "test")
-			mybot.login(credentials.test)
-				.then(loginSuccess).catch(function(err){
-					console.log(err);
-					sleep(5000);
-					process.exit();
-			}); 	  //TEST
-		else if(config.target === "prod")
-			mybot.login(credentials.prod)
-			  	.then(loginSuccess).catch(function(){
-					sleep(5000);
-					process.exit();
-			});   //PROD
-		else
-		{
-			console.log("Failure. Incorrect target. Terminating....");
-			sleep(5000);
-			process.exit();
-		}
+		/** LOGIN **/
+        credentials.getDiscordCredentialsByEnvironment(config.target)
+			.then(function(token){
+                if(token) {
+                    mybot.login(token)
+                        .then(loginSuccess).catch(function (err) {
+                        console.log(err);
+                        sleep(5000);
+                        process.exit();
+                    });
+                }
+                else
+                {
+                    console.error("Failure. Incorrect target. Terminating....");
+                    log.err("Failure. Incorrect target. Terminating....");
+                    sleep(5000);
+                    process.exit();
+                }
+			})
+
 	} catch(err){
 		process.exit();
 	}
