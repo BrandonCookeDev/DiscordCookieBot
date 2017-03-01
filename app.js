@@ -28,15 +28,6 @@ mongoose.connect('mongodb://localhost/cookiebot');
 var mybot 	 = new Discord.Client();
 log.info('Beginning cookiE bot');
 
-var twitter  = null;
-try{
-	credentials.getTwitterCredentialsByEnvironment(config.target);
-	twitter	 = require("./twitter.discord");
-} catch(err){
-	console.warn("twitter unavailable");
-	log.warn('Twitter Unavailable');
-}
-
 /** CONFIG **/
 var servers    = [];
 var channelMap = {};
@@ -210,6 +201,9 @@ function loginSuccess(token)
 		//SET CONFIG
 		console.log("Connected to server!");
 		config.connected = true;
+
+		//FETCH TWITTER
+		initTwitter();
 		
 		//INIT PICTURE ARRAYS
 		if(arrays.falconImgs.length == 0)
@@ -260,6 +254,17 @@ function initPictureArray(dir, arr)
 	} catch(err){
 		log.err(err);
 	}
+}
+
+function initTwitter(){
+    var twitter  = null;
+    try{
+        twitter = require("./twitter.discord");
+        twitter.initTwitter();
+    } catch(err){
+        console.warn("twitter unavailable");
+        log.warn('Twitter Unavailable');
+    }
 }
 
 function sleep(milliseconds) {

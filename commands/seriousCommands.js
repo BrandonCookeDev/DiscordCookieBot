@@ -3,6 +3,7 @@ var arrays	= require('../data/arrays');
 var common	= require('./common');
 var config  = require('../data/config');
 var log		= require('../log');
+var twitter	= require('../twitter.discord');
 
 exports.repo = function(message){
 	message.channel.sendMessage(urls.streamControl)
@@ -51,13 +52,17 @@ exports.game = function(message, user, game){
 	}
 };
 
+exports.tweet = function(message, user, content){
+    twitter.tweet(message, content);
+};
+
 // TODO Unbreak this
 exports.avatar = function(message, url){
 	var imgBuffer = null;
 	request.get(url, function(err, response, body){
 		console.log('body: ' + (body instanceof Buffer));
 
-		message.client.setAvatar(body, function(err){
+		message.setAvatar(body, function(err){
 			console.log(err);
 			log.err(err);
 		});

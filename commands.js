@@ -153,6 +153,6 @@ exports.fuckLuigi = function(message){
 /** VIDEO **/
 exports.suhdude = function(message){
     // TODO Implement video module
-	message.client.sendMessage(message.channel, urls.suhdudeUrl);
+	message.channel.sendMessage(urls.suhdudeUrl);
 };
 

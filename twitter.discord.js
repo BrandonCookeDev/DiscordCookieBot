@@ -1,28 +1,36 @@
 var discord = require('discord.js');
 var twitter = require('twitter');
-var props	= require('./twitter.properties');
 var log		= require('./log');
+var config	= require('./data/config');
+var credentials = require('./models/credentials.model');
 
 var CHAR_LIMIT = 140;
 
-var client = new twitter({
-	  consumer_key: props.consumer_key,
-	  consumer_secret: props.consumer_secret,
-	  access_token_key: props.access_token_key,
-	  access_token_secret: props.access_token_secret
-	});
+var client = null;
+function initTwitter(){
+	credentials.getTwitterCredentialsByEnvironment('prod')
+		.then(function(creds){
+			delete creds.env;
+			delete creds._id;
+			client = new twitter(creds);
 
-/*
-var params = {screen_name: 'nodejs'};
-client.get('statuses/user_timeline', params, function(error, tweets, response){
-  if (!error) {
-    console.log(tweets);
-  }
-});
-*/
+			console.log('Twitter Available!');
+			log.info('Twitter avilable!');
+		})
+		.catch(function(err){
+			if(err){
+				console.error(err.message);
+				log.err(err)
+			}
+		})
+}
 
-exports.tweet = function(message, content){
+function tweet(message, content){
 	content = String(content);
+	if(!client){
+		message.reply('cookiEbot420 is unavailable currently. Please try again later');
+	}
+
 	if(content){
 		console.log(content);
 		var tweetContents = message.author.username + ": " + content;
@@ -30,9 +38,9 @@ exports.tweet = function(message, content){
 		if(tweetContents.length > CHAR_LIMIT){
 			try{
 				var tooLong = "Count: " + tweetContents.length + ". Tweet content must be under " + CHAR_LIMIT;
-				message.client.reply(message, tooLong);
+				message.reply(message, tooLong);
 			} catch(err){
-				message.client.reply(message, err);
+				message.reply(message);
 			}
 		}
 		else{
@@ -40,13 +48,19 @@ exports.tweet = function(message, content){
 					{status: tweetContents},
 					function(err, tw, response){
 				if(!err){
-					message.client.reply(message, 'Tweet posted successfully!');
+					message.reply('Tweet posted successfully!');
 				}
 				else{
-					message.client.reply(message, err);
+					message.reply(err.message);
+					log.err(err);
 				}
 			});
 		}
 	}
-	else message.client.reply(message, "You have to put some text after, fam");
+	else message.reply(message, "You have to put some text after, fam");
 };
+
+module.exports = {
+	initTwitter: initTwitter,
+	tweet: tweet
+}
