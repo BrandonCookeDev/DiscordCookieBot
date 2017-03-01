@@ -22,8 +22,22 @@ var modeCmd      = require('./commands/modeCommands');
 var videoCmd     = require('./commands/videoCommands');
 
 var credentials  = require('./models/credentials.model');
-mongoose.connect('mongodb://localhost/cookiebot');
 
+if (cluster.isMaster) {
+    cluster.fork();
+
+    cluster.on('exit', function(worker, code, signal) {
+        cluster.fork();
+    });
+}
+
+mongoose.connect('mongodb://localhost/cookiebot');
+mongoose.connection.on('disconnect', function(){
+	process.exit(3);
+});
+mongoose.connection.on('error', function(){
+	process.exit(3);
+});
 
 var mybot 	 = new Discord.Client();
 log.info('Beginning cookiE bot');
@@ -147,14 +161,6 @@ mybot.on("error", function(err){
 	mybot.user.setStatus('invisible');
 	process.exit();
 });
-
-if (cluster.isMaster) {
-	cluster.fork();
-
-	cluster.on('exit', function(worker, code, signal) {
-		cluster.fork();
-	});
-}
 
 /** MAIN **/
 if (cluster.isWorker) {

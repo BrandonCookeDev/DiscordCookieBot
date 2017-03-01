@@ -5,6 +5,7 @@ var config	= require('./data/config');
 var credentials = require('./models/credentials.model');
 
 var CHAR_LIMIT = 140;
+var twitterUrl = 'http://www.twitter.com/' + config.twHandle;
 
 var client = null;
 function initTwitter(){
@@ -48,7 +49,7 @@ function tweet(message, content){
 					{status: tweetContents},
 					function(err, tw, response){
 				if(!err){
-					message.reply('Tweet posted successfully!');
+					message.reply('Tweet posted successfully!\nFind it here: ' + twitterUrl);
 				}
 				else{
 					message.reply(err.message);
