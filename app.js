@@ -13,13 +13,7 @@ var urls	 = require("./data/urls");
 var arrays	 = require("./data/arrays");
 var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
-
-var seriousCmd   = require('./commands/seriousCommands');
-var dumbCmd      = require('./commands/dumbCommands');
-var copypastaCmd = require('./commands/copypastaCommands');
-var imageCmd     = require('./commands/imageCommands');
-var modeCmd      = require('./commands/modeCommands');
-var videoCmd     = require('./commands/videoCommands');
+var common	 = require('./commands/common');
 
 var credentials  = require('./models/credentials.model');
 
@@ -49,47 +43,25 @@ console.log("Running cookiE_bot...");
 /** REGISTER TEXT EVENTS USING 
 reg.register(<text you're searching for>, <function to be called>) 
 **/
+reg.HelpString.init();
+reg.HelpString.addToHelpString('cookiE_bot Version: ' + config.version);
+reg.HelpString.addToHelpString('USAGE:');
+reg.HelpString.addToHelpString('  ![command][optional:parameter]');
 
-//IMAGES
-reg.register('thumb', imageCmd.thumb);
-reg.register('ok', imageCmd.ok);
-reg.register('pangasm', imageCmd.panGasm);
-reg.register('dolphin', imageCmd.dolphin);
-reg.register('rags', imageCmd.rags);
-reg.register('waifu', imageCmd.waifu);
-reg.register('bruciepie', imageCmd.bruciepie);
-reg.register('showmeyourmoves', imageCmd.showmeyourmoves);
-reg.register('sandler', imageCmd.sandler);
+//HELP
+reg.HelpString.addToHelpString('\n----HELP----');
+reg.register('help', function(message, user, param){
+    message.channel.sendMessage(reg.HelpString.helpString)
+        .then(common.success)
+        .catch(common.error);
+}, 'Print the help string for a list of commands');
 
-//SHITPOST COPYPASTA
-reg.register('fuckluigi', copypastaCmd.fuckLuigi);
-reg.register('saltytears', copypastaCmd.saltyTears);
-reg.register('plagueis', copypastaCmd.plagueis);
+//GAME
+reg.HelpString.addToHelpString('\n----GAME----');
+reg.register('game', function(command, message){mybot.setGame(message)}, 'Set the bot\s current game');
 
-//VIDEO
-reg.register('suhdude', videoCmd.suhdude);
+reg.registerCommands();
 
-//DUMB COMMANDS
-reg.register('privilege', dumbCmd.privilege);
-reg.register('smashdat', dumbCmd.smashDat);
-reg.register('love', dumbCmd.love);
-reg.register('melee', dumbCmd.melee);
-reg.register('conch', dumbCmd.conch);
-
-//SERIOUS
-reg.register('help', seriousCmd.help);
-reg.register('mute', seriousCmd.mute);
-reg.register('game', seriousCmd.game);
-reg.register('google', seriousCmd.google);
-reg.register('tweet', seriousCmd.tweet);
-reg.register('avatar', seriousCmd.avatar);
-reg.register('frames', seriousCmd.frames);
-reg.register('request', seriousCmd.request);
-reg.register('cookierepo', seriousCmd.cookieRepo);
-
-//MODES
-reg.register('ftu', modeCmd.ftumode);
-reg.register('shittalk', modeCmd.shittalkmode);
 
 mybot.on("message", function(message){
 	if(message.content.charAt(0) === "!")
