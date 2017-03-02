@@ -88,7 +88,7 @@ var saltyTears = "I am very mad. I drove all the way to CSU to play in a tournam
 		"Probably will never go to a tournament that gay ass sheiks enter ever again. " +
 		"This definitely ruined my day.";
 
-var fuckLuigi = "I am very mad. I drove all the way to CSU to play in a tournament, " +
+var fuckLuigi = "I am very mad. I drove all the way to KSU to play in a tournament, " +
 	"get stuck in traffic and lost against this retarded ass luigi. Slip-and-slide to down smash and " +
 	"wouldn't stop being gay. " +
 	"I really cannot think straight right now." +

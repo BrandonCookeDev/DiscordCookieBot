@@ -31,14 +31,6 @@ if (cluster.isMaster) {
     });
 }
 
-mongoose.connect('mongodb://localhost/cookiebot');
-mongoose.connection.on('disconnect', function(){
-	process.exit(3);
-});
-mongoose.connection.on('error', function(){
-	process.exit(3);
-});
-
 var mybot 	 = new Discord.Client();
 log.info('Beginning cookiE bot');
 
@@ -267,6 +259,7 @@ function initTwitter(){
     try{
         twitter = require("./twitter.discord");
         twitter.initTwitter();
+
     } catch(err){
         console.warn("twitter unavailable");
         log.warn('Twitter Unavailable');

@@ -9,21 +9,27 @@ var twitterUrl = 'http://www.twitter.com/' + config.twHandle;
 
 var client = null;
 function initTwitter(){
-	credentials.getTwitterCredentialsByEnvironment('prod')
-		.then(function(creds){
-			delete creds.env;
-			delete creds._id;
-			client = new twitter(creds);
+	return new Promise(function(resolve, reject){
+        credentials.getTwitterCredentialsByEnvironment('prod')
+            .then(function(creds){
+                delete creds.env;
+                delete creds._id;
+                client = new twitter(creds);
 
-			console.log('Twitter Available!');
-			log.info('Twitter avilable!');
-		})
-		.catch(function(err){
-			if(err){
-				console.error(err.message);
-				log.err(err)
-			}
-		})
+                console.log('Twitter Available!');
+                log.info('Twitter avilable!');
+                resolve(client);
+            })
+            .catch(function(err){
+                if(err){
+                    console.error(err.message);
+                    log.err(err);
+					reject(err);
+                }
+                else reject;
+            })
+	})
+
 }
 
 function tweet(message, content){

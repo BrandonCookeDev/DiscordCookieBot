@@ -2,6 +2,8 @@ const log      = require('../log');
 const mongoose = require('mongoose');
 let Schema     = mongoose.Schema;
 
+let conn = 'mongodb://localhost/cookiebot';
+
 let DiscordSchema = new Schema({
     env: String,
     token: String
@@ -24,6 +26,8 @@ let credentials = mongoose.model('Credentials', CredSchema, 'credentials');
 
 credentials.getDiscordCredentialsByEnvironment = function(env){
     return new Promise(function(resolve, reject){
+        connect();
+
         var creds = null;
         credentials.find({'discord.env': env.toString()}, {'discord.$': 1}).lean().exec(function(err, docs){
             if(err){
@@ -36,6 +40,8 @@ credentials.getDiscordCredentialsByEnvironment = function(env){
             }
         })
         .then(function(){
+            disconnect();
+
             resolve(creds);
         })
     })
@@ -43,6 +49,8 @@ credentials.getDiscordCredentialsByEnvironment = function(env){
 
 credentials.getTwitterCredentialsByEnvironment = function(env){
     return new Promise(function(resolve, reject){
+        connect();
+
         var creds = null;
         credentials.find({'twitter.env': env.toString()}, {'twitter.$': 1}).lean().exec(function(err, docs){
             if(err){
@@ -55,9 +63,32 @@ credentials.getTwitterCredentialsByEnvironment = function(env){
             }
         })
         .then(function(){
+            disconnect();
+
             resolve(creds);
         })
     })
 };
+
+function connect(){
+    try {
+        mongoose.connect(conn);
+        console.log('Mongo Connected');
+        log.info('Mongo Connected');
+    }
+    catch(err){
+        log.err(err);
+    }
+}
+
+function disconnect(){
+    try{
+        mongoose.disconnect();
+        console.log('Mongo Disconnected');
+        log.info('Mongo Disconnecte');
+    }catch(err){
+        log.err(err);
+    }
+}
 
 module.exports = credentials;
