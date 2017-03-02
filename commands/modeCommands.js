@@ -22,7 +22,7 @@ exports.ftu = function(message, tyusUsername) {
 	var user = message.author;
 	var name = user.username.toLowerCase();
 	var arr = arrays.tyusResponses;
-	if (name === tyusUsername)//|| name === 'cookie')
+	if (name.includes(tyusUsername))//|| name === 'cookie')
 	{
 		var index = Math.floor((Math.random() * arr.length));
 		message.reply(arr[index])
