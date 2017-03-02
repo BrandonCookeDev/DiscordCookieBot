@@ -24,6 +24,16 @@ exports.waifu = function(message, user){
 	})
 };
 
+exports.sandler = function(message){
+	var index = Math.floor(Math.random() * arrays.sandlerImgs.length);
+    var sandlerStream = fs.createReadStream(arrays.sandlerImgs[index]);
+    streamToBuffer(sandlerStream, function(err, buffer){
+    	message.channel.sendFile(buffer, 'sandler.jpg')
+			.then(common.success)
+			.catch(common.error);
+	})
+};
+
 exports.ok = function(message, user){
 	var index = Math.floor(Math.random() * arrays.okImgs.length);
 	var okStream = fs.createReadStream(arrays.okImgs[index]);

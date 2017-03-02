@@ -59,6 +59,7 @@ reg.register('rags', imageCmd.rags);
 reg.register('waifu', imageCmd.waifu);
 reg.register('bruciepie', imageCmd.bruciepie);
 reg.register('showmeyourmoves', imageCmd.showmeyourmoves);
+reg.register('sandler', imageCmd.sandler);
 
 //SHITPOST COPYPASTA
 reg.register('fuckluigi', copypastaCmd.fuckLuigi);
@@ -218,6 +219,9 @@ function loginSuccess(token)
 			
 		if(arrays.waifuImgs.length == 0)
 			initPictureArray(imgs.waifuDir, arrays.waifuImgs);
+
+		if(arrays.sandlerImgs.length == 0)
+			initPictureArray(imgs.sandlerDir, arrays.sandlerImgs);
 	}
 	catch(err)
 	{

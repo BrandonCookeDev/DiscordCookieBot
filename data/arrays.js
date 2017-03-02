@@ -104,11 +104,12 @@ var bracket = "Flashback Games 21: " + urls.bracketUrl;
 
 var smashDat = ":joy: :joy: :joy: :joy: :joy: :ok_hand: :ok_hand: :ok_hand:";
 
-var falconImgs = [];
-var bruceImgs  = [];
-var ragsImgs   = [];
-var okImgs	   = [];
-var waifuImgs  = [];
+var falconImgs  = [];
+var bruceImgs   = [];
+var ragsImgs    = [];
+var okImgs	    = [];
+var waifuImgs   = [];
+var sandlerImgs = [];
 		
 module.exports = {
 	tyusResponses: tyusResponses,
@@ -127,5 +128,6 @@ module.exports = {
 	bruceImgs: bruceImgs,
 	ragsImgs: ragsImgs,
 	okImgs: okImgs,
-	waifuImgs: waifuImgs
+	waifuImgs: waifuImgs,
+	sandlerImgs: sandlerImgs
 };
