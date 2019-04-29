@@ -39,6 +39,7 @@ var config	 = require("./data/config");
 var common	 = require('./commands/common');
 
 // RESTART ON TAKEDOWN
+/*
 if (cluster.isMaster) {
     cluster.fork();
 
@@ -46,6 +47,7 @@ if (cluster.isMaster) {
         cluster.fork();
     });
 }
+*/
 
 var mybot 	 = new Discord.Client();
 log.info('Beginning cookiE bot');
@@ -150,7 +152,7 @@ mybot.on("error", function(err){
 });
 
 /** MAIN **/
-if (cluster.isWorker) {
+//if (cluster.isWorker) {
 	try{
 		//if(process.argv.length > 2){
 		//	if(process.argv[2] === 'prod')
@@ -161,31 +163,31 @@ if (cluster.isWorker) {
         //credentials.getDiscordCredentialsByEnvironment(config.target)
 		//	.then(function(discord){
 
-		if(process.env.DISCORD_API_KEY) {
-			mybot.login(process.env.DISCORD_API_KEY)
-				.then(loginSuccess)
-				.catch(function (err) {
-					console.error(err);
-					log.err(err);
+	if(process.env.DISCORD_API_KEY) {
+		mybot.login(process.env.DISCORD_API_KEY)
+			.then(loginSuccess)
+			.catch(function (err) {
+				console.error(err);
+				log.err(err);
 
-					sleep(5000);
-					process.exit();
-				});
-		}
-		else
-		{
-			console.error("Failure. Incorrect target. Terminating....");
-			log.err("Failure. Incorrect target. Terminating....");
-			sleep(5000);
-			process.exit();
-		}
-
-			//})
-
-	} catch(err){
+				sleep(5000);
+				process.exit();
+			});
+	}
+	else
+	{
+		console.error("Failure. Incorrect target. Terminating....");
+		log.err("Failure. Incorrect target. Terminating....");
+		sleep(5000);
 		process.exit();
 	}
+
+		//})
+
+} catch(err){
+	process.exit();
 }
+//}
 
 /** FUNCTIONS **/
 function loginSuccess(token)
