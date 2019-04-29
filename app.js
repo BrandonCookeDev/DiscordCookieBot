@@ -1,12 +1,35 @@
+
+///////////////////////////////////
+// UNCAUGHT ERROR HANDLER
+//
+function errHandler(e){
+	console.error('CRITICAL: uncaught error')
+	console.error(e)
+	process.exit(1)
+}
+process.on('error', errHandler)
+process.on('unhandledRejection', errHandler)
+process.on('uncaughtException', errHandler)
+
+function killHandler(){
+	console.warn('process terminating due to signal....')
+	process.exit(2)
+}
+process.on('SIGINT', killHandler)
+process.on('SIGTERM', killHandler)
+//
+//////////////////////////////////
+
+
 /** IMPORTS **/
-var credentials = require('./credentials');
+var path = require('path')
+require('dotenv').config({path: path.join(__dirname, '.env')})
 
 var Discord  = require("discord.js");
 var fs 		 = require("fs");
 var cluster  = require("cluster");
-var mongoose = require('mongoose');
 
-var log   = require("./log");
+var log   	 = require("./log");
 var commands = require("./commands");
 var reg		 = require('./commandRegister');
 var urls	 = require("./data/urls");
@@ -15,8 +38,7 @@ var imgs	 = require("./data/imgPaths");
 var config	 = require("./data/config");
 var common	 = require('./commands/common');
 
-var credentials  = require('./models/credentials.model');
-
+// RESTART ON TAKEDOWN
 if (cluster.isMaster) {
     cluster.fork();
 
@@ -130,32 +152,35 @@ mybot.on("error", function(err){
 /** MAIN **/
 if (cluster.isWorker) {
 	try{
-		if(process.argv.length > 2){
-			if(process.argv[2] === 'prod')
-				config.target = 'prod';
-		}
+		//if(process.argv.length > 2){
+		//	if(process.argv[2] === 'prod')
+		//		config.target = 'prod';
+		//}
 		
 		/** LOGIN **/
-        credentials.getDiscordCredentialsByEnvironment(config.target)
-			.then(function(discord){
-                if(discord.token) {
-                    mybot.login(discord.token)
-                        .then(loginSuccess).catch(function (err) {
-							console.error(err);
-							log.err(err);
+        //credentials.getDiscordCredentialsByEnvironment(config.target)
+		//	.then(function(discord){
 
-							sleep(5000);
-							process.exit();
-                    	});
-                }
-                else
-                {
-                    console.error("Failure. Incorrect target. Terminating....");
-                    log.err("Failure. Incorrect target. Terminating....");
-                    sleep(5000);
-                    process.exit();
-                }
-			})
+		if(process.env.DISCORD_API_KEY) {
+			mybot.login(process.env.DISCORD_API_KEY)
+				.then(loginSuccess)
+				.catch(function (err) {
+					console.error(err);
+					log.err(err);
+
+					sleep(5000);
+					process.exit();
+				});
+		}
+		else
+		{
+			console.error("Failure. Incorrect target. Terminating....");
+			log.err("Failure. Incorrect target. Terminating....");
+			sleep(5000);
+			process.exit();
+		}
+
+			//})
 
 	} catch(err){
 		process.exit();

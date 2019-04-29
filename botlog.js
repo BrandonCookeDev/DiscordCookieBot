@@ -1,6 +1,7 @@
 /** JAVASCRIPT TO CREATE AND LOG TO A FILE **/
 var fs 		= require('fs');
-var logDir 	= './log';
+var path	= require('path')
+var logDir 	= path.join(__dirname, '/log');
 var logFile = '/cookiEbot.log';
 
 

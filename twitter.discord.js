@@ -2,7 +2,7 @@ var discord = require('discord.js');
 var twitter = require('twitter');
 var log		= require('./log');
 var config	= require('./data/config');
-var credentials = require('./models/credentials.model');
+//var credentials = require('./models/credentials.model');
 
 var CHAR_LIMIT = 140;
 var twitterUrl = 'http://www.twitter.com/' + config.twHandle;
@@ -10,16 +10,24 @@ var twitterUrl = 'http://www.twitter.com/' + config.twHandle;
 var client = null;
 function initTwitter(){
 	return new Promise(function(resolve, reject){
-        credentials.getTwitterCredentialsByEnvironment('prod')
-            .then(function(creds){
-                delete creds.env;
-                delete creds._id;
-                client = new twitter(creds);
+        //credentials.getTwitterCredentialsByEnvironment('prod')
+        //    .then(function(creds){
+        //        delete creds.env;
+		//        delete creds._id;
+		
+		client = new twitter({
+			consumer_key: process.env.TWITTER_CONSUMER_KEY,
+			consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+			access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+			access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET	
+		});
 
-                console.log('Twitter Available!');
-                log.info('Twitter avilable!');
-                resolve(client);
-            })
+		console.log('Twitter Available!');
+		log.info('Twitter avilable!');
+		resolve(client);
+
+		/*
+			})
             .catch(function(err){
                 if(err){
                     console.error(err.message);
@@ -27,7 +35,8 @@ function initTwitter(){
 					reject(err);
                 }
                 else reject;
-            })
+			})
+		*/
 	})
 
 }
