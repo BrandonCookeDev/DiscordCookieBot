@@ -281,4 +281,17 @@ function logCommand(user, command)
 	log.info(user.username + ", " + command);
 }
 
+// healthcheck ping
+var http = require('http');
+http.createServer(function (req, res) {
+  log.debug('healthcheck server pinged')
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.write('Hello World!');
+  res.end();
+}).listen(process.env.PORT || 8080);
 
+// keep alive function
+http.get(`http://127.0.0.1:${process.env.PORT || 8080}`); //test
+setInterval(function() { 
+    http.get(`http://127.0.0.1:${process.env.PORT || 8080}`);
+}, 300000);
