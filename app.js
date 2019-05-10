@@ -24,6 +24,8 @@ process.on('SIGTERM', killHandler)
 /** IMPORTS **/
 var path = require('path')
 require('dotenv').config({path: path.join(__dirname, '.env')})
+const awsCredsHelper = require('./helpers/AWSCredentialsHelper')
+awsCredsHelper.write()
 
 var Discord  = require("discord.js");
 var fs 		 = require("fs");
@@ -163,6 +165,7 @@ mybot.on("error", function(err){
         //credentials.getDiscordCredentialsByEnvironment(config.target)
 		//	.then(function(discord){
 
+	console.log('connecting to Discord with access key: %s', process.env.DISCORD_API_KEY)
 	if(process.env.DISCORD_API_KEY) {
 		mybot.login(process.env.DISCORD_API_KEY)
 			.then(loginSuccess)
@@ -176,8 +179,8 @@ mybot.on("error", function(err){
 	}
 	else
 	{
-		console.error("Failure. Incorrect target. Terminating....");
-		log.err("Failure. Incorrect target. Terminating....");
+		console.error("Failure. Incorrect or nonexistant API Key. Terminating....");
+		log.err("Failure. Incorrect or nonexistant API Key. Terminating....");
 		sleep(5000);
 		process.exit();
 	}
@@ -283,7 +286,6 @@ function logCommand(user, command)
 	log.info(user.username + ", " + command);
 }
 
-console.log('test')
 // healthcheck ping
 var http = require('http');
 http.createServer(function (req, res) {

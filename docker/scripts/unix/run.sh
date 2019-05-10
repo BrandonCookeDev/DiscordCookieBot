@@ -2,12 +2,24 @@
 
 CURDIR=$(pwd)
 BASEDIR=$(dirname $0)
+ROOTDIR=$BASEDIR/../../..
 IMAGE_NAME=$(cat $BASEDIR/../ImageName.txt)
+
+source $ROOTDIR/.env
+
+echo $DISCORD_API_KEY
+echo $AWS_CREDENTIALS_ACCESS_KEY
+echo $AWS_CREDENTIALS_SECRET_ACCESS_KEY
 
 echo Running Docker container $IMAGE_NAME
 
-cd $BASEDIR/../../..
-cmd="docker run $@ -it $IMAGE_NAME"
+cd 
+
+cmd="docker run -e DISCORD_API_KEY=$DISCORD_API_KEY \
+	-e AWS_CREDENTIALS_ACCESS_KEY=$AWS_CREDENTIALS_ACCESS_KEY \
+	-e AWS_CREDENTIALS_SECRET_ACCESS_KEY=$AWS_CREDENTIALS_SECRET_ACCESS_KEY \
+	$@ -it $IMAGE_NAME"
 echo $cmd
 $cmd
+
 cd $CURDIR

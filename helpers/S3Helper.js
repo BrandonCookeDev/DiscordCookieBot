@@ -48,6 +48,7 @@ class S3Helper{
 						ACL: 'public-read-write'
 					}, function(error, data) { 
 						if (error) {
+							console.error(error)
 							return reject("error downloading image to s3");
 						} else {
 							return resolve("success uploading to s3");
