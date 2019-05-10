@@ -23,7 +23,19 @@ function getRandomImage(folder){
         const item = bucketContents.Contents[Math.floor(Math.random() * bucketContents.Contents.length)]
         console.log(item)
         return s3.get(bucket, item.Key)
+            .then(image => {
+                return {
+                    Filename: item.Key,
+                    File: image
+                }
+            })
     })
+}
+function getContentType(uri){
+    return request.head(uri)
+        .then(data => {
+            return data['Content-Type']
+        })
 }
 
 exports.randomImage = function(message, user, arr){
@@ -38,7 +50,9 @@ exports.randomImage = function(message, user, arr){
 
 exports.waifu = function(message, user){
    getRandomImage('waifu').then(image => {
-        return message.channel.sendFile(image.Body, 'waifu.png')
+       console.log(image)
+       console.log('sending: %s', image.Filename)
+        return message.channel.sendFile(image.File.Body, image.Filename)
             .then(common.success)
             .catch(common.error);
         })
@@ -46,7 +60,7 @@ exports.waifu = function(message, user){
 
 exports.sandler = function(message){
 	getRandomImage('sandler').then(image => {
-        return message.channel.sendFile(image.Body, 'sandler.png')
+        return message.channel.sendFile(image.File.Body, image.Filename)
             .then(common.success)
             .catch(common.error);
         })
@@ -54,7 +68,7 @@ exports.sandler = function(message){
 
 exports.ok = function(message, user){
 	getRandomImage('ok').then(image => {
-        return message.channel.sendFile(image.Body, 'ok.png')
+        return message.channel.sendFile(image.File.Body, image.Filename)
             .then(common.success)
             .catch(common.error);
         })
@@ -62,7 +76,7 @@ exports.ok = function(message, user){
 
 exports.rags = function(message, user){
 	getRandomImage('rags').then(image => {
-        return message.channel.sendFile(image.Body, 'rags.png')
+        return message.channel.sendFile(image.File.Body, image.Filename)
             .then(common.success)
             .catch(common.error);
         })
@@ -70,7 +84,7 @@ exports.rags = function(message, user){
 
 exports.bruciepie = function(message, user){
 	getRandomImage('bruce').then(image => {
-        return message.channel.sendFile(image.Body, 'bruce.png')
+        return message.channel.sendFile(image.File.Body, image.Filename)
             .then(common.success)
             .catch(common.error);
         })
@@ -78,7 +92,7 @@ exports.bruciepie = function(message, user){
 
 exports.showmeyourmoves = function(message, user){
 	getRandomImage('falcon').then(image => {
-        return message.channel.sendFile(image.Body, 'falcon.png')
+        return message.channel.sendFile(image.image.Body, image.Key)
             .then(common.success)
             .catch(common.error);
         })
@@ -86,7 +100,7 @@ exports.showmeyourmoves = function(message, user){
 
 exports.thumb = function(message){
 	getImage('thumb.jpg').then(image => {
-        return message.channel.sendFile(image.Body, 'thumb.png')
+        return message.channel.sendFile(image.Body, image.Key)
             .then(common.success)
             .catch(common.error);
         })
@@ -94,7 +108,7 @@ exports.thumb = function(message){
 
 exports.panGasm = function(message){
 	getImage('PanGasm.png').then(image => {
-        return message.channel.sendFile(image.Body, 'pangasm.png')
+        return message.channel.sendFile(image.Body, image.Key)
             .then(common.success)
             .catch(common.error);
         })
@@ -103,7 +117,7 @@ exports.panGasm = function(message){
 exports.dolphin = function(message){
     getImage('dolphin.jpg')
         .then(image => {
-            return message.channel.sendFile(image.Body, 'dolphin.jpg')
+            return message.channel.sendFile(image.Body, image.Key)
                 .then(common.success)
                 .catch(common.error);
         })
@@ -130,8 +144,8 @@ exports.put = function(message){
         case 'param':
             url = split[2]
             key = url.substring(url.lastIndexOf('/') + 1)
-            ext = key.charAt(key.length - 4) != '.' ? '.jpg' : path.extname(key)
-            key += ext
+            //ext = key.charAt(key.length - 4) != '.' ? '.jpg' : path.extname(key)
+            //key += ext
             break;
         case 'attachment':
             const attachments = message.attachments.first()
@@ -143,13 +157,23 @@ exports.put = function(message){
     }
     
     // format key and upload
-    const keyPath = ['images', targetDir, key].join('/')
-    return s3.uploadUrlImageToS3(url, bucket, keyPath)
+    let keyPath = ['images', targetDir, key].join('/')
+    return Promise.resolve(keyPath.charAt(keyPath.length-4) === '.')
+        .then(hasExtension => {
+            if(hasExtension) return keyPath
+            else return getContentType(url)
+                .then(contentType => {
+                    if(contentType.indexOf('image/') >= 0)
+                        return keyPath + '.' + contentType.substring(contentType.lastIndexOf('/') + 1)
+                    else return keyPath + '.jpg'
+                })
+        })
+        .then(newKeyPath => s3.uploadUrlImageToS3(url, bucket, newKeyPath))
         .then(() => {
             // on success
             message.reply('successfully added ' + key + ' to command ' + targetDir)
             return true
-        })
+        })//https://cdn.discordapp.com/attachments/572472694977855498/576444341388705802/tumblr_oyrj7kp4zx1sy8x5ho5_r2_400.gif
         .catch(e => {
             console.error(e)
             message.reply('an error occured adding ' + key + ' to command ' + targetDir)
