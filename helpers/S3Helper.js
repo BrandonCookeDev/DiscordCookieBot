@@ -51,7 +51,7 @@ class S3Helper{
 							console.error(error)
 							return reject("error downloading image to s3");
 						} else {
-							return resolve("success uploading to s3");
+							return resolve(path);
 						}
 					}); 
 				}   

@@ -34,7 +34,8 @@ function getRandomImage(folder){
 function getContentType(uri){
     return request.head(uri)
         .then(data => {
-            return data['Content-Type']
+            console.log(data)
+            return data['content-type']
         })
 }
 
@@ -165,7 +166,8 @@ exports.put = function(message){
                 .then(contentType => {
                     if(contentType.indexOf('image/') >= 0)
                         return keyPath + '.' + contentType.substring(contentType.lastIndexOf('/') + 1)
-                    else return keyPath + '.jpg'
+                    else 
+                        throw new Error('cannot add non-image. You attempted to add content: ' + contentType)
                 })
         })
         .then(newKeyPath => s3.uploadUrlImageToS3(url, bucket, newKeyPath))
@@ -176,7 +178,7 @@ exports.put = function(message){
         })//https://cdn.discordapp.com/attachments/572472694977855498/576444341388705802/tumblr_oyrj7kp4zx1sy8x5ho5_r2_400.gif
         .catch(e => {
             console.error(e)
-            message.reply('an error occured adding ' + key + ' to command ' + targetDir)
+            message.reply('an error occured adding ' + key + ' to command ' + targetDir + '. Reason: ' + e.message)
             return true
         })
 };
