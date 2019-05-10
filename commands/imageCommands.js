@@ -1,4 +1,5 @@
 var fs		= require('fs');
+var path    = require('path');
 var arrays	= require('../data/arrays');
 var imgs	= require("../data/imgPaths");
 var common  = require('./common');
@@ -114,19 +115,23 @@ exports.put = function(message){
     const split = message.content.split(' ')
 
     let type
-    if(split.length >= 3)
+    if(split.length < 2)
+        return message.reply(usage)
+    else if(split.length >= 3)
         type = 'param'
     else if(message.attachments)
         type = 'attachment'
     else
         type = 'error'
-
+        
     let url, key
     const targetDir = split[1]
     switch(type){
         case 'param':
             url = split[2]
             key = url.substring(url.lastIndexOf('/') + 1)
+            ext = key.charAt(key.length - 4) != '.' ? '.jpg' : path.extname(key)
+            key += ext
             break;
         case 'attachment':
             const attachments = message.attachments.first()
