@@ -76,6 +76,7 @@ function registerCommands(){
     register('bruciepie', 	imageCmd.bruciepie, 'Display a photo of Bruciepie Daryooni');
     register('sandler', 	imageCmd.sandler, 	'Display a photo of One True God Adam Sandler');
     register('showmeyourmoves', imageCmd.showmeyourmoves, 'HYES');
+    register('put',         imageCmd.put,       'Put an image in the list');
 
 //SHITPOST COPYPASTA
     HelpString.addToHelpString("\n----COPYPASTA----");
