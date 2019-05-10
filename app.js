@@ -283,6 +283,7 @@ function logCommand(user, command)
 	log.info(user.username + ", " + command);
 }
 
+console.log('test')
 // healthcheck ping
 var http = require('http');
 http.createServer(function (req, res) {

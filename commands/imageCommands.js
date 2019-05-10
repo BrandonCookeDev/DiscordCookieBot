@@ -7,21 +7,22 @@ const request = require('request-promise')
 
 const s3 = require('../helpers/S3Helper')
 const bucket = 'discord-cookie-bot'
-async function getImage(prefix){
+function getImage(prefix){
     const key = 'images/' + prefix
-    return await s3.get(bucket, key)
+    return s3.get(bucket, key)
 }
-async function putImage(prefix, buf, contentType){
+function putImage(prefix, buf, contentType){
     const key = 'images/' + prefix;
-    return await s3.put(bucket, key, buf, contentType)
+    return s3.put(bucket, key, buf, contentType)
 }
-async function getRandomImage(folder){
+function getRandomImage(folder){
     const key = 'images/' + folder
-    const bucketContents = await s3.list(bucket, key)
-    console.log(bucketContents.Contents)
-    const item = bucketContents.Contents[Math.floor(Math.random() * bucketContents.Contents.length)]
-    console.log(item)
-    return await s3.get(bucket, item.Key)
+    return s3.list(bucket, key).then(bucketContents => {
+        console.log(bucketContents.Contents)
+        const item = bucketContents.Contents[Math.floor(Math.random() * bucketContents.Contents.length)]
+        console.log(item)
+        return s3.get(bucket, item.Key)
+    })
 }
 
 exports.randomImage = function(message, user, arr){
@@ -34,70 +35,80 @@ exports.randomImage = function(message, user, arr){
     });
 };
 
-exports.waifu = async function(message, user){
-   const image = await getRandomImage('waifu')
-   return message.channel.sendFile(image.Body, 'waifu.png')
-        .then(common.success)
-        .catch(common.error);
+exports.waifu = function(message, user){
+   getRandomImage('waifu').then(image => {
+        return message.channel.sendFile(image.Body, 'waifu.png')
+            .then(common.success)
+            .catch(common.error);
+        })
 };
 
-exports.sandler = async function(message){
-	const image = await getRandomImage('sandler')
-    return message.channel.sendFile(image.Body, 'sandler.png')
-        .then(common.success)
-        .catch(common.error);
+exports.sandler = function(message){
+	getRandomImage('sandler').then(image => {
+        return message.channel.sendFile(image.Body, 'sandler.png')
+            .then(common.success)
+            .catch(common.error);
+        })
 };
 
-exports.ok = async function(message, user){
-	const image = await getRandomImage('ok')
-    return message.channel.sendFile(image.Body, 'ok.png')
-        .then(common.success)
-        .catch(common.error);
+exports.ok = function(message, user){
+	getRandomImage('ok').then(image => {
+        return message.channel.sendFile(image.Body, 'ok.png')
+            .then(common.success)
+            .catch(common.error);
+        })
 };
 
-exports.rags = async function(message, user){
-	const image = await getRandomImage('rags')
-    return message.channel.sendFile(image.Body, 'rags.png')
-        .then(common.success)
-        .catch(common.error);
+exports.rags = function(message, user){
+	getRandomImage('rags').then(image => {
+        return message.channel.sendFile(image.Body, 'rags.png')
+            .then(common.success)
+            .catch(common.error);
+        })
 };
 
-exports.bruciepie = async function(message, user){
-	const image = await getRandomImage('bruce')
-    return message.channel.sendFile(image.Body, 'bruce.png')
-        .then(common.success)
-        .catch(common.error);
+exports.bruciepie = function(message, user){
+	getRandomImage('bruce').then(image => {
+        return message.channel.sendFile(image.Body, 'bruce.png')
+            .then(common.success)
+            .catch(common.error);
+        })
 };
 
-exports.showmeyourmoves = async function(message, user){
-	const image = await getRandomImage('falcon')
-    return message.channel.sendFile(image.Body, 'falcon.png')
-        .then(common.success)
-        .catch(common.error);
+exports.showmeyourmoves = function(message, user){
+	getRandomImage('falcon').then(image => {
+        return message.channel.sendFile(image.Body, 'falcon.png')
+            .then(common.success)
+            .catch(common.error);
+        })
 };
 
-exports.thumb = async function(message){
-	const image = await getImage('thumb.jpg')
-    return message.channel.sendFile(image.Body, 'thumb.png')
-        .then(common.success)
-        .catch(common.error);
+exports.thumb = function(message){
+	getImage('thumb.jpg').then(image => {
+        return message.channel.sendFile(image.Body, 'thumb.png')
+            .then(common.success)
+            .catch(common.error);
+        })
 };
 
-exports.panGasm = async function(message){
-	const image = await getImage('PanGasm.png')
-    return message.channel.sendFile(image.Body, 'pangasm.png')
-        .then(common.success)
-        .catch(common.error);
+exports.panGasm = function(message){
+	getImage('PanGasm.png').then(image => {
+        return message.channel.sendFile(image.Body, 'pangasm.png')
+            .then(common.success)
+            .catch(common.error);
+        })
 };
 
-exports.dolphin = async function(message){
-	const image = await getImage('dolphin.jpg')
-    return message.channel.sendFile(image.Body, 'dolphin.png')
-        .then(common.success)
-        .catch(common.error);
+exports.dolphin = function(message){
+    getImage('dolphin.jpg')
+        .then(image => {
+            return message.channel.sendFile(image.Body, 'dolphin.jpg')
+                .then(common.success)
+                .catch(common.error);
+        })
 };
 
-exports.put = async function(message){
+exports.put = function(message){
     //console.log(message.content)
     const usage = '!put USAGE: !put <target command> <optional: url> or !put <target> (attach image to message)'
     const split = message.content.split(' ')
@@ -128,9 +139,15 @@ exports.put = async function(message){
     
     // format key and upload
     const keyPath = ['images', targetDir, key].join('/')
-    await s3.uploadUrlImageToS3(url, bucket, keyPath)
-
-    // on success
-    message.reply('successfully added ' + key + ' to command ' + targetDir)
-    return true
+    return s3.uploadUrlImageToS3(url, bucket, keyPath)
+        .then(() => {
+            // on success
+            message.reply('successfully added ' + key + ' to command ' + targetDir)
+            return true
+        })
+        .catch(e => {
+            console.error(e)
+            message.reply('an error occured adding ' + key + ' to command ' + targetDir)
+            return true
+        })
 };

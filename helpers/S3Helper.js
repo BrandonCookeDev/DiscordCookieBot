@@ -5,15 +5,15 @@ const request = require('request')
 
 class S3Helper{
 
-	static async get(bucket, key){
-		return await s3.getObject({
+	static get(bucket, key){
+		return s3.getObject({
 			Bucket: bucket,
 			Key: key,
 		}).promise()
 	}
 
-	static async put(bucket, key, payload, contentType){
-		return await s3.putObject({
+	static put(bucket, key, payload, contentType){
+		return s3.putObject({
 			Bucket: bucket,
 			Key: key,
 			Body: payload,
@@ -23,8 +23,8 @@ class S3Helper{
 		}).promise()
 	}
 
-	static async list(bucket, prefix){
-		return await s3.listObjects({
+	static list(bucket, prefix){
+		return s3.listObjects({
 			Bucket: bucket,
 			Prefix: prefix || '/'
 		}).promise()
